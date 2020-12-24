@@ -39,12 +39,4 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 
 	r.POST("/student/list", h.StudentList)
 
-	r.POST("/report/rsubject/list", h.ReportSubjectList)
-	r.POST("/report/history/list", h.ReportHistoryList)
-	r.POST("/report/history/add", h.ReportHistoryAdd)
-	r.POST("/report/subject/edit", h.SubjectReportEdit)
-	r.POST("/report/subject/list", h.SubjectReportList)
-	r.POST("/report/hometeacher/edit", h.HometeacherReportEdit)
-	r.POST("/report/hometeacher/list", h.HometeacherReportList)
-
 }
