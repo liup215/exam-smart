@@ -4,10 +4,8 @@
 
       <div class="title-container">
         <h3 class="title">Login Form</h3>
+        <div style="text-align: center; color: #fff; padding-bottom: 40px;"><a href="https://github.com/liup215/exam-smart">开源项目介绍>>></a></div>
       </div>
-
-      <a style="text-align: center" href="https://github.com/liup215/exam-smart">开源地址</a>
-
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
