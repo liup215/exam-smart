@@ -7,7 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-func (dao *Dao) UserCreate(user model.User) error {
+func (dao *Dao) AdminCreate(user model.Admin) error {
 	if user.ID != uint(0) {
 		return errors.New("用户ID必须为空")
 	}
@@ -16,7 +16,7 @@ func (dao *Dao) UserCreate(user model.User) error {
 		return errors.New("用户名或密码不能为空")
 	}
 
-	_, err := dao.GetUserByUserName(user.UserName)
+	_, err := dao.GetAdminByUserName(user.UserName)
 	if err == nil {
 		return errors.New("用户名已存在")
 	} else {
@@ -25,13 +25,13 @@ func (dao *Dao) UserCreate(user model.User) error {
 
 }
 
-func (dao *Dao) GetUserByUserName(username string) (*model.User, error) {
+func (dao *Dao) GetAdminByUserName(username string) (*model.Admin, error) {
 
 	if username == "" {
 		return nil, errors.New("用户名不能为空")
 	}
-	var user model.User
-	err := dao.orm.Where(&model.User{UserName: username}).First(&user).Error
+	var user model.Admin
+	err := dao.orm.Where(&model.Admin{UserName: username}).First(&user).Error
 	if err != nil {
 		if err != gorm.ErrRecordNotFound {
 			return nil, err
@@ -43,18 +43,14 @@ func (dao *Dao) GetUserByUserName(username string) (*model.User, error) {
 	return &user, nil
 }
 
-func (dao *Dao) UserPage(request model.UserQuery) ([]model.User, int) {
-	list := []model.User{}
+func (dao *Dao) AdminPage(request model.AdminQuery) ([]model.Admin, int) {
+	list := []model.Admin{}
 	total := 0
 
-	db := dao.orm.Model(&model.User{})
+	db := dao.orm.Model(&model.Admin{})
 
 	if request.UserName != "" {
 		db = db.Where("user_name = ?", request.UserName)
-	}
-
-	if request.Role != 0 {
-		db = db.Where("role = ?", request.Role)
 	}
 
 	db.Order("id desc").Offset(request.PageSize * (request.PageIndex - 1)).Limit(request.PageSize).Find(&list)

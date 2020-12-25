@@ -24,8 +24,8 @@ func New(cf *conf.Config) *Dao {
 		db.CreateTable(&model.Syllabus{})
 	}
 
-	if !db.HasTable(&model.User{}) {
-		db.CreateTable(&model.User{})
+	if !db.HasTable(&model.Admin{}) {
+		db.CreateTable(&model.Admin{})
 	}
 
 	if !db.HasTable(&model.Chapter{}) {
@@ -34,18 +34,6 @@ func New(cf *conf.Config) *Dao {
 
 	if !db.HasTable(&model.Student{}) {
 		db.CreateTable(&model.Student{})
-	}
-
-	if !db.HasTable(&model.ReportHistory{}) {
-		db.CreateTable(&model.ReportHistory{})
-	}
-
-	if !db.HasTable(&model.SubjectReport{}) {
-		db.CreateTable(&model.SubjectReport{})
-	}
-
-	if !db.HasTable(&model.HometeacherReport{}) {
-		db.CreateTable(&model.HometeacherReport{})
 	}
 
 	if !db.HasTable(&model.Question{}) {

@@ -8,15 +8,35 @@ import (
 )
 
 func (auth *Service) InitUser() {
-	auth.dao.UserCreate(model.User{
+	auth.dao.AdminCreate(model.Admin{
 		UserName: "admin",
 		Password: auth.encodePwd("123456"),
 	})
 }
 
-func (auth *Service) AuthUser(username, password string) (*model.User, bool) {
+func (auth *Service) AuthAdmin(username, password string) (*model.Admin, bool) {
 
-	user, _ := auth.dao.GetUserByUserName(username)
+	user, _ := auth.dao.GetAdminByUserName(username)
+	if user == nil {
+		return nil, false
+	}
+
+	if user.Password == "" || len(user.Password) == 0 {
+		return nil, false
+	}
+
+	pwd := auth.decodePwd(user.Password)
+
+	if pwd != password {
+		return nil, false
+	}
+
+	return user, true
+}
+
+func (auth *Service) AuthTeacher(username, password string) (*model.Teacher, bool) {
+
+	user, _ := auth.dao.GetTeacherByUserName(username)
 	if user == nil {
 		return nil, false
 	}

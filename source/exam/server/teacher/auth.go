@@ -22,7 +22,7 @@ func (h *Handler) Authenticator(c *gin.Context) (interface{}, error) {
 	}
 
 	// 登录过程验证
-	u, result := h.svr.AuthUser(login.Username, login.Password)
+	u, result := h.svr.AuthTeacher(login.Username, login.Password)
 	if !result {
 		return nil, errors.New("用户名或密码错误")
 	}
@@ -46,7 +46,7 @@ func (h *Handler) Unauthorized(c *gin.Context, code int, message string) {
 
 func (h *Handler) GetUserInfo(c *gin.Context) {
 	u, _ := auth.GetCurrentUser(c)
-	u.Roles = []string{"admin"}
+	u.Roles = []string{"teacher"}
 	http.Response(c, 200, "信息获取成功", u)
 
 }
