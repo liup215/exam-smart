@@ -6,13 +6,13 @@ var request = getRequest(BaseApi.BASE_API)
 export default {
   add: (data) => {
     return request({
-      url: '/admin/questionToChapter/add',
+      url: '/questionToChapter/add',
       method: 'post',
       data: data
     })
   },
   delete: data => request({
-    url: '/admin/questionToChapter/delete',
+    url: '/questionToChapter/delete',
     method: 'post',
     data: data
   })

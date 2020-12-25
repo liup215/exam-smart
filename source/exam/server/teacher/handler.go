@@ -37,6 +37,36 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/dashboard", h.Dashboard)
 	r.GET("/info", h.GetUserInfo)
 
-	r.POST("/student/list", h.StudentList)
+	r.GET("/subject/list", h.SubjectListPage)
+	r.POST("/subject/list", h.SubjectList)
+	r.GET("/subject/add", h.SubjectAddPage)
+	r.POST("/subject/add", h.SubjectAdd)
+	r.POST("/subject/edit", h.SubjectEdit)
+
+	r.POST("/syllabus/list", h.SyllabusList)
+	r.POST("/syllabus/add", h.SyllabusAdd)
+	r.POST("/syllabus/edit", h.SyllabusUpdate)
+
+	r.POST("/chapter/tree", h.ChapterTree)
+	r.POST("/chapter/listBySyllabus", h.ChapterListBySyllabus)
+	r.POST("/chapter/add", h.ChapterAdd)
+	r.POST("/chapter/edit", h.ChapterUpdate)
+	r.POST("/chapter/update", h.ChapterUpdate)
+	r.POST("/chapter/delete", h.ChapterDelete)
+
+	r.POST("/question/list", h.QuestionList)
+	r.POST("/question/edit", h.QuestionAddOrEdit)
+	r.POST("/question/selectById", h.QuestionById)
+
+	r.POST("/questionToChapter/add", h.QuestionToChapterAdd)
+	r.POST("/questionToChapter/delete", h.QuestionToChapterDelete)
+
+	r.POST("/exam/paper/edit", h.ExamPaperEdit)
+	r.POST("/exam/paper/list", h.ExamPaperList)
+	r.POST("/exam/paper/selectById", h.ExamPaperById)
+
+	r.POST("/exam/pastPaper/list", h.PastPaperList)
+	r.POST("/exam/pastPaper/selectById", h.PastPaperById)
+	r.POST("/exam/pastPaper/edit", h.PastPaperEdit)
 
 }

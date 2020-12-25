@@ -1,4 +1,4 @@
-package admin
+package teacher
 
 import (
 	"exam/lib/net/http"
@@ -10,6 +10,21 @@ import (
 
 func (h *Handler) SubjectListPage(c *gin.Context) {
 	c.HTML(200, "admin/subject_list.html", gin.H{})
+}
+
+func (h *Handler) SubjectList(c *gin.Context) {
+	query := model.SubjectQuery{}
+	if err := c.BindJSON(&query); err != nil {
+		http.Response(c, 400, "参数解析失败: "+err.Error(), nil)
+		return
+	}
+	list, total := h.svr.SelectSubjectList(query)
+	c.JSON(200, gin.H{
+		"code":  0,
+		"msg":   "数据获取成功",
+		"count": total,
+		"data":  list,
+	})
 }
 
 func (h *Handler) SubjectAddPage(c *gin.Context) {
@@ -46,7 +61,7 @@ func (h *Handler) SubjectEdit(c *gin.Context) {
 	http.Response(c, 200, "编辑成功!", gin.H{})
 }
 
-func (h *Handler) SubjectList(c *gin.Context) {
+func (h *Handler) SubjectListOld(c *gin.Context) {
 
 	query := model.SubjectQuery{}
 	if err := c.BindJSON(&query); err != nil {

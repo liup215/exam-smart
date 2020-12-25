@@ -1,33 +1,33 @@
 import { getRequest } from '@/utils/request.js'
 import BaseApi from '@/config/baseApi'
 
-var request = getRequest(BaseApi.USER_BASE_API)
+var request = getRequest(BaseApi.BASE_API)
 
 export default {
   list: (data) => {
     return request({
-      url: '/admin/syllabus/list',
+      url: '/syllabus/list',
       method: 'post',
       data: data
     })
   },
   add: (data) => {
     return request({
-      url: '/admin/education/syllabus/add',
+      url: '/education/syllabus/add',
       method: 'post',
       data: data
     })
   },
   edit: (data) => {
     return request({
-      url: '/admin/education/syllabus/update',
+      url: '/education/syllabus/update',
       method: 'post',
       data: data
     })
   },
   getById: (query) => {
     return request({
-      url: '/admin/education/syllabus/getById',
+      url: '/education/syllabus/getById',
       method: 'post',
       data: query
     })

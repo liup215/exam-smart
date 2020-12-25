@@ -5,7 +5,7 @@ var request = getRequest(BaseApi.BASE_API)
 
 export function index() {
   return request({
-    url: '/admin/dashboard',
+    url: '/dashboard',
     method: 'post'
   })
 }

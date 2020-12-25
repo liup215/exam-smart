@@ -1,7 +1,7 @@
 import { getRequest } from '@/utils/request.js'
 import BaseApi from '@/config/baseApi'
 
-var request = getRequest(BaseApi.USER_BASE_API)
+var request = getRequest(BaseApi.BASE_API)
 
 export function getUserPageList(data) {
   return request({

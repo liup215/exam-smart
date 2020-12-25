@@ -37,12 +37,6 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/dashboard", h.Dashboard)
 	r.GET("/info", h.GetUserInfo)
 
-	r.POST("/education/subject/add", h.SubjectAdd)
-	r.POST("/education/subject/edit", h.SubjectEdit)
-	r.POST("/education/subject/list", h.SubjectListOld)
-	r.POST("/education/subject/select/:id", h.SubjectSelectById)
-	r.POST("/education/subject/all", h.SubjectAll)
-
 	r.POST("/education/syllabus/list", h.SyllabusList)
 	r.POST("/education/syllabus/add", h.SyllabusAdd)
 	r.POST("/education/syllabus/getById", h.SyllabusById)
@@ -54,11 +48,11 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/education/chapter/update", h.ChapterUpdate)
 	r.POST("/education/chapter/delete", h.ChapterDelete)
 
-	r.GET("/subject/list", h.SubjectListPage)
 	r.POST("/subject/list", h.SubjectList)
-	r.GET("/subject/add", h.SubjectAddPage)
 	r.POST("/subject/add", h.SubjectAdd)
 	r.POST("/subject/edit", h.SubjectEdit)
+	r.POST("/subject/select/:id", h.SubjectSelectById)
+	r.POST("/subject/all", h.SubjectAll)
 
 	r.POST("/syllabus/list", h.SyllabusList)
 	r.POST("/syllabus/add", h.SyllabusAdd)

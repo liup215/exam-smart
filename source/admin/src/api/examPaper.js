@@ -1,40 +1,40 @@
 import { getRequest } from '@/utils/request.js'
 import BaseApi from '@/config/baseApi'
 
-var request = getRequest(BaseApi.USER_BASE_API)
+var request = getRequest(BaseApi.BASE_API)
 
 export default {
   pageList: query => request({
-    url: '/admin/exam/paper/list',
+    url: '/exam/paper/list',
     method: 'post',
     data: query
   }),
   taskExamPage: query => request({
-    url: '/admin/exam/paper/taskExamPage',
+    url: '/exam/paper/taskExamPage',
     method: 'post',
     data: query
   }),
   edit: query => request({
-    url: '/admin/exam/paper/edit',
+    url: '/exam/paper/edit',
     method: 'post',
     data: query
   }),
   select: id => request({
-    url: '/admin/exam/paper/selectById',
+    url: '/exam/paper/selectById',
     data: {ID: id},
     method: 'post'
   }),
   deletePaper: id => request({
-    url: '/admin/exam/paper/delete/' + id,
+    url: '/exam/paper/delete/' + id,
     method: 'post'
   }),
   pastPaperList: data => request({
-    url: '/admin/exam/pastPaper/list',
+    url: '/exam/pastPaper/list',
     method: 'post',
     data: data
   }),
   addPastPaper: data => request({
-    url: '/admin/exam/pastPaper/add',
+    url: '/exam/pastPaper/add',
     method: 'post',
     data: data
   }),

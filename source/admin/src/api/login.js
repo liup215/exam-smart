@@ -1,11 +1,11 @@
 import { getRequest } from '@/utils/request.js'
 import BaseApi from '@/config/baseApi'
 
-var request = getRequest(BaseApi.USER_BASE_API)
+var request = getRequest(BaseApi.BASE_API)
 
 export function login(data) {
   return request({
-    url: '/admin/vue-login',
+    url: '/vue-login',
     method: 'post',
     data
   })
@@ -13,7 +13,7 @@ export function login(data) {
 
 export function getInfo(token) {
   return request({
-    url: '/admin/info',
+    url: '/info',
     method: 'get',
     params: { token }
   })
@@ -21,14 +21,14 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/admin/logout',
+    url: '/logout',
     method: 'post'
   })
 }
 
 export function getCurrentUser() {
   return request({
-    url: '/admin/current',
+    url: '/current',
     method: 'post'
   })
 }
