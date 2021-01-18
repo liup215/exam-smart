@@ -3,6 +3,7 @@ package admin
 import (
 	"exam/lib/net/http"
 	"exam/model"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -108,4 +109,23 @@ func (h *Handler) ExamPaperById(c *gin.Context) {
 	}
 
 	http.Response(c, 200, "试卷获取成功!", paper)
+}
+
+func (h *Handler) ExamPaperDownload(c *gin.Context) {
+	idStr := c.Query("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Response(c, 400, "无效的ID", gin.H{})
+		c.String(200, "试卷下载失败: "+err.Error())
+		return
+	}
+
+	path, err := h.svr.ExamPaperExportToDox(uint(id))
+	if err != nil {
+		c.String(200, "试卷下载失败："+err.Error())
+		return
+	}
+
+	c.File(path)
+
 }

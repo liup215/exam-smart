@@ -6,34 +6,34 @@ var request = getRequest(BaseApi.USER_BASE_API)
 export default {
   list: () => {
     return request({
-      url: '/admin/education/subject/all',
+      url: '/admin/subject/all',
       method: 'post'
     })
   },
   pageList: query => {
     return request({
-      url: '/admin/education/subject/list',
+      url: '/admin/subject/list',
       method: 'post',
       data: query
     })
   },
   edit: query => {
     return request({
-      url: '/admin/education/subject/edit',
+      url: '/admin/subject/edit',
       method: 'post',
       data: query
     })
   },
   add: query => {
     return request({
-      url: '/admin/education/subject/add',
+      url: '/admin/subject/add',
       method: 'post',
       data: query
     })
   },
   select: id => {
     return request({
-      url: '/admin/education/subject/select/' + id,
+      url: '/admin/subject/select/' + id,
       method: 'post'
     })
   }
