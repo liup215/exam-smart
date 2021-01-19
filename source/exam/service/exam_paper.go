@@ -3,8 +3,28 @@ package service
 import (
 	"encoding/json"
 	"errors"
+	"exam/lib/strings"
 	"exam/model"
+	"fmt"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/carmel/gooxml/common"
+	"github.com/carmel/gooxml/document"
+	"github.com/carmel/gooxml/measurement"
+	"github.com/carmel/gooxml/schema/soo/wml"
+	"io/ioutil"
+	"net/http"
+	"os"
+	gostrings "strings"
+	"time"
 )
+
+const (
+	EXAM_TMP_DIR = "./tmp/exam_paper/"
+)
+
+func init() {
+	fmt.Println(os.MkdirAll(EXAM_TMP_DIR, os.ModePerm))
+}
 
 func (svr *Service) SelectExamPaperAllCount() int {
 	return svr.dao.SelectExamPaperAllCount()
@@ -21,6 +41,127 @@ func (svr *Service) ExamPaperList(query model.ExamPaperQuery) ([]model.ExamPaper
 }
 
 func (svr *Service) ExamPaperById(id uint) (model.ExamPaper, error) {
+	if id == uint(0) {
+		return model.ExamPaper{}, errors.New("试卷ID不能为空")
+	}
+
+	return svr.examPaperById(id)
+}
+
+func (svr *Service) ExamPaperExportToDox(id uint) (string, error) {
+	if id == uint(0) {
+		return "", errors.New("试卷ID不能为空")
+	}
+
+	paper, err := svr.dao.SelectExamPaperById(id)
+	if err != nil {
+		return "", err
+	}
+
+	p := svr.examPaperFormat(paper)
+
+	filePath := EXAM_TMP_DIR + fmt.Sprintf("exam_paper_%v_%v.docx", int(id), time.Now().Format("20060102150405")+strings.NumRandomStr(4))
+
+	// 判断有无文件，若有则先删除
+	if _, err := os.Stat(filePath); err != nil {
+		if err == nil {
+			os.Remove(filePath)
+		}
+	}
+
+	// 写入标题
+	doc := document.New()
+	t := doc.AddParagraph()
+	tRun := t.AddRun()
+	t.SetStyle("Title")
+	tRun.AddText(p.Name)
+
+	// 写入题目
+
+	for order, titleItem := range p.TitleItems {
+		item := doc.AddParagraph()
+		iRun := item.AddRun()
+		item.SetStyle("Heading1")
+		iRun.AddText(fmt.Sprintf("%v. %v", order+1, titleItem.Name))
+
+		// 正式写入题目
+		for qOrder, qItem := range titleItem.QuestionItems {
+			svr.writeQuestionToDoc(doc, qItem.Question, qOrder)
+		}
+
+	}
+
+	doc.SaveToFile(filePath)
+
+	return filePath, nil
+}
+
+func (svr *Service) writeQuestionToDoc(doc *document.Document, q model.Question, qOrder int) {
+	if doc == nil {
+		return
+	}
+	qTitleP := doc.AddParagraph()
+	qTitleRun := qTitleP.AddRun()
+	qTitleRun.AddText(fmt.Sprintf("%v. (%v-%v-%v)", qOrder+1, q.Year, q.Series, q.Code))
+
+	// 添加题目内容
+	html := "<div id='qTitle'>" + q.Title + "</div>"
+
+	dom, err := goquery.NewDocumentFromReader(gostrings.NewReader(html))
+	if err != nil {
+		return
+	}
+
+	dom.Find("p").Each(func(i1 int, selection *goquery.Selection) {
+		nPara := doc.AddParagraph()
+		nRun := nPara.AddRun()
+		selection.Find("img").Each(func(i2 int, img *goquery.Selection) {
+			src, ok := img.Attr("src")
+			if ok {
+				res, err := http.Get(src)
+				if err != nil {
+					return
+				}
+
+				defer res.Body.Close()
+				imgBytes, err := ioutil.ReadAll(res.Body)
+				if err != nil {
+					return
+				}
+				if img0, err := common.ImageFromBytes(imgBytes); err != nil {
+					return
+				} else {
+					img0Ref, err := doc.AddImage(img0)
+					if err != nil {
+						return
+					}
+
+					if inlineDrawing, err := nRun.AddDrawingInline(img0Ref); err != nil {
+						return
+					} else {
+						width := measurement.Distance(0.5 * 210 * measurement.Millimeter)
+						height := img0Ref.RelativeHeight(width)
+						inlineDrawing.SetSize(width, height)
+						nPara.Properties().SetAlignment(wml.ST_JcCenter)
+					}
+				}
+			}
+		})
+
+		nRun.AddText(selection.Text())
+	})
+
+	// 如果是单选题，就同时写入选项
+	if q.QuestionType == model.QUESTION_TYPE_SINGLE_CHOICE {
+		for _, item := range q.Items {
+			iPar := doc.AddParagraph()
+			iRun := iPar.AddRun()
+			iRun.AddText(item.Prefix + ". " + item.Content)
+		}
+	}
+}
+
+func (svr *Service) examPaperById(id uint) (model.ExamPaper, error) {
 	if id == uint(0) {
 		return model.ExamPaper{}, errors.New("试卷ID不能为空")
 	}

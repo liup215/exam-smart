@@ -24,6 +24,10 @@ export default {
     data: {ID: id},
     method: 'post'
   }),
+  download: id => request({
+    url: '/admin/exam/paper/download?id=' + id,
+    method: 'get'
+  }),
   deletePaper: id => request({
     url: '/exam/paper/delete/' + id,
     method: 'post'
@@ -47,5 +51,5 @@ export default {
     url: '/admin/exam/pastPaper/selectById',
     data: {ID: id},
     method: 'post'
-  }),
+  })
 }

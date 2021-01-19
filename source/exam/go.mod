@@ -3,7 +3,9 @@ module exam
 go 1.12
 
 require (
+	github.com/PuerkitoBio/goquery v1.6.1
 	github.com/appleboy/gin-jwt v2.5.0+incompatible
+	github.com/carmel/gooxml v0.0.0-20191215153803-80e0ad0dc8fd
 	github.com/chanxuehong/rand v0.0.0-20180830053958-4b3aff17f488
 	github.com/chanxuehong/util v0.0.0-20200101141541-cec33d5d7fcd
 	github.com/chanxuehong/wechat v0.0.0-20190521093015-fafb751f9916
@@ -20,6 +22,7 @@ require (
 	github.com/tealeg/xlsx v1.0.5
 	github.com/techleeone/gophp v0.1.0
 	github.com/tidwall/gjson v1.5.0 // indirect
+	github.com/unidoc/unioffice v1.8.0
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
 	gopkg.in/dgrijalva/jwt-go.v3 v3.2.0
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22

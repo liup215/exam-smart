@@ -39,6 +39,7 @@
         <template slot-scope="{row}">
           <el-button size="mini" @click="$router.push({path:'/exam/paper/edit',query:{id:row.ID}})" >编辑</el-button>
           <el-button size="mini" target='_blank' @click="paperPreview(row.ID)">预览</el-button>
+          <el-button size="mini" target='_blank' @click="paperDownload(row.ID)">下载</el-button>
           <el-button size="mini" type="danger" disabled @click="deletePaper(row.ID)" class="link-left">删除</el-button>
         </template>
       </el-table-column>
@@ -53,6 +54,8 @@ import { mapGetters, mapState, mapActions } from 'vuex'
 import Pagination from '@/components/Pagination'
 import examPaperApi from '@/api/examPaper'
 import syllabusApi from '@/api/syllabus'
+import baseApi from '@/config/baseApi'
+import { getToken } from '@/utils/auth'
 
 export default {
   components: { Pagination },
@@ -122,6 +125,10 @@ export default {
         query: { id: id }
       })
       window.open(routeData.href, '_blank')
+    },
+    paperDownload(id) {
+      // examPaperApi.download(id)
+      window.open(baseApi.BASE_API + '/admin/exam/paper/download?id=' + id + '&token=' + getToken())
     },
     subjectFormatter  (row, column, cellValue) {
       return this.subjectEnumFormat(cellValue)

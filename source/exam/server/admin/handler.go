@@ -75,6 +75,7 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/exam/paper/edit", h.ExamPaperEdit)
 	r.POST("/exam/paper/list", h.ExamPaperList)
 	r.POST("/exam/paper/selectById", h.ExamPaperById)
+	r.GET("/exam/paper/download", h.ExamPaperDownload)
 
 	r.POST("/exam/pastPaper/list", h.PastPaperList)
 	r.POST("/exam/pastPaper/selectById", h.PastPaperById)
