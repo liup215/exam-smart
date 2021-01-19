@@ -1,4 +1,6 @@
 source/exam/cmd/cmd
 source/admin/node_modules/
 source/admin/dist/
+source/teacher/node_modules/
+source/teacher/dist/
 
