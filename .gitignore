@@ -3,4 +3,4 @@ source/admin/node_modules/
 source/admin/dist/
 source/teacher/node_modules/
 source/teacher/dist/
-
+source/exam/cmd/tmp/
