@@ -1,36 +1,36 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="考试局：" prop="SyllabusType">
-        <el-select v-model="form.SyllabusType" placeholder="考试局"  @change="organisationChange">
+      <el-form-item label="考试局：" prop="syllabusType">
+        <el-select v-model="form.syllabusType" placeholder="考试局"  @change="organisationChange">
           <el-option :value="1" label="CIE"></el-option>
           <el-option :value="2" label="Edexcel"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="学科：" prop="SubjectId">
-        <el-select v-model="form.SubjectId" placeholder="学科" @change="subjectChange">
-          <el-option v-for="item in subjectList" :key="item.ID" :value="item.ID" :label="item.Name"></el-option>
+      <el-form-item label="学科：" prop="subjectId">
+        <el-select v-model="form.subjectId" placeholder="学科" @change="subjectChange">
+          <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="考纲" prop="SyllabusId">
-        <el-select v-model="form.SyllabusId">
-          <el-option v-for="item in syllabusList" :key="item.ID" :value="item.ID" :label="item.Name"></el-option>
+      <el-form-item label="考纲" prop="syllabusId">
+        <el-select v-model="form.syllabusId">
+          <el-option v-for="item in syllabusList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="年份" prop="Year">
-        <el-select v-model="form.Year">
+      <el-form-item label="年份" prop="year">
+        <el-select v-model="form.year">
           <el-option v-for="(item, index) in yearList" :key="index" :value="item">{{item}}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="月份" prop="Series">
-        <el-select v-model="form.Series">
+      <el-form-item label="月份" prop="series">
+        <el-select v-model="form.series">
           <el-option value="January">January</el-option>
           <el-option value="June">June</el-option>
           <el-option value="October">October</el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="试卷代码"  prop="Code">
-        <el-input v-model="form.Code"/>
+        <el-input v-model="form.code"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
@@ -54,34 +54,34 @@ export default {
   data () {
     return {
       form: {
-        ID: null,
-        SubjectId: null,
-        SyllabusId: null,
-        Name: '',
-        SuggestTime: null,
-        TitleItems: []
+        id: null,
+        subjectId: null,
+        syllabusId: null,
+        name: '',
+        suggestTime: null,
+        titleItems: []
       },
       subjectList: [],
       syllabusList: [],
       formLoading: false,
       yearList: [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000],
       rules: {
-        SyllabusType: [
+        syllabusType: [
           { required: true, message: '请选择考试局', trigger: 'change' }
         ],
-        SubjectId: [
+        subjectId: [
           { required: true, message: '请选择学科', trigger: 'change' }
         ],
-        SyllabusId: [
+        syllabusId: [
           { required: true, message: '请选择考纲', trigger: 'change' }
         ],
-        Year: [
+        year: [
           { required: true, message: '请选择试卷年份', trigger: 'blur' }
         ],
-        Series: [
+        series: [
           { required: true, message: '请选择考试季', trigger: 'blur' }
         ],
-        Code: [
+        code: [
           { required: true, message: '请输入试卷代码', trigger: 'blur' }
         ]
       },
@@ -89,11 +89,11 @@ export default {
         multipleSelection: [],
         showDialog: false,
         queryParam: {
-          ID: null,
-          QuestionType: null,
-          SubjectId: 1,
-          PageIndex: 1,
-          PageSize: 5
+          id: null,
+          questionType: null,
+          subjectId: 1,
+          pageIndex: 1,
+          pageSize: 5
         },
         listLoading: true,
         tableData: [],
@@ -112,10 +112,10 @@ export default {
       _this.formLoading = true
       examPaperApi.selectPastPaper(parseInt(id)).then(re => {
         _this.form = re.data
-        if (!_this.form.TitleItems) {
-          _this.form.TitleItems = []
+        if (!_this.form.titleItems) {
+          _this.form.titleItems = []
         }
-        _this.searchSyllabus({Type: _this.form.SyllabusType, SubjectId: re.data.SubjectId})
+        _this.searchSyllabus({type: _this.form.syllabusType, subjectId: re.data.subjectId})
         _this.formLoading = false
       })
     }
@@ -128,19 +128,19 @@ export default {
       this.searchSyllabus()
     },
     searchSyllabus() {
-      syllabusApi.list({Type: this.form.SyllabusType ? this.form.SyllabusType : 0, SubjectId: this.form.SubjectId ? this.form.SubjectId: 0}).then(res => {
+      syllabusApi.list({type: this.form.syllabusType ? this.form.syllabusType : 0, subjectId: this.form.subjectId ? this.form.subjectId: 0}).then(res => {
         this.syllabusList = res.data.list
 
         var syllabusExist = false
         for (var i = 0; i<this.syllabusList.length; i++) {
-          if (this.syllabusList[i].ID === this.form.SyllabusId) {
+          if (this.syllabusList[i].id === this.form.syllabusId) {
             syllabusExist = true
             break
           }
         }
 
         if (!syllabusExist) {
-          this.form.SyllabusId = null
+          this.form.syllabusId = null
         }
       })
     },
@@ -149,7 +149,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.formLoading = true
-          this.form.SuggestTime = parseInt(this.form.SuggestTime)
+          this.form.suggestTime = parseInt(this.form.suggestTime)
           examPaperApi.editPastPaper(this.form).then(re => {
             if (re.code === 200) {
               _this.form = re.data
@@ -170,9 +170,9 @@ export default {
       })
     },
     addTitle () {
-      this.form.TitleItems.push({
-        Name: '',
-        QuestionItems: []
+      this.form.titleItems.push({
+        name: '',
+        questionItems: []
       })
 
     },
@@ -182,7 +182,7 @@ export default {
       this.search()
     },
     removeTitleItem (titleItem) {
-      this.form.TitleItems.remove(titleItem)
+      this.form.titleItems.remove(titleItem)
     },
     removeQuestion (titleItem, questionItem) {
       titleItem.questionItems.remove(questionItem)
@@ -205,13 +205,13 @@ export default {
       this.subjectFilter = this.subjects.filter(data => data.level === this.form.level)
     },
     search () {
-      this.questionPage.queryParam.SubjectId = this.form.SubjectId
+      this.questionPage.queryParam.subjectId = this.form.subjectId
       this.questionPage.listLoading = true
       questionApi.pageList(this.questionPage.queryParam).then(re => {
         const data = re.data
         this.questionPage.tableData = data.list
         this.questionPage.total = data.total
-        this.questionPage.queryParam.pageIndex = re.PageIndex
+        this.questionPage.queryParam.pageIndex = re.pageIndex
         this.questionPage.listLoading = false
       })
     },

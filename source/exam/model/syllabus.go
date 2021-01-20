@@ -1,8 +1,6 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import ()
 
 const (
 	SYLLABUS_TYPE_ALL = iota
@@ -11,12 +9,12 @@ const (
 )
 
 type Syllabus struct {
-	gorm.Model
-	Name        string
-	SubjectId   uint
-	SubjectName string `gorm:"-"`
-	Type        int
-	TypeName    string `gorm:"-"`
+	Model
+	Name        string `json:"name"`
+	SubjectId   uint   `json:"subjectId"`
+	SubjectName string `gorm:"-" json:"subjectName"`
+	Type        int    `json:"type"`
+	TypeName    string `gorm:"-" json:"typeName"`
 }
 
 func (s Syllabus) GetSyllabusTypeName() string {
@@ -30,9 +28,9 @@ func (s Syllabus) GetSyllabusTypeName() string {
 }
 
 type SyllabusQuery struct {
-	ID        uint
+	ID        uint `json:"id"`
 	SubjectId uint `json:"subjectId"`
-	Type      int
-	PageIndex int `form:"pageIndex" json:"pageIndex"`
-	PageSize  int `form:"pageSize" json:"pageSize"`
+	Type      int  `json:"type"`
+	PageIndex int  `form:"pageIndex" json:"pageIndex"`
+	PageSize  int  `form:"pageSize" json:"pageSize"`
 }

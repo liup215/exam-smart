@@ -1,11 +1,9 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import ()
 
 type Admin struct {
-	gorm.Model
+	Model
 	UserName string `form:"userName" json:"userName"` // 用户名
 	Password string `form:"password" json:"password"`
 	RealName string `form:"realName" json:"realName"` // 真实姓名

@@ -90,5 +90,5 @@ func (dao *Dao) SyllabusUpdate(syllabus model.Syllabus) error {
 	if syllabus.ID == 0 {
 		return errors.New("书籍ID不能为空")
 	}
-	return dao.orm.Model(&model.Syllabus{}).Where(&model.Syllabus{Model: gorm.Model{ID: syllabus.ID}}).Save(&syllabus).Error
+	return dao.orm.Model(&model.Syllabus{}).Where(&model.Syllabus{Model: model.Model{ID: syllabus.ID}}).Save(&syllabus).Error
 }

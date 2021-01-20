@@ -1,70 +1,68 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import ()
 
 type PastPaper struct {
-	gorm.Model
-	Name       string
-	SyllabusId uint
-	Year       int
-	Code       string
-	Series     string
+	Model
+	Name       string `json:"name"`
+	SyllabusId uint   `json:"syllabusId"`
+	Year       int    `json:"year"`
+	Code       string `json:"code"`
+	Series     string `json:"series"`
 
 	// Response
-	SyllabusType     int    `gorm:"-"`
-	SyllabusTypeName string `gorm:"-"`
-	SyllabusName     string `gorm:"-"`
-	SubjectId        uint   `gorm:"-"`
-	SubjectName      string `gorm:"-"`
+	SyllabusType     int    `gorm:"-" json:"syllabusType"`
+	SyllabusTypeName string `gorm:"-" json:"syllabusTypeName"`
+	SyllabusName     string `gorm:"-" json:"syllabusName"`
+	SubjectId        uint   `gorm:"-" json:"subjectId"`
+	SubjectName      string `gorm:"-" json:"subjectName"`
 }
 
 type PastPaperQuery struct {
-	ID         uint
-	SyllabusId uint
-	Year       int
-	Code       string
-	Series     string
-	PageIndex  int
-	PageSize   int
+	ID         uint   `json:"id"`
+	SyllabusId uint   `json:"syllabusId"`
+	Year       int    `json:"year"`
+	Code       string `json:"code"`
+	Series     string `json:"series"`
+	PageIndex  int    `json:"pageIndex"`
+	PageSize   int    `json:"pageSize"`
 }
 
 type ExamPaper struct {
-	gorm.Model
-	Name              string // 试卷名称
-	SyllabusId        uint   // 考纲ID
-	Score             int    // 试卷总分(千分制)
-	QuestionCount     int    // 题目数量
-	SuggestTime       int    // 建议时长(分钟)
-	FrameTexcontentId uint   // 试卷框架 内容为JSON
-	CreateUser        uint
+	Model
+	Name              string `json:"name"` // 试卷名称
+	SyllabusId        uint   `json:"syllabusId"`
+	Score             int    `json:"score"`
+	QuestionCount     int    `json:"questionCount"`
+	SuggestTime       int    `json:"suggestTime"`
+	FrameTexcontentId uint   `json:"frameTexcontentId"`
+	CreateUser        uint   `json:"createUser"`
 
 	// request VM
-	TitleItems []ExamPaperTitleItem `gorm:"-"`
+	TitleItems []ExamPaperTitleItem `gorm:"-" json:"titleItems"`
 
 	// response VM
-	CreatedAtFormatted string `gorm:"-"`
-	SyllabusName       string `gorm:"-"`
-	SyllabusType       int    `gorm:"-"`
-	SyllabusTypeName   string `gorm:"-"`
-	SubjectId          uint   `gorm:"-"`
-	SubjectName        string `gorm:"-"`
+	CreatedAtFormatted string `gorm:"-" json:"createdAtFormatted"`
+	SyllabusName       string `gorm:"-" json:"syllabusName"`
+	SyllabusType       int    `gorm:"-" json:"syllabusType"`
+	SyllabusTypeName   string `gorm:"-" json:"syllabusTypeName"`
+	SubjectId          uint   `gorm:"-" json:"subjectId"`
+	SubjectName        string `gorm:"-" json:"subjectName"`
 }
 
 type ExamPaperQuery struct {
-	ID         uint
-	SyllabusId uint
-	PageIndex  int `json:"pageIndex" form:"pageIndex"`
-	PageSize   int `json:"pageSize" form:"pageSize"`
+	ID         uint `json:"id"`
+	SyllabusId uint `json:"syllabusId"`
+	PageIndex  int  `json:"pageIndex" form:"pageIndex"`
+	PageSize   int  `json:"pageSize" form:"pageSize"`
 }
 
 type ExamPaperTitleItem struct {
-	Name          string
-	QuestionItems []ExamPaperQuestionItem
+	Name          string                  `json:"name"`
+	QuestionItems []ExamPaperQuestionItem `json:"questionItems"`
 }
 
 type ExamPaperQuestionItem struct {
-	ItemOrder int
-	Question  Question
+	ItemOrder int      `json:"itemOrder"`
+	Question  Question `json:"question"`
 }

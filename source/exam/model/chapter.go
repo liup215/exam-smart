@@ -1,25 +1,23 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import ()
 
 // "exam/lib/database/data"
 
 type Chapter struct {
-	gorm.Model
-	SyllabusId   uint
-	Name         string
-	ParentId     uint
-	Children     []Chapter `gorm:"-" json:"Children,omitempty"`
-	IsLeaf       int       `gorm:"-"`
-	QuestionList string    `grom:""`
+	Model
+	SyllabusId   uint      `json:"syllabusId"`
+	Name         string    `json:"name"`
+	ParentId     uint      `json:"parentId"`
+	Children     []Chapter `gorm:"-" json:"children,omitempty"`
+	IsLeaf       int       `gorm:"-" json:"isLeaf"`
+	QuestionList string    `gorm:"-" json:"questionList"`
 }
 
 type ChapterQuery struct {
-	ID         uint
-	SyllabusId uint
-	ParentId   uint
-	PageIndex  int
-	PageSize   int
+	ID         uint `json:"id"`
+	SyllabusId uint `json:"syllabusId"`
+	ParentId   uint `json:"parentId"`
+	PageIndex  int  `json:"pageIndex"`
+	PageSize   int  `json:"pageSize"`
 }

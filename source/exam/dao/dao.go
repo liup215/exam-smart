@@ -32,10 +32,6 @@ func New(cf *conf.Config) *Dao {
 		db.CreateTable(&model.Chapter{})
 	}
 
-	if !db.HasTable(&model.Student{}) {
-		db.CreateTable(&model.Student{})
-	}
-
 	if !db.HasTable(&model.Question{}) {
 		db.CreateTable(&model.Question{})
 	}

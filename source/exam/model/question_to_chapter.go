@@ -1,19 +1,17 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import ()
 
 type QuestionToChapter struct {
-	gorm.Model
-	QuestionId uint
-	ChapterId  uint
+	Model
+	QuestionId uint `json:"questionId"`
+	ChapterId  uint `json:"chapterId"`
 }
 
 type QuestionToChapterQuery struct {
-	Id         uint
-	QuestionId uint
-	ChapterId  uint
-	PageIndex  int
-	PageSize   int
+	Id         uint `json:"id"`
+	QuestionId uint `json:"questionId"`
+	ChapterId  uint `json:"chapterId"`
+	PageIndex  int  `json:"pageIndex"`
+	PageSize   int  `json:"pageSize"`
 }

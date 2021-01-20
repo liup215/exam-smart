@@ -98,7 +98,7 @@ func (dao *Dao) ChapterDelete(id uint) error {
 		return errors.New("该章节下有子章节，不能删除")
 	}
 
-	return dao.orm.Model(&model.Chapter{}).Delete(&model.Chapter{Model: gorm.Model{ID: id}}).Error
+	return dao.orm.Model(&model.Chapter{}).Delete(&model.Chapter{Model: model.Model{ID: id}}).Error
 }
 
 func (dao *Dao) ChapterListBySyllabus(sid uint) ([]model.Chapter, int) {

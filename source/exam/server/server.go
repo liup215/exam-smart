@@ -4,7 +4,6 @@ import (
 	"exam/conf"
 	"exam/lib/net/http/middleware/cors"
 	"exam/server/admin"
-	"exam/server/teacher"
 	"exam/server/util"
 	"exam/service"
 	"fmt"
@@ -41,7 +40,7 @@ func router(r *gin.Engine, c *conf.Config) {
 	adminHandle := admin.NewHandlerFromService(svr)
 	adminHandle.Route(adminGroup)
 
-	teacherGroup := r.Group("/teacher")
-	teacherHandle := teacher.NewHandlerFromService(svr)
-	teacherHandle.Route(teacherGroup)
+	// teacherGroup := r.Group("/teacher")
+	// teacherHandle := teacher.NewHandlerFromService(svr)
+	// teacherHandle.Route(teacherGroup)
 }

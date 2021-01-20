@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading">
       <el-form-item label="学科：" required>
-        <el-input v-model="form.Name"></el-input>
+        <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="排序">
-        <el-input-number v-model="form.ItemOrder"></el-input-number>
+        <el-input-number v-model="form.itemOrder"></el-input-number>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
@@ -23,9 +23,9 @@ export default {
   data () {
     return {
       form: {
-        ID: null,
-        Name: '',
-        ItemOrder: 0
+        id: null,
+        name: '',
+        itemOrder: 0
       },
       formLoading: false
     }

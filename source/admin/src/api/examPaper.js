@@ -21,7 +21,7 @@ export default {
   }),
   select: id => request({
     url: '/exam/paper/selectById',
-    data: {ID: id},
+    data: {id: id},
     method: 'post'
   }),
   download: id => request({

@@ -4,20 +4,20 @@
       <el-form-item label="题目ID：">
         <el-input v-model="queryParam.id" clearable></el-input>
       </el-form-item>
-      <el-form-item label="考试局：" prop="Organisation">
-        <el-select v-model="queryParam.Organisation" placeholder="考试局"  @change="organisationChange">
+      <el-form-item label="考试局：" prop="organisation">
+        <el-select v-model="queryParam.organisation" placeholder="考试局"  @change="organisationChange">
           <el-option :value="1" label="CIE"></el-option>
           <el-option :value="2" label="Edexcel"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="学科：" prop="SubjectId" required>
-        <el-select v-model="queryParam.SubjectId" placeholder="学科" @change="subjectChange">
-          <el-option v-for="item in subjectList" :key="item.ID" :value="item.ID" :label="item.Name"></el-option>
+      <el-form-item label="学科：" prop="subjectId" required>
+        <el-select v-model="queryParam.subjectId" placeholder="学科" @change="subjectChange">
+          <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="考纲" required>
-        <el-select v-model="queryParam.SyllabusId">
-          <el-option v-for="item in syllabusList" :key="item.ID" :value="item.ID" :label="item.Name"></el-option>
+        <el-select v-model="queryParam.syllabusId">
+          <el-option v-for="item in syllabusList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -28,23 +28,23 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
-      <el-table-column prop="ID" label="Id" width="90px"/>
+      <el-table-column prop="id" label="Id" width="90px"/>
 
-      <el-table-column prop="SyllabusTypeName" label="考试局"/>
-      <el-table-column prop="SubjectName" label="学科"/>
-      <el-table-column prop="SyllabusName" label="考纲"></el-table-column>
-      <el-table-column prop="Year" label="年份"  />
-      <el-table-column prop="Series" label="考试季"/>
-      <el-table-column prop="Code" label="试卷代码"/>
+      <el-table-column prop="syllabusTypeName" label="考试局"/>
+      <el-table-column prop="subjectName" label="学科"/>
+      <el-table-column prop="syllabusName" label="考纲"></el-table-column>
+      <el-table-column prop="year" label="年份"  />
+      <el-table-column prop="series" label="考试季"/>
+      <el-table-column prop="code" label="试卷代码"/>
       <el-table-column  label="操作" align="center">
         <template slot-scope="{row}">
-          <el-button size="mini" @click="$router.push({path:'/exam/pastPaper/edit',query:{id:row.ID}})" >编辑</el-button>
-          <el-button size="mini" target='_blank' @click="paperPreview(row.ID)">预览</el-button>
+          <el-button size="mini" @click="$router.push({path:'/exam/pastPaper/edit',query:{id:row.id}})" >编辑</el-button>
+          <el-button size="mini" target='_blank' @click="paperPreview(row.id)">预览</el-button>
           <el-button size="mini" type="danger" disabled @click="" class="link-left">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="queryParam.PageIndex" :limit.sync="queryParam.PageSize"
+    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"
                 @pagination="search"/>
   </div>
 </template>
@@ -60,12 +60,12 @@ export default {
   data () {
     return {
       queryParam: {
-        ID: null,
-        Organisation: null,
-        SubjectId: null,
-        SyllabusId: null,
-        PageIndex: 1,
-        PageSize: 10
+        id: null,
+        organisation: null,
+        subjectId: null,
+        syllabusId: null,
+        pageIndex: 1,
+        pageSize: 10
       },
       syllabusList: [],
       subjectList: [],
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     submitForm () {
-      this.queryParam.PageIndex = 1
+      this.queryParam.pageIndex = 1
       this.search()
     },
     search () {
@@ -102,7 +102,7 @@ export default {
       this.searchSyllabus()
     },
     searchSyllabus() {
-      syllabusApi.list({Type: this.queryParam.Organisation ? this.queryParam.Organisation : 0, SubjectId: this.queryParam.SubjectId ? this.queryParam.SubjectId: 0}).then(res => {
+      syllabusApi.list({type: this.queryParam.organisation ? this.queryParam.organisation : 0, subjectId: this.queryParam.subjectId ? this.queryParam.subjectId: 0}).then(res => {
         this.syllabusList = res.data.list
       })
     },

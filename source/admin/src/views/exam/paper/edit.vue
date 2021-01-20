@@ -1,48 +1,48 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="考试局：" prop="SyllabusType" required>
-        <el-select v-model="form.SyllabusType" placeholder="考试局"  @change="organisationChange">
+      <el-form-item label="考试局：" prop="syllabusType" required>
+        <el-select v-model="form.syllabusType" placeholder="考试局"  @change="organisationChange">
           <el-option :value="1" label="CIE"></el-option>
           <el-option :value="2" label="Edexcel"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="学科：" prop="SubjectId" required>
-        <el-select v-model="form.SubjectId" placeholder="学科" @change="subjectChange">
-          <el-option v-for="item in subjectList" :key="item.ID" :value="item.ID" :label="item.Name"></el-option>
+      <el-form-item label="学科：" prop="subjectId" required>
+        <el-select v-model="form.subjectId" placeholder="学科" @change="subjectChange">
+          <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="考纲" required>
-        <el-select v-model="form.SyllabusId">
-          <el-option v-for="item in syllabusList" :key="item.ID" :value="item.ID" :label="item.Name"></el-option>
+        <el-select v-model="form.syllabusId">
+          <el-option v-for="item in syllabusList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="试卷名称："  prop="Name" required>
-        <el-input v-model="form.Name"/>
+      <el-form-item label="试卷名称："  prop="name" required>
+        <el-input v-model="form.name"/>
       </el-form-item>
-      <el-form-item :key="index" :label="'标题'+(index+1)+':'" required v-for="(titleItem,index) in form.TitleItems">
+      <el-form-item :key="index" :label="'标题'+(index+1)+':'" required v-for="(titleItem,index) in form.titleItems">
         <el-input v-model="titleItem.Name" style="width: 80%"/>
         <el-button type="text" class="link-left" style="margin-left: 20px" size="mini" @click="addQuestion(titleItem)">
           添加题目
         </el-button>
-        <el-button type="text" class="link-left" size="mini" @click="form.TitleItems.splice(index,1)">删除</el-button>
-        <el-card class="exampaper-item-box" v-if="titleItem.QuestionItems.length!==0">
+        <el-button type="text" class="link-left" size="mini" @click="form.titleItems.splice(index,1)">删除</el-button>
+        <el-card class="exampaper-item-box" v-if="titleItem.questionItems.length!==0">
           <el-form-item :key="questionIndex" :label="'题目'+(questionIndex+1)+'：'"
-                        v-for="(questionItem,questionIndex) in titleItem.QuestionItems" style="margin-bottom: 15px">
+                        v-for="(questionItem,questionIndex) in titleItem.questionItems" style="margin-bottom: 15px">
             <el-row>
               <el-col :span="23">
-                <QuestionShow :qType="questionItem.Question.QuestionType" :question="questionItem.Question"/>
+                <QuestionShow :qType="questionItem.question.questionType" :question="questionItem.question"/>
               </el-col>
               <el-col :span="1">
-                <el-button type="text" size="mini" @click="titleItem.QuestionItems.splice(questionIndex,1)">删除
+                <el-button type="text" size="mini" @click="titleItem.questionItems.splice(questionIndex,1)">删除
                 </el-button>
               </el-col>
             </el-row>
           </el-form-item>
         </el-card>
       </el-form-item>
-      <el-form-item label="建议时长：" prop="SuggestTime" required>
-        <el-input v-model="form.SuggestTime" placeholder="分钟"/>
+      <el-form-item label="建议时长：" prop="suggestTime" required>
+        <el-input v-model="form.suggestTime" placeholder="分钟"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
@@ -67,9 +67,9 @@
       <el-table v-loading="questionPage.listLoading" :data="questionPage.tableData"
                 @selection-change="handleSelectionChange" border fit highlight-current-row style="width: 100%">
         <el-table-column type="selection" width="35"></el-table-column>
-        <el-table-column prop="ID" label="Id" width="60px"/>
-        <el-table-column prop="QuestionType" label="题型" :formatter="questionTypeFormatter" width="70px"/>
-        <el-table-column prop="Title" label="题干" show-overflow-tooltip/>
+        <el-table-column prop="id" label="Id" width="60px"/>
+        <el-table-column prop="questionType" label="题型" :formatter="questionTypeFormatter" width="70px"/>
+        <el-table-column prop="title" label="题干" show-overflow-tooltip/>
       </el-table>
       <pagination v-show="questionPage.total>0" :total="questionPage.total"
                   :page.sync="questionPage.queryParam.pageIndex" :limit.sync="questionPage.queryParam.pageSize"
@@ -96,12 +96,12 @@ export default {
   data () {
     return {
       form: {
-        ID: null,
-        SubjectId: null,
-        SyllabusId: null,
-        Name: '',
-        SuggestTime: null,
-        TitleItems: []
+        id: null,
+        subjectId: null,
+        syllabusId: null,
+        name: '',
+        suggestTime: null,
+        titleItems: []
       },
       subjectList: [],
       syllabusList: [],
@@ -116,13 +116,13 @@ export default {
         paperType: [
           { required: true, message: '请选择试卷类型', trigger: 'change' }
         ],
-        Name: [
+        name: [
           { required: true, message: '请输入试卷名称', trigger: 'blur' }
         ],
-        SuggestTime: [
+        suggestTime: [
           { required: true, message: '请输入建议时长', trigger: 'blur' }
         ],
-        SyllabusType: [
+        syllabusType: [
           { required: true, message: '请选择考试局', trigger: 'blur' }
         ]
       },
@@ -130,11 +130,11 @@ export default {
         multipleSelection: [],
         showDialog: false,
         queryParam: {
-          ID: null,
-          QuestionType: null,
-          SubjectId: 1,
-          PageIndex: 1,
-          PageSize: 5
+          id: null,
+          questionType: null,
+          subjectId: 1,
+          pageIndex: 1,
+          pageSize: 5
         },
         listLoading: true,
         tableData: [],
@@ -153,10 +153,10 @@ export default {
       _this.formLoading = true
       examPaperApi.select(parseInt(id)).then(re => {
         _this.form = re.data
-        if (!_this.form.TitleItems) {
-          _this.form.TitleItems = []
+        if (!_this.form.titleItems) {
+          _this.form.titleItems = []
         }
-        _this.searchSyllabus({Type: _this.form.SyllabusType, SubjectId: re.data.SubjectId})
+        _this.searchSyllabus({type: _this.form.syllabusType, subjectId: re.data.subjectId})
         _this.formLoading = false
       })
     }
@@ -169,19 +169,19 @@ export default {
       this.searchSyllabus()
     },
     searchSyllabus() {
-      syllabusApi.list({Type: this.form.SyllabusType ? this.form.SyllabusType : 0, SubjectId: this.form.SubjectId ? this.form.SubjectId: 0}).then(res => {
+      syllabusApi.list({type: this.form.syllabusType ? this.form.syllabusType : 0, subjectId: this.form.subjectId ? this.form.subjectId: 0}).then(res => {
         this.syllabusList = res.data.list
 
         var syllabusExist = false
         for (var i = 0; i<this.syllabusList.length; i++) {
-          if (this.syllabusList[i].ID === this.form.SyllabusId) {
+          if (this.syllabusList[i].id === this.form.syllabusId) {
             syllabusExist = true
             break
           }
         }
 
         if (!syllabusExist) {
-          this.form.SyllabusId = null
+          this.form.syllabusId = null
         }
       })
     },
@@ -190,7 +190,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.formLoading = true
-          this.form.SuggestTime = parseInt(this.form.SuggestTime)
+          this.form.suggestTime = parseInt(this.form.suggestTime)
           examPaperApi.edit(this.form).then(re => {
             if (re.code === 200) {
               _this.form = re.data
@@ -211,9 +211,9 @@ export default {
       })
     },
     addTitle () {
-      this.form.TitleItems.push({
-        Name: '',
-        QuestionItems: []
+      this.form.titleItems.push({
+        name: '',
+        questionItems: []
       })
 
     },
@@ -235,8 +235,8 @@ export default {
     confirmQuestionSelect () {
       let _this = this
       this.questionPage.multipleSelection.forEach(q => {
-        questionApi.select(q.ID).then(re => {
-          _this.currentTitleItem.QuestionItems.push({Question: re.data})
+        questionApi.select(q.id).then(re => {
+          _this.currentTitleItem.questionItems.push({question: re.data})
         })
       })
       this.questionPage.showDialog = false
@@ -246,13 +246,13 @@ export default {
       this.subjectFilter = this.subjects.filter(data => data.level === this.form.level)
     },
     search () {
-      this.questionPage.queryParam.SubjectId = this.form.SubjectId
+      this.questionPage.queryParam.subjectId = this.form.subjectId
       this.questionPage.listLoading = true
       questionApi.pageList(this.questionPage.queryParam).then(re => {
         const data = re.data
         this.questionPage.tableData = data.list
         this.questionPage.total = data.total
-        this.questionPage.queryParam.pageIndex = re.PageIndex
+        this.questionPage.queryParam.pageIndex = re.pageIndex
         this.questionPage.listLoading = false
       })
     },

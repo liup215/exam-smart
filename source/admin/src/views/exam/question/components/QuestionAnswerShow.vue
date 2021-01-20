@@ -3,32 +3,32 @@
     <div v-if="qType==1||qType==2||qType==3||qType==4||qType==5">
       <div v-if="qType==1" v-loading="qLoading">
         <div class="q-content">
-          <span :key="item.ID" v-for="item in question.Items" class="q-item-contain">
-            <span class="q-item-prefix">{{item.Prefix}}</span>
-            <span v-html="item.Content" class="q-item-content"></span>
+          <span :key="item.id" v-for="item in question.items" class="q-item-contain">
+            <span class="q-item-prefix">{{item.prefix}}</span>
+            <span v-html="item.content" class="q-item-content"></span>
             <br/>
           </span>
         </div>
       </div>
       <div v-else-if="qType==2" v-loading="qLoading">
-        <div class="q-title" v-html="question.Title"/>
+        <div class="q-title" v-html="question.title"/>
         <div class="q-content">
-          <span :key="item.ID" v-for="item in question.Items" class="q-item-contain">
-            <span class="q-item-prefix">{{item.Prefix}}</span>
-            <span v-html="item.Content" class="q-item-content"></span>
+          <span :key="item.id" v-for="item in question.items" class="q-item-contain">
+            <span class="q-item-prefix">{{item.prefix}}</span>
+            <span v-html="item.content" class="q-item-content"></span>
           </span>
         </div>
       </div>
       <div v-else-if="qType==3" v-loading="qLoading">
-        <div class="q-title" v-html="question.Title" style="display: inline;margin-right: 10px"/>
+        <div class="q-title" v-html="question.title" style="display: inline;margin-right: 10px"/>
         <span>（</span>
-        <span :key="item.ID" v-for="item in question.Items">
-          <span v-html="item.Content" class="q-item-content"></span>
+        <span :key="item.id" v-for="item in question.items">
+          <span v-html="item.content" class="q-item-content"></span>
         </span>
         <span>）</span>
       </div>
       <div v-else-if="qType==4" v-loading="qLoading">
-        <div class="q-title" v-html="question.Title"/>
+        <div class="q-title" v-html="question.title"/>
       </div>
       <div v-else-if="qType==5" v-loading="qLoading">
       </div>
@@ -39,46 +39,46 @@
         <el-tab-pane label="题目来源" name="source">
           <div class="question-answer-show-item">
             <span class="question-show-item">学科：</span>
-            <span>{{question.SubjectName}}</span>
+            <span>{{question.subjectName}}</span>
           </div>
           <div class="question-answer-show-item">
             <span class="question-show-item">考纲：</span>
-            <span>({{question.SyllabusTypeName}}) {{question.SyllabusName}}</span>
+            <span>({{question.syllabusTypeName}}) {{question.syllabusName}}</span>
           </div>
           <div class="question-answer-show-item">
             <span class="question-show-item">真题信息：</span>
-            <span v-if="question.IsPastPaperQuestion === 1">{{question.Year}}-{{question.Series}}-{{question.Code}}-{{question.OrderNumber}}</span>
+            <span v-if="question.isPastPaperQuestion === 1">{{question.year}}-{{question.series}}-{{question.code}}-{{question.orderNumber}}</span>
             <span v-else>原创试题</span>
           </div>
         </el-tab-pane>
         <el-tab-pane label="基本信息" name="info">
           <div class="question-answer-show-item">
             <span class="question-show-item">题型：</span>
-            <span>{{question.QuestionTypeName}}</span>
+            <span>{{question.questionTypeName}}</span>
           </div>
           <div class="question-answer-show-item">
             <span class="question-show-item">分数：</span>
-            <span>{{question.Score}}</span>
+            <span>{{question.score}}</span>
           </div>
           <div class="question-answer-show-item">
             <span class="question-show-item">难度：</span>
-            <span>{{question.Difficult}}</span>
+            <span>{{question.difficult}}</span>
           </div>
         </el-tab-pane>
         <el-tab-pane label="章节管理" name="chapters">
-          <el-tag v-for="(chapter, index) in question.Chapters" :key="chapter.ID" closable @close="removeChapter(chapter.ID, index)">{{chapter.ChapterName}}</el-tag>
+          <el-tag v-for="(chapter, index) in question.chapters" :key="chapter.id" closable @close="removeChapter(chapter.id, index)">{{chapter.chapterName}}</el-tag>
           <br/>
           <el-cascader :options="chapters" :props="props" v-model="addChapterValue" @change="addChapter"></el-cascader>
         </el-tab-pane>
         <el-tab-pane label="题目解析" name="analyze">
           <div class="question-answer-show-item">
-            <div style="margin-left: 2.5rem"><span v-html="question.Analyze" class="q-item-span-content"/></div>
+            <div style="margin-left: 2.5rem"><span v-html="question.analyze" class="q-item-span-content"/></div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="正确答案" name="correct">
           <div class="question-answer-show-item">
             <div style="margin-left: 2.5rem">
-              <span v-if="qType==1||qType==2 ||qType==5" v-html="question.Correct" class="q-item-span-content"/>
+              <span v-if="qType==1||qType==2 ||qType==5" v-html="question.correct" class="q-item-span-content"/>
               <span v-if="qType==3" v-html="trueFalseFormatter(question)" class="q-item-span-content"/>
               <span v-if="qType==4">{{question.correctArray}}</span>
             </div>
@@ -121,10 +121,10 @@ export default {
   data() {
     return {
       props: {
-        label: 'Name',
-        value: 'ID',
-        children: 'Children',
-        leaf: 'IsLeaf',
+        label: 'name',
+        value: 'id',
+        children: 'children',
+        leaf: 'isLeaf',
         expandTrigger: 'hover'
       },
       chapters: [],
@@ -132,13 +132,13 @@ export default {
     }
   },
   created() {
-    chapterApi.chapterTree({SyllabusId: this.question.SyllabusId}).then(res => {
+    chapterApi.chapterTree({syllabusId: this.question.syllabusId}).then(res => {
       this.chapters = res.data.list
     })
   },
   methods: {
     trueFalseFormatter (question) {
-      return question.Items.filter(d => d.Prefix === question.Correct)[0].Content
+      return question.items.filter(d => d.prefix === question.correct)[0].content
     },
     doRightTagFormatter (status) {
       return this.enumFormat(this.doRightTag, status)
@@ -147,9 +147,9 @@ export default {
       return this.enumFormat(this.doRightEnum, status)
     },
     addChapter(value) {
-      questionToChapterApi.add({QuestionId: this.question.ID, ChapterId: value[value.length - 1]}).then(res=>{
+      questionToChapterApi.add({questionId: this.question.id, chapterId: value[value.length - 1]}).then(res=>{
         this.addChapterValue = []
-        this.question.Chapters.push(res.data)
+        this.question.chapters.push(res.data)
         this.$message.success(res.message)
       }, err => {
         this.addChapterValue = []
@@ -157,7 +157,7 @@ export default {
       })
     },
     removeChapter(qToCId, index) {
-      questionToChapterApi.delete({ID: qToCId}).then(res => {
+      questionToChapterApi.delete({id: qToCId}).then(res => {
         this.question.Chapters.splice(index, 1)
         this.$message.success(res.message)
 

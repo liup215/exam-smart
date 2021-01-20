@@ -2,8 +2,6 @@ package model
 
 import (
 	"encoding/json"
-
-	"github.com/jinzhu/gorm"
 )
 
 const (
@@ -25,35 +23,35 @@ func QuestionTypeMap() map[int]string {
 }
 
 type Question struct {
-	gorm.Model
-	SyllabusId          uint
-	IsPastPaperQuestion int
-	PastPaperId         uint
-	OrderNumber         int
-	Score               int
-	QuestionType        int
-	Difficult           int
-	Describe            string `gorm:"type: text"`
-	InfoTextContentId   uint
-	Correct             string
+	Model
+	SyllabusId          uint   `json:"syllabusId"`
+	IsPastPaperQuestion int    `json:"isPastPaperQuestion"`
+	PastPaperId         uint   `json:"pastPaperId"`
+	OrderNumber         int    `json:"orderNumber"`
+	Score               int    `json:"score"`
+	QuestionType        int    `json:"questionType"`
+	Difficult           int    `json:"difficult"`
+	Describe            string `gorm:"type:text" json:"describe"`
+	InfoTextContentId   uint   `json:"infoTextContentId"`
+	Correct             string `json:"correct"`
 
 	// Request and Response
-	QuestionTypeName string                `gorm:"-"`
-	SyllabusName     string                `gorm:"-"`
-	SyllabusType     int                   `gorm:"-"`
-	SyllabusTypeName string                `gorm:"-"`
-	SubjectName      string                `gorm:"-"`
-	SubjectId        uint                  `gorm:"-"`
-	Title            string                `gorm:"-"`
-	Analyze          string                `gorm:"-"`
-	Items            []QuestionItemObject  `gorm:"-"`
-	ChapterInfo      []QuestionChapterInfo `gorm:"-"`
-	Chapters         []QuestionChapterInfo `gorm:"-"`
-	CorrectArray     []string              `gorm:"-"`
+	QuestionTypeName string                `gorm:"-" json:"questionTypeName"`
+	SyllabusName     string                `gorm:"-" json:"syllabusName"`
+	SyllabusType     int                   `gorm:"-" json:"syllabusType"`
+	SyllabusTypeName string                `gorm:"-" json:"syllabusTypeName"`
+	SubjectName      string                `gorm:"-" json:"subjectName"`
+	SubjectId        uint                  `gorm:"-" json:"subjectId"`
+	Title            string                `gorm:"-" json:"title"`
+	Analyze          string                `gorm:"-" json:"analyze"`
+	Items            []QuestionItemObject  `gorm:"-" json:"items"`
+	ChapterInfo      []QuestionChapterInfo `gorm:"-" json:"chapterInfo"`
+	Chapters         []QuestionChapterInfo `gorm:"-" json:"chapters"`
+	CorrectArray     []string              `gorm:"-" json:"correctArray"`
 	// PastPaperInfo
-	Year   int    `gorm:"-"`
-	Series string `gorm:"-"`
-	Code   string `gorm:"-"`
+	Year   int    `gorm:"-" json:"year"`
+	Series string `gorm:"-" json:"series"`
+	Code   string `gorm:"-" json:"code"`
 }
 
 func (q *Question) SetCorrectFromVM(correct string, correctArray []string) {
@@ -67,30 +65,30 @@ func (q *Question) SetCorrectFromVM(correct string, correctArray []string) {
 }
 
 type QuestionObject struct {
-	QuestionObjectItems []QuestionItemObject
-	Analyze             string
-	TitleContent        string
-	Correct             string
+	QuestionObjectItems []QuestionItemObject `json:"questionObjectItems"`
+	Analyze             string               `json:"analyze"`
+	TitleContent        string               `json:"titleContent"`
+	Correct             string               `json:"correct"`
 }
 
 type QuestionItemObject struct {
-	Prefix  string
-	Content string
-	Score   int
+	Prefix  string `json:"prefix"`
+	Content string `json:"content"`
+	Score   int    `json:"score"`
 }
 
 type QuestionChapterInfo struct {
-	ID          uint
-	ChapterId   uint
-	ChapterName string
+	ID          uint   `json:"id"`
+	ChapterId   uint   `json:"chapterId"`
+	ChapterName string `json:"chapterName"`
 }
 
 type QuestionQuery struct {
-	PageIndex           int
-	PageSize            int
-	SyllabusId          uint
-	ID                  uint
-	IsPastPaperQuestion int
-	PastPaperId         uint
-	QuestionType        int
+	PageIndex           int  `json:"pageIndex"`
+	PageSize            int  `json:"pageSize"`
+	SyllabusId          uint `json:"syllabusId"`
+	ID                  uint `json:"id"`
+	IsPastPaperQuestion int  `json:"isPastPaperQuestion"`
+	PastPaperId         uint `json:"pastPaperId"`
+	QuestionType        int  `json:"questionType"`
 }

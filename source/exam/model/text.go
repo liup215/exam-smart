@@ -1,10 +1,8 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import ()
 
 type TextContent struct {
-	gorm.Model
-	Content string `gorm:"type:TEXT"`
+	Model
+	Content string `gorm:"type:TEXT" json:"content"`
 }

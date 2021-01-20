@@ -1,16 +1,14 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import ()
 
 type Subject struct {
-	gorm.Model
-	Name      string // 语文 数学 英语 等
-	ItemOrder int    // 排序
+	Model
+	Name      string `json:"name"`      // 语文 数学 英语 等
+	ItemOrder int    `json:"itemOrder"` // 排序
 }
 
 type SubjectQuery struct {
-	PageIndex int
-	PageSize  int
+	PageIndex int `json:"pageIndex"`
+	PageSize  int `json:"pageSize"`
 }

@@ -10,9 +10,9 @@
     </el-form>
 
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
-      <el-table-column prop="ID" label="Id" />
-      <el-table-column prop="Name" label="学科"/>
-      <el-table-column prop="ItemOrder" label="排序"></el-table-column>
+      <el-table-column prop="id" label="Id" />
+      <el-table-column prop="name" label="学科"/>
+      <el-table-column prop="itemOrder" label="排序"></el-table-column>
       <el-table-column width="220px" label="操作" align="center">
         <template slot-scope="{row}">
           <router-link :to="{path:'/education/subject/edit', query:{id:row.ID}}" class="link-left">
@@ -22,7 +22,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="queryParam.PageIndex" :limit.sync="queryParam.PageSize"
+    <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"
                 @pagination="search"/>
   </div>
 </template>
@@ -54,12 +54,12 @@ export default {
         const re = response.data
         this.tableData = re.list
         this.total = re.total
-        this.queryParam.PageIndex = re.pageNum
+        this.queryParam.pageIndex = re.pageNum
         this.listLoading = false
       })
     },
     submitForm () {
-      this.queryParam.PageIndex = 1
+      this.queryParam.pageIndex = 1
       this.search()
     }
   }

@@ -4,17 +4,17 @@
     <div style="margin: 20px">
     <el-tree
       :data="chapters"
-      node-key="ID"
+      node-key="id"
       :props="defaultProps"
       default-expand-all
       :expand-on-click-node="false"
     >
       <div class="chapter-tree-node" slot-scope="{ node, data }">
-        <span>{{data.Name}}</span>
+        <span>{{data.name}}</span>
         <span>
-          <el-button type="text" size="mini" @click="chapterAddDialogOpen(data.ID)">添加子章节</el-button>
+          <el-button type="text" size="mini" @click="chapterAddDialogOpen(data.id)">添加子章节</el-button>
           <el-button type="text" size="mini" @click="chapterEditDialogOpen(data)">编辑章节</el-button>
-          <el-button type="text" size="mini" @click="chapterDelete(data.ID)">删除</el-button>
+          <el-button type="text" size="mini" @click="chapterDelete(data.id)">删除</el-button>
         </span>
       </div>
     </el-tree>
@@ -28,7 +28,7 @@
     >
       <el-form v-model="chapterEditParam" label-width="80px">
         <el-form-item label="章节名称">
-          <el-input v-model="chapterEditParam.Name"></el-input>
+          <el-input v-model="chapterEditParam.name"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer">
@@ -47,13 +47,13 @@ export default{
       syllabus: {},
       chapters: [],
       defaultProps: {
-        children: 'Children',
-        label: 'Name'
+        children: 'children',
+        label: 'name'
       },
       chapterEditVisible: false,
       chapterEditParam: {
-        ID: null,
-        Name: null
+        id: null,
+        name: null
       },
       isChapterAdd: false
     }
@@ -65,16 +65,16 @@ export default{
     fetchData () {
       var id = parseInt(this.$route.query.id)
       this.chapterEditParam = {
-        ID: null,
-        Name: null,
-        SyllabusId: id
+        id: null,
+        name: null,
+        syllabusId: id
       }
       
-      syllabusApi.getById({ID: id}).then(response => {
+      syllabusApi.getById({id: id}).then(response => {
         this.syllabus = response.data
       })
 
-      chapterApi.chapterTree({SyllabusId: id}).then(response => {
+      chapterApi.chapterTree({syllabusId: id}).then(response => {
         this.chapters = response.data.list
         this.chapterEditVisible = false
       })
@@ -82,7 +82,7 @@ export default{
     chapterAddDialogOpen (pid) {
       this.isChapterAdd = true
       if (pid !== 0) {
-        this.chapterEditParam.ParentId = pid
+        this.chapterEditParam.parentId = pid
       }
       this.chapterEditVisible = true
     },
@@ -93,7 +93,7 @@ export default{
     },
     chapterAdd () {
       this.chapterEditParam.SyllabusId = parseInt(this.$route.query.id)
-      if (this.syllabus.SubjectId === 0) {
+      if (this.syllabus.subjectId === 0) {
         this.$message('书籍信息错误，请稍后再试')
       }
       chapterApi.chapterAdd(this.chapterEditParam).then(() => {
@@ -102,8 +102,8 @@ export default{
       })
     },
     chapterEdit () {
-      this.chapterEditParam.SyllabusId = parseInt(this.$route.query.id)
-      if (this.syllabus.SubjectId === 0) {
+      this.chapterEditParam.syllabusId = parseInt(this.$route.query.id)
+      if (this.syllabus.subjectId === 0) {
         this.$message('书籍信息错误，请稍后再试')
       }
       chapterApi.chapterUpdate(this.chapterEditParam).then(() => {
@@ -111,17 +111,17 @@ export default{
       })
     },
     chapterDelete(id) {
-      chapterApi.chapterDelete({ID: id}).then(response => {
+      chapterApi.chapterDelete({id: id}).then(response => {
         this.$message(response.message)
         this.fetchData()
       })
     },
     closeChapterParam (done) {
       this.chapterEditParam = {
-        ID: null,
-        Name: null,
-        SyllabusId: parseInt(this.$route.query.id),
-        ParentId: null
+        id: null,
+        name: null,
+        syllabusId: parseInt(this.$route.query.id),
+        parentId: null
       }
       this.chapterEditVisible = false
       done()

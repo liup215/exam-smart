@@ -2,16 +2,16 @@
   <div class="app-container">
     <el-form :model="form" label-width="80px">
       <el-form-item label="名称：">
-        <el-input v-model="form.Name"></el-input>
+        <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="学科：">
-        <el-select v-model="form.SubjectId" clearable>
-          <el-option v-for="item in subjects" :key="item.ID" :value="item.ID"
-                 :label="item.Name"></el-option>
+        <el-select v-model="form.subjectId" clearable>
+          <el-option v-for="item in subjects" :key="item.id" :value="item.id"
+                 :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="考试局">
-        <el-select v-model="form.Type">
+        <el-select v-model="form.type">
           <el-option v-for="item in syllabusType" :key="item.key" :value="item.key" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
@@ -41,7 +41,7 @@ export default {
     let _this = this
     if (id && parseInt(id) !== 0) {
       _this.formLoading = true
-      syllabusApi.getById({ID: parseInt(id)}).then(re => {
+      syllabusApi.getById({id: parseInt(id)}).then(re => {
         _this.form = re.data
         _this.formLoading = false
       })
@@ -52,7 +52,7 @@ export default {
       let _this = this
       this.formLoading = true
 
-      if (this.form.ID) {
+      if (this.form.id) {
         syllabusApi.edit(this.form).then(data => {
           if (data.code === 200) {
             _this.$message.success(data.message)

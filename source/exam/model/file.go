@@ -1,10 +1,8 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
+import ()
 
 type Image struct {
-	gorm.Model
-	Name string `gorm:"unique;type:varchar(64)"`
+	Model
+	Name string `gorm:"unique;type:varchar(64)" json:"name"`
 }

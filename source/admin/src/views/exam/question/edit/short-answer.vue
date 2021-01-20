@@ -2,33 +2,33 @@
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
       <el-form-item label="考试局：" prop="Organisation">
-        <el-select v-model="form.Organisation" placeholder="考试局"  @change="organisationChange">
+        <el-select v-model="form.organisation" placeholder="考试局"  @change="organisationChange">
           <el-option :value="1" label="CIE"></el-option>
           <el-option :value="2" label="Edexcel"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="学科：" prop="SubjectId" required>
-        <el-select v-model="form.SubjectId" placeholder="学科" @change="subjectChange">
-          <el-option v-for="item in subjectList" :key="item.ID" :value="item.ID" :label="item.Name"></el-option>
+        <el-select v-model="form.subjectId" placeholder="学科" @change="subjectChange">
+          <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="考纲" prop="SyllabusId">
-        <el-select v-model="form.SyllabusId" @change="syllabusChange">
+        <el-select v-model="form.syllabusId" @change="syllabusChange">
           <el-option :value="0" label="---请选择---"></el-option>
-          <el-option v-for="item in syllabusList" :key="item.ID" :value="item.ID" :label="item.Name"></el-option>
+          <el-option v-for="item in syllabusList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="是否是真题" required>
-        <el-switch v-model="form.IsPastPaperQuestion" active-text="是" inactive-text="否" :active-value="1" :inactive-value="0"></el-switch>
+        <el-switch v-model="form.isPastPaperQuestion" active-text="是" inactive-text="否" :active-value="1" :inactive-value="0"></el-switch>
       </el-form-item>
       <el-form-item label="年份" v-if="isPastPaperQuestion">
-        <el-select v-model="form.Year" @change="yearChange">
+        <el-select v-model="form.year" @change="yearChange">
           <el-option :value="0" label="---请选择---"></el-option>
           <el-option v-for="(item, index) in yearList" :key="index" :value="item">{{item}}</el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="月份" v-if="isPastPaperQuestion">
-        <el-select v-model="form.Series" @change="seriesChange">
+        <el-select v-model="form.series" @change="seriesChange">
           <el-option value="" label="---请选择---"></el-option>
           <el-option value="January" label="January"></el-option>
           <el-option value="June" label="June"></el-option>
@@ -36,29 +36,29 @@
         </el-select>
       </el-form-item>
       <el-form-item label="真题列表" v-if="isPastPaperQuestion">
-        <el-select v-model="form.PastPaperId">
+        <el-select v-model="form.pastPaperId">
           <el-option :value="0" label="---请选择---"></el-option>
-          <el-option v-for="(pastPaper, index) in pastPaperList" :key="index" :value="pastPaper.ID" :label="pastPaper.Year + '-' + pastPaper.Series + '-' + pastPaper.Code">
+          <el-option v-for="(pastPaper, index) in pastPaperList" :key="index" :value="pastPaper.id" :label="pastPaper.year + '-' + pastPaper.series + '-' + pastPaper.code">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="题号" v-if="isPastPaperQuestion">
-        <el-input-number v-model="form.OrderNumber" :min="1" :step="1"></el-input-number>
+        <el-input-number v-model="form.orderNumber" :min="1" :step="1"></el-input-number>
       </el-form-item>
       <el-form-item label="题干：" prop="Title" required>
-        <Tinymce v-model="form.Title"/>
+        <Tinymce v-model="form.title"/>
       </el-form-item>
       <el-form-item label="解析：" prop="Analyze" required>
-        <tinymce v-model="form.Analyze"  @focus="inputClick(form,'analyze')" />
+        <tinymce v-model="form.analyze"  @focus="inputClick(form,'analyze')" />
       </el-form-item>
       <el-form-item label="分数：" prop="Score" required>
-        <el-input-number v-model="form.Score" :min="1" :step="1"/>
+        <el-input-number v-model="form.score" :min="1" :step="1"/>
       </el-form-item>
       <el-form-item label="难度：" required>
-        <el-rate v-model="form.Difficult" class="question-item-rate"></el-rate>
+        <el-rate v-model="form.difficult" class="question-item-rate"></el-rate>
       </el-form-item>
       <el-form-item label="正确答案：" prop="Correct" required>
-        <tinymce v-model="form.Correct"></tinymce>
+        <tinymce v-model="form.correct"></tinymce>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
@@ -94,19 +94,19 @@ export default {
     }
     return {
       form: {
-        ID: null,
-        Organisation: null,
-        QuestionType: 5,
-        SubjectId: null,
-        IsPastPaperQuestion: 1,
-        Year: 0,
-        Series: '',
-        OrderNumber: 1,
-        Title: '',
-        Analyze: '',
-        Correct: '',
-        Score: '',
-        Difficult: 1
+        id: null,
+        organisation: null,
+        questionType: 5,
+        subjectId: null,
+        isPastPaperQuestion: 1,
+        year: 0,
+        series: '',
+        orderNumber: 1,
+        title: '',
+        analyze: '',
+        correct: '',
+        score: '',
+        difficult: 1
       },
       formLoading: false,
       subjectList: [],
@@ -114,25 +114,25 @@ export default {
       pastPaperList: [],
       yearList: [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000],
       rules: {
-        Organisation: [
+        organisation: [
           { required: true, validator: notZero, message: '请选择考试局', trigger: 'change' }
         ],
-        SubjectId: [
+        subjectId: [
           { required: true, validator: notZero, message: '请选择学科', trigger: 'change' }
         ],
-        SyllabusId: [
+        syllabusId: [
           { required: true, validator: notZero, message: '请选择考纲', trigger: 'change' }
         ],
-        Title: [
+        title: [
           { required: true, message: '请输入题干', trigger: 'blur' }
         ],
-        Analyze: [
+        analyze: [
           { required: true, message: '请输入解析', trigger: 'blur' }
         ],
-        Score: [
+        score: [
           { required: true, message: '请输入分数', trigger: 'blur' }
         ],
-        Correct: [
+        correct: [
           { required: true, message: '请选择正确答案', trigger: 'change' }
         ]
       },
@@ -154,8 +154,8 @@ export default {
         _this.formLoading = true
         questionApi.select(id).then(re => {
           _this.form = re.data
-          _this.form.Organisation = re.data.SyllabusType
-          _this.searchSyllabus({Type: _this.form.Organisation, SubjectId: re.data.SubjectId})
+          _this.form.organisation = re.data.syllabusType
+          _this.searchSyllabus({type: _this.form.organisation, subjectId: re.data.subjectId})
           _this.formLoading = false
         })
       } else {
@@ -213,23 +213,23 @@ export default {
       this.searchPastPaper()
     },
     searchPastPaper() {
-      examPaperApi.pastPaperList({SyllabusId: this.form.SyllabusId, Year: this.form.Year, Series: this.form.Series, Code: this.form.Code}).then(res=> {
+      examPaperApi.pastPaperList({syllabusId: this.form.syllabusId, year: this.form.year, series: this.form.series, code: this.form.code}).then(res=> {
         this.pastPaperList = res.data.list
         var flag = false
         for (var i = 0; i < this.pastPaperList.length; i++) {
-          if (this.form.PastPaperId === this.pastPaperList[i].ID) {
+          if (this.form.pastPaperId === this.pastPaperList[i].ID) {
             flag = true
             break
           }
         }
 
         if (!flag) {
-          this.form.PastPaperId = null
+          this.form.pastPaperId = null
         }
       })
     },
     searchSyllabus() {
-      syllabusApi.list({Type: this.form.Organisation ? this.form.Organisation : 0, SubjectId: this.form.SubjectId ? this.form.SubjectId: 0}).then(res => {
+      syllabusApi.list({type: this.form.organisation ? this.form.organisation : 0, subjectId: this.form.subjectId ? this.form.subjectId: 0}).then(res => {
         this.syllabusList = res.data.list
       })
     },
@@ -238,7 +238,7 @@ export default {
       this.questionShow.dialog = true
       this.questionShow.loading = true
       questionApi.select(this.form.id).then(re => {
-        _this.questionShow.qType = re.data.QuestionType
+        _this.questionShow.qType = re.data.questionType
         _this.questionShow.question = re.data
         _this.questionShow.loading = false
       })

@@ -15,16 +15,16 @@
       </el-form-item>
     </el-form>
     <el-table :data="syllabusList" border fit highlight-current-row style="width: 100%">
-      <el-table-column prop="ID" label="Id" />
-      <el-table-column prop="Name" label="名称" />
-      <el-table-column prop="SubjectName" label="科目"></el-table-column>
-      <el-table-column prop="TypeName" label="考试局"></el-table-column>
+      <el-table-column prop="id" label="Id" />
+      <el-table-column prop="name" label="名称" />
+      <el-table-column prop="subjectName" label="科目"></el-table-column>
+      <el-table-column prop="typeName" label="考试局"></el-table-column>
       <el-table-column width="300px" label="操作" align="center">
         <template slot-scope="{row}">
-          <router-link :to="{path:'/education/syllabus/edit', query:{id:row.ID}}" class="link-left">
+          <router-link :to="{path:'/education/syllabus/edit', query:{id:row.id}}" class="link-left">
             <el-button size="mini" type="primary">编辑</el-button>
           </router-link>
-          <router-link :to="{path:'/education/syllabus/chapter', query:{id:row.ID}}" class="link-left">
+          <router-link :to="{path:'/education/syllabus/chapter', query:{id:row.id}}" class="link-left">
             <el-button size="mini" type="primary">章节管理</el-button>
           </router-link>
           <el-button size="mini" type="danger" disabled class="link-left">删除</el-button>
@@ -62,7 +62,7 @@ export default {
       listLoading: true,
       syllabusList: [],
       syllabusEditParam: {
-        ID: null,
+        id: null,
         name: null,
         subjectId: null
       },
@@ -115,12 +115,12 @@ export default {
     syllabusEditDialogOpen (syllabus) {
       this.isSyllabusAdd = false
       this.syllabusEditParam.name = syllabus.name
-      this.syllabusEditParam.ID = syllabus.ID
-      this.syllabusEditParam.Type = syllabus.Type
+      this.syllabusEditParam.id = syllabus.id
+      this.syllabusEditParam.type = syllabus.type
 
-      var sub = this.subjects.filter(data => data.ID === syllabus.subjectId)[0]
+      var sub = this.subjects.filter(data => data.id === syllabus.subjectId)[0]
 
-      this.syllabusEditParam.subjectId = sub.ID
+      this.syllabusEditParam.subjectId = sub.id
       this.syllabusEditVisible = true
     },
     closeSyllabusParam (done) {
@@ -139,7 +139,7 @@ export default {
     },
     getSubjectName(id) {
       for (var i = 0; i<this.subjects.length; i++) {
-        if (this.subjects[i].ID === id) {
+        if (this.subjects[i].id === id) {
           return this.subjects[i].name
         }
       }

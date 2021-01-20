@@ -29,7 +29,7 @@
       </el-form-item>
     </el-form>
     <div v-if="tableData.length > 0">
-      <question-item v-for="item in tableData" :key="item.ID" :question="item"></question-item>
+      <question-item v-for="item in tableData" :key="item.id" :question="item"></question-item>
     </div>
     <div v-if="tableData.length <= 0" style="text-align: center">暂无题目数据</div>
     <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageIndex" :limit.sync="queryParam.pageSize"

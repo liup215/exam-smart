@@ -73,7 +73,8 @@ func (svr *Service) ExamPaperExportToDox(id uint) (string, error) {
 	doc := document.New()
 	t := doc.AddParagraph()
 	tRun := t.AddRun()
-	t.SetStyle("Title")
+	t.SetStyle("Heading1")
+	tRun.Properties().SetFontFamily("Arial")
 	tRun.AddText(p.Name)
 
 	// 写入题目
@@ -81,7 +82,8 @@ func (svr *Service) ExamPaperExportToDox(id uint) (string, error) {
 	for order, titleItem := range p.TitleItems {
 		item := doc.AddParagraph()
 		iRun := item.AddRun()
-		item.SetStyle("Heading1")
+		item.SetStyle("Heading2")
+		iRun.Properties().SetFontFamily("Arial")
 		iRun.AddText(fmt.Sprintf("%v. %v", order+1, titleItem.Name))
 
 		// 正式写入题目
@@ -103,6 +105,7 @@ func (svr *Service) writeQuestionToDoc(doc *document.Document, q model.Question,
 	qTitleP := doc.AddParagraph()
 	qTitleRun := qTitleP.AddRun()
 	qTitleRun.AddText(fmt.Sprintf("%v. (%v-%v-%v)", qOrder+1, q.Year, q.Series, q.Code))
+	qTitleRun.Properties().SetFontFamily("Arial")
 
 	// 添加题目内容
 	html := "<div id='qTitle'>" + q.Title + "</div>"
@@ -149,6 +152,8 @@ func (svr *Service) writeQuestionToDoc(doc *document.Document, q model.Question,
 		})
 
 		nRun.AddText(selection.Text())
+
+		nRun.Properties().SetFontFamily("Arial")
 	})
 
 	// 如果是单选题，就同时写入选项
@@ -156,6 +161,7 @@ func (svr *Service) writeQuestionToDoc(doc *document.Document, q model.Question,
 		for _, item := range q.Items {
 			iPar := doc.AddParagraph()
 			iRun := iPar.AddRun()
+			iRun.Properties().SetFontFamily("Arial")
 			iRun.AddText(item.Prefix + ". " + item.Content)
 		}
 	}
