@@ -120,11 +120,14 @@ func (h *Handler) ExamPaperDownload(c *gin.Context) {
 		return
 	}
 
-	path, err := h.svr.ExamPaperExportToDox(uint(id))
+	path, fileName, err := h.svr.ExamPaperExportToDox(uint(id))
 	if err != nil {
 		c.String(200, "试卷下载失败："+err.Error())
 		return
 	}
+
+	c.Header("Content-Disposition", "attachment;filename="+fileName)
+	c.Header("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document .docx")
 
 	c.File(path)
 

@@ -48,19 +48,20 @@ func (svr *Service) ExamPaperById(id uint) (model.ExamPaper, error) {
 	return svr.examPaperById(id)
 }
 
-func (svr *Service) ExamPaperExportToDox(id uint) (string, error) {
+func (svr *Service) ExamPaperExportToDox(id uint) (string, string, error) {
 	if id == uint(0) {
-		return "", errors.New("试卷ID不能为空")
+		return "", "", errors.New("试卷ID不能为空")
 	}
 
 	paper, err := svr.dao.SelectExamPaperById(id)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
 	p := svr.examPaperFormat(paper)
+	fileName := fmt.Sprintf("exam_paper_%v_%v_%v.docx", int(id), paper.Name, time.Now().Format("20060102150405")+strings.NumRandomStr(4))
 
-	filePath := EXAM_TMP_DIR + fmt.Sprintf("exam_paper_%v_%v.docx", int(id), time.Now().Format("20060102150405")+strings.NumRandomStr(4))
+	filePath := EXAM_TMP_DIR + fileName
 
 	// 判断有无文件，若有则先删除
 	if _, err := os.Stat(filePath); err != nil {
@@ -95,7 +96,7 @@ func (svr *Service) ExamPaperExportToDox(id uint) (string, error) {
 
 	doc.SaveToFile(filePath)
 
-	return filePath, nil
+	return filePath, fileName, nil
 }
 
 func (svr *Service) writeQuestionToDoc(doc *document.Document, q model.Question, qOrder int) {
