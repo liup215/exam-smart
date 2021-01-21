@@ -54,7 +54,6 @@ import { mapGetters, mapState, mapActions } from 'vuex'
 import Pagination from '@/components/Pagination'
 import examPaperApi from '@/api/examPaper'
 import syllabusApi from '@/api/syllabus'
-import baseApi from '@/config/baseApi'
 import { getToken } from '@/utils/auth'
 
 export default {
@@ -128,7 +127,7 @@ export default {
     },
     paperDownload(id) {
       // examPaperApi.download(id)
-      window.open(baseApi.BASE_API + '/exam/paper/download?id=' + id + '&token=' + getToken())
+      window.open(process.env.VUE_APP_BASE_API + '/exam/paper/download?id=' + id + '&token=' + getToken())
     },
     subjectFormatter  (row, column, cellValue) {
       return this.subjectEnumFormat(cellValue)

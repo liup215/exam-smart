@@ -1,7 +1,5 @@
 import { getRequest } from '@/utils/request.js'
-import BaseApi from '@/config/baseApi'
-
-var request = getRequest(BaseApi.SYSTEM_API)
+var request = getRequest(process.env.VUE_APP_BASE_API)
 
 export default {
   uploadToken: () => {

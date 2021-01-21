@@ -32,7 +32,6 @@
 
 <script>
 // import { getToken } from 'api/qiniu'
-import baseApi from '@/config/baseApi'
 import fileApi from '@/api/file'
 
 export default {
@@ -49,7 +48,7 @@ export default {
       listObj: {},
       fileList: [],
       dataObj: { token: '', key: '' },
-      qiniu: baseApi.QINIU_UPLOAD_API
+      qiniu: process.env.VUE_APP_QINIU_UPLOAD_API
     }
   },
   methods: {
@@ -73,7 +72,7 @@ export default {
       for (let i = 0, len = objKeyArr.length; i < len; i++) {
         if (this.listObj[objKeyArr[i]].uid === uid) {
           //this.listObj[objKeyArr[i]].url = response.files.file
-          this.listObj[objKeyArr[i]].url = baseApi.CDN_API + '/' + response.key
+          this.listObj[objKeyArr[i]].url = process.env.VUE_APP_CDN_API + '/' + response.key
 
           this.listObj[objKeyArr[i]].hasSuccess = true
           return
