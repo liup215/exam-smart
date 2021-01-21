@@ -40,7 +40,7 @@
         <template slot-scope="{row}">
           <el-button size="mini" @click="$router.push({path:'/exam/pastPaper/edit',query:{id:row.id}})" >编辑</el-button>
           <el-button size="mini" target='_blank' @click="paperPreview(row.id)">预览</el-button>
-          <el-button size="mini" type="danger" disabled @click="" class="link-left">删除</el-button>
+          <el-button size="mini" type="danger" disabled class="link-left">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

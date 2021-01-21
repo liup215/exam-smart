@@ -97,9 +97,9 @@ export default {
         this.listLoading = false
       })
     },
-    deletePaper (row) {
+    deletePaper (id) {
       let _this = this
-      examPaperApi.deletePaper(row.id).then(re => {
+      examPaperApi.deletePaper(id).then(re => {
         if (re.code === 1) {
           _this.search()
           _this.$message.success(re.message)

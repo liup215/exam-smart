@@ -43,14 +43,11 @@
 <script>
 
 import { mapGetters, mapState, mapActions } from 'vuex'
-import Pagination from '@/components/Pagination'
-import QuestionShow from '../question/components/Show'
 import examPaperApi from '@/api/examPaper'
 import questionApi from '@/api/question'
 import syllabusApi from '@/api/syllabus'
 
 export default {
-  components: { Pagination },
   data () {
     return {
       form: {
