@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/model/a11y/keyboard_handler_mixin.dart","angular_components|lib/utils/browser/events/events.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

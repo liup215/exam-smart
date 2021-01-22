@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["dart_internal|lib/extract_type_arguments.dart","observable|lib/src/observable.dart","observable|lib/src/observable_list.dart","observable|lib/src/observable_map.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["collection"],"hasMain":false}

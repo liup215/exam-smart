@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["build|lib/build.dart","dart_style|lib/dart_style.dart","source_gen|lib/source_gen.dart","angular_compiler|lib/v1/src/angular_compiler/cli/flags.dart","angular_compiler|lib/v1/src/angular_compiler/cli/logging.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

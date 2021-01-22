@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/focus/focus.dart","angular_components|lib/utils/browser/dom_iterator/dom_iterator.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html"],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular|lib/meta.dart","angular_components|lib/material_menu/affix/base_affix.dart","angular_components|lib/material_menu/affix/caption_affix_model.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

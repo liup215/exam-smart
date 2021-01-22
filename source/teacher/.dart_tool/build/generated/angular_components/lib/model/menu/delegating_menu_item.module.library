@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["built_collection|lib/built_collection.dart","observable|lib/observable.dart","angular_components|lib/model/menu/menu.dart","angular_components|lib/model/ui/icon.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

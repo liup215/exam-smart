@@ -1,0 +1,1 @@
+final List<dynamic> styles = ['.mirror-text._ngcontent-%ID%{visibility:hidden;word-wrap:break-word;white-space:pre-wrap;overflow:hidden}.line-height-measure._ngcontent-%ID%{visibility:hidden;position:absolute}.staticHeight._ngcontent-%ID%{position:static}'];

@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_forms|lib/angular_forms.dart","intl|lib/intl.dart","angular_components|lib/material_input/material_input_error_keys.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

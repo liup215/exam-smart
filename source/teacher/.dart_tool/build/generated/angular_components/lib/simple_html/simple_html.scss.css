@@ -1,0 +1,11 @@
+:host ::ng-deep a {
+  color: #3367d6;
+  cursor: pointer;
+  text-decoration: none;
+}
+:host ::ng-deep a:visited {
+  color: #673ab7;
+}
+:host ::ng-deep a:active {
+  color: #c53929;
+}

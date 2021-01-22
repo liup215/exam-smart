@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/model/selection/select.dart","angular_components|lib/model/selection/selection_container.dart","angular_components|lib/model/ui/has_factory.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

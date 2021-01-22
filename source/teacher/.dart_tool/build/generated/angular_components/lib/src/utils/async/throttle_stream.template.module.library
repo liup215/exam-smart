@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/src/utils/async/throttle_stream.dart","angular_components|lib/utils/rate_limit_utils/rate_limit_utils.template.dart","angular_components|lib/src/utils/async/rate_limit.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

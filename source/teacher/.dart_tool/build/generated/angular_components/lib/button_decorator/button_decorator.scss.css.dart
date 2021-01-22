@@ -1,0 +1,1 @@
+final List<dynamic> styles = ['[buttonDecorator] {\n  cursor: pointer;\n}\n[buttonDecorator].is-disabled {\n  cursor: not-allowed;\n}\n'];

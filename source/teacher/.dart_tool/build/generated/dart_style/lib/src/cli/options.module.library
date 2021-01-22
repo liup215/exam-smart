@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["args|lib/args.dart","dart_style|lib/src/style_fix.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

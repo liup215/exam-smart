@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/angular.dart","intl|lib/intl.dart","angular_components|lib/laminate/popup/popup.dart","angular_components|lib/model/action/delayed_action.dart","angular_components|lib/model/ui/toggle.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html"],"hasMain":false}

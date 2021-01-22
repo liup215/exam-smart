@@ -46,3 +46,60 @@ func (s *Service) pastPaperFormat(p model.PastPaper) model.PastPaper {
 
 	return p
 }
+
+func (s *Service) YearAdd(year model.Year) (model.Year, error) {
+	if year.ID != uint(0) {
+		year.ID = uint(0)
+	}
+
+	return s.dao.YearAdd(year)
+
+}
+
+func (s *Service) YearEdit(year model.Year) (model.Year, error) {
+	return s.dao.YearEdit(year)
+}
+
+func (s *Service) SelectYearById(id uint) (model.Year, error) {
+	return s.dao.SelectYearById(id)
+}
+
+func (s *Service) SelectYearAll() ([]model.Year, int) {
+	return s.dao.SelectYearAll()
+}
+
+func (s *Service) SelectYearList(q model.YearQuery) ([]model.Year, int) {
+	return s.dao.SelectYearList(q)
+}
+
+func (s *Service) SeriesAdd(se model.Series) (model.Series, error) {
+	return s.dao.SeriesAdd(se)
+}
+
+func (s *Service) SeriesEdit(se model.Series) (model.Series, error) {
+	return s.dao.SeriesEdit(se)
+}
+
+func (s *Service) SelectSeriesById(id uint) (model.Series, error) {
+	return s.dao.SelectSeriesById(id)
+}
+
+func (s *Service) SelectSeriesList(q model.SeriesQuery) ([]model.Series, int) {
+	return s.dao.SelectSeriesList(q)
+}
+
+func (s *Service) CodeAdd(se model.Code) (model.Code, error) {
+	return s.dao.CodeAdd(se)
+}
+
+func (s *Service) CodeEdit(se model.Code) (model.Code, error) {
+	return s.dao.CodeEdit(se)
+}
+
+func (s *Service) SelectCodeById(id uint) (model.Code, error) {
+	return s.dao.SelectCodeById(id)
+}
+
+func (s *Service) SelectCodeList(q model.CodeQuery) ([]model.Code, int) {
+	return s.dao.SelectCodeList(q)
+}

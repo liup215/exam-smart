@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/src/laminate/components/modal/modal_controller_directive.dart","angular|lib/angular.template.dart","angular_components|lib/laminate/overlay/overlay.template.dart","angular_components|lib/laminate/portal/portal.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

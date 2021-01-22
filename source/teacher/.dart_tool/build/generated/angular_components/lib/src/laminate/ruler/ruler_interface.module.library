@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/laminate/enums/position.dart","angular_components|lib/laminate/enums/visibility.dart","angular_components|lib/utils/browser/dom_service/dom_service.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","math"],"hasMain":false}

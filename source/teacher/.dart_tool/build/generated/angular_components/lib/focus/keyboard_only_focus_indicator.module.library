@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular|lib/meta.dart","meta|lib/meta.dart","angular_components|lib/utils/browser/dom_service/dom_service.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html"],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_test|lib/src/frontend/stabilizer.dart","angular_test|lib/src/errors.template.dart","angular_test|lib/src/frontend/ng_zone/timer_hook_zone.template.dart","angular|lib/di.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

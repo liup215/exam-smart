@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/mixins/has_tab_index.dart","angular|lib/angular.template.dart","angular_components|lib/utils/angular/properties/properties.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

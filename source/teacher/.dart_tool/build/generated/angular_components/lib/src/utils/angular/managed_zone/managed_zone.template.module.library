@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/src/utils/angular/managed_zone/managed_zone.dart","angular_components|lib/utils/disposer/disposer.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

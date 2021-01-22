@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/di.dart","meta|lib/meta.dart","angular_components|lib/utils/async/async.dart","angular_components|lib/utils/disposer/disposable_callback.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html","math"],"hasMain":false}

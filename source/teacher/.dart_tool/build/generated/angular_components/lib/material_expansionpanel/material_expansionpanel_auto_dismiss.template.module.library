@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/material_expansionpanel/material_expansionpanel_auto_dismiss.dart","angular|lib/angular.template.dart","angular_components|lib/laminate/overlay/module.template.dart","angular_components|lib/material_expansionpanel/material_expansionpanel.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

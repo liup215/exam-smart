@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["dart_style|lib/src/source_code.dart","dart_style|lib/src/cli/formatter_options.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["io"],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/angular.dart","angular_components|lib/laminate/enums/alignment.dart","angular_components|lib/src/laminate/popup/popup_size_provider.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["math"],"hasMain":false}

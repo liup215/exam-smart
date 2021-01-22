@@ -37,17 +37,6 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/dashboard", h.Dashboard)
 	r.GET("/info", h.GetUserInfo)
 
-	r.POST("/education/syllabus/list", h.SyllabusList)
-	r.POST("/education/syllabus/add", h.SyllabusAdd)
-	r.POST("/education/syllabus/getById", h.SyllabusById)
-	r.POST("/education/syllabus/update", h.SyllabusUpdate)
-
-	r.POST("/education/chapter/list", h.ChapterList)
-	r.POST("/education/chapter/tree", h.ChapterTree)
-	r.POST("/education/chapter/add", h.ChapterAdd)
-	r.POST("/education/chapter/update", h.ChapterUpdate)
-	r.POST("/education/chapter/delete", h.ChapterDelete)
-
 	r.POST("/subject/list", h.SubjectList)
 	r.POST("/subject/add", h.SubjectAdd)
 	r.POST("/subject/edit", h.SubjectEdit)
@@ -80,4 +69,20 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/exam/pastPaper/list", h.PastPaperList)
 	r.POST("/exam/pastPaper/selectById", h.PastPaperById)
 	r.POST("/exam/pastPaper/edit", h.PastPaperEdit)
+
+	r.POST("/exam/year/add", h.YearAdd)
+	r.POST("/exam/year/edit", h.YearEdit)
+	r.POST("/exam/year/selectById", h.SelectYearById)
+	r.POST("/exam/year/selectList", h.SelectYearList)
+	r.POST("/exam/year/selectAll", h.SelectYearAll)
+
+	r.POST("/exam/series/add", h.SeriesAdd)
+	r.POST("/exam/series/edit", h.SeriesEdit)
+	r.POST("/exam/series/selectById", h.SelectSeriesById)
+	r.POST("/exam/series/selectList", h.SelectSeriesList)
+
+	r.POST("/exam/code/add", h.CodeAdd)
+	r.POST("/exam/code/edit", h.CodeEdit)
+	r.POST("/exam/code/selectById", h.SelectCodeById)
+	r.POST("/exam/code/selectList", h.SelectCodeList)
 }

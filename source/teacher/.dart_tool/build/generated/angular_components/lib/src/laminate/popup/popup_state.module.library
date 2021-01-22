@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["observable|lib/observable.dart","quiver|lib/core.dart","angular_components|lib/laminate/enums/alignment.dart","angular_components|lib/src/laminate/popup/popup_source.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

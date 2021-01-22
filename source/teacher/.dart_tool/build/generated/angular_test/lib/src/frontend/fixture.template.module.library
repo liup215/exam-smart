@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_test|lib/src/frontend/fixture.dart","angular_test|lib/src/frontend/bed.template.dart","angular|lib/angular.template.dart","angular|lib/src/runtime.template.dart","angular_test|lib/src/frontend/stabilizer.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

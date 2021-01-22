@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_compiler|lib/v1/src/compiler/attribute_matcher.dart","angular_compiler|lib/v1/src/compiler/html_tags.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

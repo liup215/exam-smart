@@ -38,3 +38,27 @@ func (svr *Service) SyllabusUpdate(syllabus model.Syllabus) error {
 	}
 	return svr.dao.SyllabusUpdate(syllabus)
 }
+
+func (svr *Service) buildSyllabusOptionById(id uint) model.SyllabusOption {
+	result := model.SyllabusOption{}
+
+	if id == uint(0) {
+		return result
+	}
+
+	syllabus, err := svr.SelectSyllabusById(id)
+	if err != nil {
+		return result
+	}
+
+	result.SyllabusId = id
+	result.SyllabusName = syllabus.Name
+	result.SyllabusType = syllabus.Type
+	result.SyllabusTypeName = syllabus.GetSyllabusTypeName()
+	result.SubjectId = syllabus.SubjectId
+	if sub, err := svr.SelectSubjectById(syllabus.SubjectId); err != nil {
+		result.SubjectName = sub.Name
+	}
+
+	return result
+}

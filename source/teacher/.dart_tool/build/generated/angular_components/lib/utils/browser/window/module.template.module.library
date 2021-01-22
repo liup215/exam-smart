@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/utils/browser/window/module.dart","angular|lib/src/di/reflector.dart","angular|lib/angular.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html"],"hasMain":false}

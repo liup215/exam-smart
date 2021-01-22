@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/content/deferred_content_aware.dart","angular_components|lib/focus/focus.dart","angular_components|lib/utils/id_generator/id_generator.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html"],"hasMain":false}

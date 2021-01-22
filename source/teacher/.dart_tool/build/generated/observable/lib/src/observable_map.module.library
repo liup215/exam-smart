@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["observable|lib/src/observable.dart","observable|lib/src/records.dart","observable|lib/src/to_observable.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["collection"],"hasMain":false}

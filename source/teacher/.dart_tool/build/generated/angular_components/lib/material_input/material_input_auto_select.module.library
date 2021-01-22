@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/utils/disposer/disposer.dart","angular_components|lib/material_input/base_material_input.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

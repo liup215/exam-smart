@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/model/selection/selection_options.dart","angular_components|lib/model/selection/tree_selection_mixin.dart","angular_components|lib/model/ui/has_renderer.dart","angular_components|lib/utils/async/async.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

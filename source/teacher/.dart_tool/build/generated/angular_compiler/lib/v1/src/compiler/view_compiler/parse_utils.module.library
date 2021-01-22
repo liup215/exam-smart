@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_compiler|lib/v1/src/compiler/expression_parser/ast.dart","angular_compiler|lib/v1/src/compiler/view_compiler/constants.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

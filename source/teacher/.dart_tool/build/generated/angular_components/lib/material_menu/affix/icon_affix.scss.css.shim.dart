@@ -1,0 +1,1 @@
+final List<dynamic> styles = ['._nghost-%ID%{display:block}.secondary-icon._ngcontent-%ID%{color:rgba(0,0,0,0.54);transition:color 218ms cubic-bezier(0.4,0,0.2,1);width:24px}.secondary-icon:not(.disabled):hover._ngcontent-%ID%{color:rgba(0,0,0,0.87)}.secondary-icon.hover-icon._ngcontent-%ID%{opacity:0}'];

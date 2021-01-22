@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["meta|lib/meta.dart","angular_compiler|lib/v1/src/metadata/runtime_shim.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

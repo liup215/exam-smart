@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_forms|lib/angular_forms.dart","angular_components|lib/focus/focus.dart","angular_components|lib/material_radio/material_radio.dart","angular_components|lib/model/selection/selection_model.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

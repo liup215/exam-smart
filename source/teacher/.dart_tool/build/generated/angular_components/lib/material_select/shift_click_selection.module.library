@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/material_select/activation_handler.dart","angular_components|lib/model/selection/selection_model.dart","angular_components|lib/model/selection/selection_options.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html","math"],"hasMain":false}

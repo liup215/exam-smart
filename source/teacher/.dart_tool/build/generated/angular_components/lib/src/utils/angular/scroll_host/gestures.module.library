@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/angular.dart","quiver|lib/time.dart","angular_components|lib/src/utils/angular/scroll_host/scroll_host_event_impl.dart","angular_components|lib/src/utils/angular/scroll_host/scroll_host_interface.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html","math"],"hasMain":false}

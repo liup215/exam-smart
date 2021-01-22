@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/src/utils/angular/scroll_host/scroll_host_interface.dart","angular_components|lib/utils/disposer/disposer.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

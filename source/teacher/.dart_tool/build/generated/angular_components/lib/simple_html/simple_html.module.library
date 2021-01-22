@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","logging|lib/logging.dart","quiver|lib/check.dart","angular_components|lib/utils/angular/properties/properties.dart","angular_components|lib/utils/browser/dom_service/dom_service.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html"],"hasMain":false}

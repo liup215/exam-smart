@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","js|lib/js_util.dart","angular_components|lib/laminate/components/modal/modal.dart","angular_components|lib/laminate/popup/popup.dart","angular_components|lib/utils/browser/dom_service/dom_service.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html"],"hasMain":false}

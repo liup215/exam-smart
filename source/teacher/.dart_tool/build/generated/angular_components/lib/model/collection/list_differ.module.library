@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["observable|lib/observable.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["collection"],"hasMain":false}

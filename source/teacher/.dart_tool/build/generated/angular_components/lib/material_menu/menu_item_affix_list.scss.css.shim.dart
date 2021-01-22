@@ -1,0 +1,1 @@
+final List<dynamic> styles = ['._nghost-%ID%{display:flex;align-items:baseline}._nghost-%ID%:hover  .secondary-icon.hover-icon{opacity:inherit}._nghost-%ID%  .affix:not(:first-child){margin-left:4px}'];

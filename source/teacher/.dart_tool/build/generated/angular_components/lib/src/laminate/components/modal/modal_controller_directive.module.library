@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/angular.dart","angular_components|lib/laminate/overlay/overlay.dart","angular_components|lib/laminate/portal/portal.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

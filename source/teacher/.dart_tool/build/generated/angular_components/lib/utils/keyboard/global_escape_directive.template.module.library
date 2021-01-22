@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/utils/keyboard/global_escape_directive.dart","angular|lib/angular.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

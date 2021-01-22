@@ -1,0 +1,1 @@
+final List<dynamic> styles = ['.item-group-list._ngcontent-%ID%{padding:8px 0}'];

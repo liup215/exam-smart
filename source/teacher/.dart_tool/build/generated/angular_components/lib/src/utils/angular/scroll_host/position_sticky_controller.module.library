@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["quiver|lib/core.dart","angular_components|lib/utils/angular/scroll_host/interface.dart","angular_components|lib/utils/browser/events/events.dart","angular_components|lib/utils/browser/feature_detector/feature_detector.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html"],"hasMain":false}

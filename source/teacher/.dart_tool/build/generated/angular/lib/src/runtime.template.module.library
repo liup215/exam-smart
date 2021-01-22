@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/src/runtime.dart","angular|lib/src/runtime/check_binding.template.dart","angular|lib/src/runtime/messages/messages.template.dart","angular|lib/src/runtime/optimizations.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

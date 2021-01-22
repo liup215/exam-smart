@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/src/laminate/popup/popup_size_provider_directive.dart","angular|lib/angular.template.dart","angular_components|lib/src/laminate/popup/popup_size_provider.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

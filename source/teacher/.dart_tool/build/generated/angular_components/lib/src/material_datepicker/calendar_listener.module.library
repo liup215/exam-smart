@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/meta.dart","angular_components|lib/material_datepicker/calendar.dart","angular_components|lib/model/date/date.dart","angular_components|lib/model/observable/observable.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html"],"hasMain":false}

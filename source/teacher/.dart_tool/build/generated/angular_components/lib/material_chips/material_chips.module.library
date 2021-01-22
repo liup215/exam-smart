@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/material_chips/material_chip.dart","angular_components|lib/model/selection/selection_model.dart","angular_components|lib/model/ui/has_renderer.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

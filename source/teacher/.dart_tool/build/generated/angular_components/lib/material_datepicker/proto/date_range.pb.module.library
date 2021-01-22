@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["protobuf|lib/protobuf.dart","angular_components|lib/material_datepicker/proto/date.pb.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["core"],"hasMain":false}

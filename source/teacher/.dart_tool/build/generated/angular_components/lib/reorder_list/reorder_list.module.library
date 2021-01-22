@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","quiver|lib/iterables.dart","angular_components|lib/reorder_list/reorder_events.dart","angular_components|lib/utils/disposer/disposer.dart","angular_components|lib/utils/keyboard/keyboard.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html","math"],"hasMain":false}

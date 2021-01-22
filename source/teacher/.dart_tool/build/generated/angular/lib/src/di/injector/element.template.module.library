@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/src/di/injector/element.dart","angular|lib/src/di/injector/hierarchical.template.dart","angular|lib/src/di/injector/injector.template.dart","angular|lib/src/core/linker/views/view.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/angular.dart","collection|lib/collection.dart","meta|lib/meta.dart","pedantic|lib/pedantic.dart","angular_test|lib/src/frontend/stabilizer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

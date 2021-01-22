@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/model/selection/selection_model.dart","angular_components|lib/src/model/selection/delegating_selection_model.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

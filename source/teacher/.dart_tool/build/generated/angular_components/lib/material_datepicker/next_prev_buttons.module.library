@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","intl|lib/intl.dart","angular_components|lib/src/material_datepicker/sequential.dart","angular_components|lib/material_icon/material_icon.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html"],"hasMain":false}

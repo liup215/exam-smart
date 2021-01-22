@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/dart2js.dart","angular|lib/src/runtime.dart","angular|lib/src/runtime/interpolate.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html"],"hasMain":false}

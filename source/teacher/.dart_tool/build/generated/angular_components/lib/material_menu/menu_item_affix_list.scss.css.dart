@@ -1,0 +1,1 @@
+final List<dynamic> styles = [':host {\n  display: flex;\n  align-items: baseline;\n}\n:host:hover ::ng-deep .secondary-icon.hover-icon {\n  opacity: inherit;\n}\n:host ::ng-deep .affix:not(:first-child) {\n  margin-left: 4px;\n}\n'];

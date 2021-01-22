@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/mixins/material_dropdown_base.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

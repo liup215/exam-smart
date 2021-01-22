@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["quiver|lib/src/async/string.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","convert","io"],"hasMain":false}

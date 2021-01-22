@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/meta.dart","observable|lib/src/change_notifier.dart","observable|lib/src/records.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

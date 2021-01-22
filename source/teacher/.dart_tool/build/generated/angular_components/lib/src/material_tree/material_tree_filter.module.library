@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/angular.dart","angular_components|lib/material_input/material_input.dart","angular_components|lib/src/material_tree/material_tree_root.dart","angular_components|lib/model/selection/select.dart","angular_components|lib/utils/async/async.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

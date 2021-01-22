@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["collection|lib/collection.dart","meta|lib/dart2js.dart","meta|lib/meta.dart","angular|lib/src/runtime/messages.dart","angular|lib/src/runtime/optimizations.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

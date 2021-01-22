@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/di.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html"],"hasMain":false}

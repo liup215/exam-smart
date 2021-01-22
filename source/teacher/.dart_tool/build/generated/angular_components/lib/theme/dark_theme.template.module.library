@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/theme/dark_theme.dart","angular_compiler|lib/v1/src/metadata/di_tokens.dart","angular|lib/src/di/reflector.dart","angular|lib/angular.template.dart","angular_components|lib/theme/module.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

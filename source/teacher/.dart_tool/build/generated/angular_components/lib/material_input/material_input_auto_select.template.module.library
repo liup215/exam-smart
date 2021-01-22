@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/material_input/material_input_auto_select.dart","angular_components|lib/material_input/base_material_input.template.dart","angular|lib/angular.template.dart","angular_components|lib/utils/disposer/disposer.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

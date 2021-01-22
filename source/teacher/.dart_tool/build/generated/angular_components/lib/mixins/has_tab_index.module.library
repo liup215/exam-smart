@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","quiver|lib/strings.dart","angular_components|lib/utils/angular/properties/properties.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

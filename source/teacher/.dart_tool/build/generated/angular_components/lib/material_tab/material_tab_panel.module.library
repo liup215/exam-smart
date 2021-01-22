@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/material_tab/fixed_material_tab_strip.dart","angular_components|lib/material_tab/material_tab.dart","angular_components|lib/material_tab/tab_change_event.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

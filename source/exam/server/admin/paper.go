@@ -132,3 +132,209 @@ func (h *Handler) ExamPaperDownload(c *gin.Context) {
 	c.File(path)
 
 }
+
+func (h *Handler) YearAdd(c *gin.Context) {
+	year := model.Year{}
+	if err := c.BindJSON(&year); err != nil {
+		http.Response(c, 400, "添加失败: "+err.Error(), nil)
+		return
+	}
+
+	y, err := h.svr.YearAdd(year)
+	if err != nil {
+		http.Response(c, 400, "添加失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "添加成功!", y)
+}
+
+func (h *Handler) YearEdit(c *gin.Context) {
+	year := model.Year{}
+	if err := c.BindJSON(&year); err != nil {
+		http.Response(c, 400, "编辑失败: "+err.Error(), nil)
+		return
+	}
+
+	y, err := h.svr.YearEdit(year)
+	if err != nil {
+		http.Response(c, 400, "编辑失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "编辑成功!", y)
+}
+
+func (h *Handler) SelectYearById(c *gin.Context) {
+	idStr := c.Query("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Response(c, 400, "查询失败: 无效的ID", nil)
+		return
+	}
+
+	y, err := h.svr.SelectYearById(uint(id))
+
+	if err != nil {
+		http.Response(c, 400, "查询失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "数据获取成功!", y)
+}
+
+func (h *Handler) SelectYearAll(c *gin.Context) {
+	list, total := h.svr.SelectYearAll()
+	http.Response(c, 200, "数据获取成功!", gin.H{
+		"list":  list,
+		"total": total,
+	})
+}
+
+func (h *Handler) SelectYearList(c *gin.Context) {
+	q := model.YearQuery{}
+
+	if err := c.BindJSON(&q); err != nil {
+		http.Response(c, 400, "数据获取失败: "+err.Error(), nil)
+		return
+	}
+
+	list, total := h.svr.SelectYearList(q)
+
+	http.Response(c, 200, "数据获取成功!", gin.H{
+		"list":  list,
+		"total": total,
+	})
+}
+
+func (h *Handler) SeriesAdd(c *gin.Context) {
+	series := model.Series{}
+	if err := c.BindJSON(&series); err != nil {
+		http.Response(c, 400, "添加失败: "+err.Error(), nil)
+		return
+	}
+
+	s, err := h.svr.SeriesAdd(series)
+	if err != nil {
+		http.Response(c, 400, "添加失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "添加成功!", s)
+}
+
+func (h *Handler) SeriesEdit(c *gin.Context) {
+	series := model.Series{}
+	if err := c.BindJSON(&series); err != nil {
+		http.Response(c, 400, "编辑失败: "+err.Error(), nil)
+		return
+	}
+
+	s, err := h.svr.SeriesEdit(series)
+	if err != nil {
+		http.Response(c, 400, "编辑失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "编辑成功!", s)
+}
+
+func (h *Handler) SelectSeriesById(c *gin.Context) {
+	idStr := c.Query("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Response(c, 400, "查询失败: 无效的ID", nil)
+		return
+	}
+
+	s, err := h.svr.SelectSeriesById(uint(id))
+
+	if err != nil {
+		http.Response(c, 400, "查询失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "数据获取成功!", s)
+}
+
+func (h *Handler) SelectSeriesList(c *gin.Context) {
+	q := model.SeriesQuery{}
+
+	if err := c.BindJSON(&q); err != nil {
+		http.Response(c, 400, "数据获取失败: "+err.Error(), nil)
+		return
+	}
+
+	list, total := h.svr.SelectSeriesList(q)
+
+	http.Response(c, 200, "数据获取成功!", gin.H{
+		"list":  list,
+		"total": total,
+	})
+}
+
+func (h *Handler) CodeAdd(c *gin.Context) {
+	code := model.Code{}
+	if err := c.BindJSON(&code); err != nil {
+		http.Response(c, 400, "添加失败: "+err.Error(), nil)
+		return
+	}
+
+	co, err := h.svr.CodeAdd(code)
+	if err != nil {
+		http.Response(c, 400, "添加失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "添加成功!", co)
+}
+
+func (h *Handler) CodeEdit(c *gin.Context) {
+	code := model.Code{}
+	if err := c.BindJSON(&code); err != nil {
+		http.Response(c, 400, "编辑失败: "+err.Error(), nil)
+		return
+	}
+
+	co, err := h.svr.CodeEdit(code)
+	if err != nil {
+		http.Response(c, 400, "编辑失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "编辑成功!", co)
+}
+
+func (h *Handler) SelectCodeById(c *gin.Context) {
+	idStr := c.Query("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Response(c, 400, "查询失败: 无效的ID", nil)
+		return
+	}
+
+	co, err := h.svr.SelectCodeById(uint(id))
+
+	if err != nil {
+		http.Response(c, 400, "查询失败: "+err.Error(), nil)
+		return
+	}
+
+	http.Response(c, 200, "数据获取成功!", co)
+}
+
+func (h *Handler) SelectCodeList(c *gin.Context) {
+	q := model.CodeQuery{}
+
+	if err := c.BindJSON(&q); err != nil {
+		http.Response(c, 400, "数据获取失败: "+err.Error(), nil)
+		return
+	}
+
+	list, total := h.svr.SelectCodeList(q)
+
+	http.Response(c, 200, "数据获取成功!", gin.H{
+		"list":  list,
+		"total": total,
+	})
+}

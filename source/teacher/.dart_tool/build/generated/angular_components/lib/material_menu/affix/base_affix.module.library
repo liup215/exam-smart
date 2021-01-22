@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/interfaces/has_disabled.dart","angular_components|lib/model/menu/menu_item_affix.dart","angular_components|lib/model/ui/has_renderer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

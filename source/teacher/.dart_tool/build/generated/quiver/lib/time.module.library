@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["quiver|lib/src/time/clock.dart","quiver|lib/src/time/duration_unit_constants.dart","quiver|lib/src/time/util.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

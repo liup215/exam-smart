@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["meta|lib/meta.dart","angular_ast|lib/angular_ast.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

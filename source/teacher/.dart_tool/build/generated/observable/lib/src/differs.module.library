@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["collection|lib/collection.dart","observable|lib/src/records.dart","observable|lib/src/internal.dart"],"parts":["observable|lib/src/differs/list_differ.dart","observable|lib/src/differs/map_differ.dart"],"conditionalDeps":[],"sdkDeps":["math"],"hasMain":false}

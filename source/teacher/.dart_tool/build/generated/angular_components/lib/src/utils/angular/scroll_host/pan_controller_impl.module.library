@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/angular.dart","angular_components|lib/utils/angular/scroll_host/interface.dart","angular_components|lib/utils/async/async.dart","angular_components|lib/utils/browser/dom_service/dom_service.dart","angular_components|lib/utils/disposer/disposer.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","html"],"hasMain":false}

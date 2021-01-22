@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/src/core/linker/ng_content_ref.dart","angular|lib/src/core/linker/view_container.template.dart","angular|lib/src/core/linker/views/render_view.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

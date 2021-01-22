@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/model/ui/accepts_width.dart","angular_components|lib/utils/angular/properties/properties.dart","angular_components|lib/material_list/material_list_size.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

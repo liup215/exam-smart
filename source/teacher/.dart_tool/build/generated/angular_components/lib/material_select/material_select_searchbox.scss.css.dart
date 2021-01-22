@@ -1,0 +1,1 @@
+final List<dynamic> styles = ['.searchbox-input {\n  width: 100%;\n  padding: 0;\n}\n.searchbox-input ::ng-deep .glyph {\n  color: #bdbdbd;\n}\n'];

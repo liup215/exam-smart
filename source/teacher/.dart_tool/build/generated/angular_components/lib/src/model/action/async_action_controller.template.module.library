@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/src/model/action/async_action_controller.dart","angular_components|lib/src/model/action/async_action.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

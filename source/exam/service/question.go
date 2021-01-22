@@ -43,17 +43,8 @@ func (svr *Service) buildQuestion(q *model.Question) error {
 
 	q.QuestionTypeName = model.QuestionTypeMap()[q.QuestionType]
 
-	syllabus, _ := svr.dao.SelectSyllabusById(q.SyllabusId)
-
-	q.SyllabusName = syllabus.Name
-	q.SyllabusType = syllabus.Type
-
-	q.SyllabusTypeName = syllabus.GetSyllabusTypeName()
-
-	if sub, err := svr.dao.SelectSubjectById(syllabus.SubjectId); err == nil {
-		q.SubjectName = sub.Name
-		q.SubjectId = sub.ID
-	}
+	syllabusOption := svr.buildSyllabusOptionById(q.SyllabusId)
+	q.SyllabusOption = syllabusOption
 
 	textContent, err := svr.dao.TextContentById(q.InfoTextContentId)
 	if err != nil {
@@ -73,9 +64,9 @@ func (svr *Service) buildQuestion(q *model.Question) error {
 	// 返回真题信息
 	if q.IsPastPaperQuestion == 1 && q.PastPaperId != 0 {
 		pastPaper, _ := svr.dao.PastPaperById(q.PastPaperId)
-		q.Year = pastPaper.Year
-		q.Code = pastPaper.Code
-		q.Series = pastPaper.Series
+		q.YearId = pastPaper.YearId
+		q.CodeId = pastPaper.CodeId
+		q.SeriesId = pastPaper.SeriesId
 	}
 
 	// 返回题目章节信息

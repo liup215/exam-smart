@@ -1,0 +1,1 @@
+final List<dynamic> styles = [':host,\nmaterial-list,\n.options-wrapper,\ndiv[group] {\n  display: inline-flex;\n  flex-direction: column;\n}\n\nmaterial-list,\ndiv[group] {\n  flex: 1 0 auto;\n  flex-direction: column;\n}\n'];

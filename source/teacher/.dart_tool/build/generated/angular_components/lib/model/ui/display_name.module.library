@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["quiver|lib/core.dart","angular_components|lib/model/formatters/formatter.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["analyzer|lib/dart/element/element.dart","build|lib/build.dart","meta|lib/meta.dart","path|lib/path.dart","angular_compiler|lib/v1/cli.dart","angular_compiler|lib/v1/angular_compiler.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

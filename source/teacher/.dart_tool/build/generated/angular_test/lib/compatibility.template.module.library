@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_test|lib/compatibility.dart","angular|lib/angular.template.dart","angular|lib/experimental.template.dart","angular_test|lib/src/frontend/bed.template.dart","angular_test|lib/src/frontend/fixture.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  align-items: baseline;
+}
+:host:hover ::ng-deep .secondary-icon.hover-icon {
+  opacity: inherit;
+}
+:host ::ng-deep .affix:not(:first-child) {
+  margin-left: 4px;
+}

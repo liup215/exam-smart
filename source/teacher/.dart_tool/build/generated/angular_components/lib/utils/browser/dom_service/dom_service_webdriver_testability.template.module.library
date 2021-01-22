@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/utils/browser/dom_service/dom_service_webdriver_testability.dart","angular_components|lib/framework_stabilizers/testability.template.dart","angular_components|lib/utils/browser/dom_service/dom_service.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

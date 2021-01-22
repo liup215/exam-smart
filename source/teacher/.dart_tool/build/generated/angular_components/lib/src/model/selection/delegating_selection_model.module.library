@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["observable|lib/observable.dart","angular_components|lib/model/selection/selection_model.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

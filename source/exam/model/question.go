@@ -24,7 +24,7 @@ func QuestionTypeMap() map[int]string {
 
 type Question struct {
 	Model
-	SyllabusId          uint   `json:"syllabusId"`
+	PaperOption
 	IsPastPaperQuestion int    `json:"isPastPaperQuestion"`
 	PastPaperId         uint   `json:"pastPaperId"`
 	OrderNumber         int    `json:"orderNumber"`
@@ -37,21 +37,12 @@ type Question struct {
 
 	// Request and Response
 	QuestionTypeName string                `gorm:"-" json:"questionTypeName"`
-	SyllabusName     string                `gorm:"-" json:"syllabusName"`
-	SyllabusType     int                   `gorm:"-" json:"syllabusType"`
-	SyllabusTypeName string                `gorm:"-" json:"syllabusTypeName"`
-	SubjectName      string                `gorm:"-" json:"subjectName"`
-	SubjectId        uint                  `gorm:"-" json:"subjectId"`
 	Title            string                `gorm:"-" json:"title"`
 	Analyze          string                `gorm:"-" json:"analyze"`
 	Items            []QuestionItemObject  `gorm:"-" json:"items"`
 	ChapterInfo      []QuestionChapterInfo `gorm:"-" json:"chapterInfo"`
 	Chapters         []QuestionChapterInfo `gorm:"-" json:"chapters"`
 	CorrectArray     []string              `gorm:"-" json:"correctArray"`
-	// PastPaperInfo
-	Year   int    `gorm:"-" json:"year"`
-	Series string `gorm:"-" json:"series"`
-	Code   string `gorm:"-" json:"code"`
 }
 
 func (q *Question) SetCorrectFromVM(correct string, correctArray []string) {

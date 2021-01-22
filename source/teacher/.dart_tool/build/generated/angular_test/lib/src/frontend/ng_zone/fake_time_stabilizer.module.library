@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/angular.dart","collection|lib/collection.dart","meta|lib/meta.dart","angular_test|lib/src/frontend/ng_zone/base_stabilizer.dart","angular_test|lib/src/frontend/ng_zone/timer_hook_zone.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

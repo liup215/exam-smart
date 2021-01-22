@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["meta|lib/meta.dart","observable|lib/src/internal.dart","observable|lib/src/observable.dart","observable|lib/src/records.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

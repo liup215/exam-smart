@@ -56,6 +56,18 @@ func New(cf *conf.Config) *Dao {
 		db.CreateTable(&model.PastPaper{})
 	}
 
+	if !db.HasTable(&model.Year{}) {
+		db.CreateTable(&model.Year{})
+	}
+
+	if !db.HasTable(&model.Series{}) {
+		db.CreateTable(&model.Series{})
+	}
+
+	if !db.HasTable(&model.Code{}) {
+		db.CreateTable(&model.Code{})
+	}
+
 	return &Dao{
 		orm: orm.New(cf.Orm),
 	}

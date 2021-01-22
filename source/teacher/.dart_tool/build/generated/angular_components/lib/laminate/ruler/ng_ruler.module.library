@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/laminate/enums/position.dart","angular_components|lib/laminate/enums/visibility.dart","angular_components|lib/laminate/ruler/dom_ruler.dart","angular_components|lib/src/laminate/ruler/ruler_interface.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async","math"],"hasMain":false}

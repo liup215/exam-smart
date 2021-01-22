@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","angular_components|lib/laminate/portal/portal.dart","angular_components|lib/model/action/async_action.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

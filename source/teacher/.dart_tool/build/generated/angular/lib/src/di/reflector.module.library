@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular|lib/src/runtime.dart","angular_compiler|lib/v1/src/metadata.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

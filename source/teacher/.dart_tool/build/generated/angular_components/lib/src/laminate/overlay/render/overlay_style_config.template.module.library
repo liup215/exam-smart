@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/src/laminate/overlay/render/overlay_style_config.dart","angular|lib/src/di/reflector.dart","angular|lib/angular.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["html"],"hasMain":false}

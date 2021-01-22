@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/model/selection/selection_model.dart","angular_components|lib/model/selection/tree_selection_options.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

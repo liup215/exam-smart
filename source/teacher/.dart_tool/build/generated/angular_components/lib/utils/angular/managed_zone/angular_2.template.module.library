@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular_components|lib/utils/angular/managed_zone/angular_2.dart","angular|lib/src/core/zone/ng_zone.dart","angular|lib/src/di/reflector.dart","angular|lib/di.template.dart","angular_components|lib/src/utils/angular/managed_zone/managed_zone.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

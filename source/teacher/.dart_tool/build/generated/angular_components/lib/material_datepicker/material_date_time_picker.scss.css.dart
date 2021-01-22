@@ -1,0 +1,1 @@
+final List<dynamic> styles = [':host {\n  display: flex;\n}\n:host material-datepicker {\n  margin-right: 16px;\n}\n'];

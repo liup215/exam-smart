@@ -105,7 +105,7 @@ func (svr *Service) writeQuestionToDoc(doc *document.Document, q model.Question,
 	}
 	qTitleP := doc.AddParagraph()
 	qTitleRun := qTitleP.AddRun()
-	qTitleRun.AddText(fmt.Sprintf("%v. (%v-%v-%v)", qOrder+1, q.Year, q.Series, q.Code))
+	qTitleRun.AddText(fmt.Sprintf("%v. (%v-%v-%v)", qOrder+1, q.YearName, q.SeriesName, q.CodeName))
 	qTitleRun.Properties().SetFontFamily("Arial")
 
 	// 添加题目内容
@@ -178,15 +178,8 @@ func (svr *Service) examPaperById(id uint) (model.ExamPaper, error) {
 }
 
 func (svr *Service) examPaperFormat(p model.ExamPaper) model.ExamPaper {
-	slbs, _ := svr.dao.SelectSyllabusById(p.SyllabusId)
-	p.SyllabusTypeName = slbs.GetSyllabusTypeName()
-	p.SyllabusType = slbs.Type
-	p.SyllabusName = slbs.Name
-
-	// 格式化科目
-	sub, _ := svr.dao.SelectSubjectById(slbs.SubjectId)
-	p.SubjectId = slbs.SubjectId
-	p.SubjectName = sub.Name
+	syllabusOption := svr.buildSyllabusOptionById(p.SyllabusId)
+	p.SyllabusOption = syllabusOption
 
 	// 格式化创建时间
 	p.CreatedAtFormatted = p.CreatedAt.Format("2006 01 02 15:04:05")

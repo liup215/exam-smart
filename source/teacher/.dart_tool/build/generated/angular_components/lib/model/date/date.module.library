@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["intl|lib/intl.dart","quiver|lib/core.dart","quiver|lib/time.dart","angular_components|lib/model/observable/observable.dart","angular_components|lib/utils/comparators/comparators.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["async"],"hasMain":false}

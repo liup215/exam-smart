@@ -1,0 +1,1 @@
+{"isEntrypoint":false,"deps":["angular_components|lib/src/material_tooltip/tooltip_controller.dart","angular|lib/src/di/reflector.dart","angular|lib/angular.template.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["angular|lib/angular.dart","quiver|lib/time.dart","angular_components|lib/laminate/popup/module.dart","angular_components|lib/model/date/time_zone_aware_clock.dart","angular_components|lib/material_datepicker/model.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}
