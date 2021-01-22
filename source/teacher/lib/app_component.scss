@@ -1,0 +1,17 @@
+@import 'package:angular_components/app_layout/mixins';
+
+:host {
+  height: 100%;
+  bottom: 0;
+}
+
+.controls {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-width {
+  @include mat-drawer-width(50%);
+  @include mat-temporary-drawer-width(50%);
+}
