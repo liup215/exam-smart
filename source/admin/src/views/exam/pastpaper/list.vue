@@ -29,13 +29,13 @@
     </el-form>
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="id" label="Id" width="90px"/>
-
+      <el-table-column prop="name" label="试卷名称"/>
       <el-table-column prop="syllabusTypeName" label="考试局"/>
       <el-table-column prop="subjectName" label="学科"/>
       <el-table-column prop="syllabusName" label="考纲"></el-table-column>
-      <el-table-column prop="year" label="年份"  />
-      <el-table-column prop="series" label="考试季"/>
-      <el-table-column prop="code" label="试卷代码"/>
+      <el-table-column prop="yearName" label="年份"  />
+      <el-table-column prop="seriesName" label="考试季"/>
+      <el-table-column prop="codeName" label="试卷代码"/>
       <el-table-column  label="操作" align="center">
         <template slot-scope="{row}">
           <el-button size="mini" @click="$router.push({path:'/exam/pastPaper/edit',query:{id:row.id}})" >编辑</el-button>

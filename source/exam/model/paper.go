@@ -4,11 +4,11 @@ import ()
 
 type PaperOption struct {
 	YearId     uint   `json:"yearId"`
-	YearName   int    `gorm:"-" json:"yearName"`
+	YearName   string `gorm:"-" json:"yearName"`
 	CodeId     uint   `json:"codeId"`
 	CodeName   string `gorm:"-" json:"codeName"`
 	SeriesId   uint   `json:"seriesId"`
-	SeriesName string `gorm:"-" json:"series"`
+	SeriesName string `gorm:"-" json:"seriesName"`
 
 	// Response
 	SyllabusOption
@@ -78,7 +78,6 @@ type ExamPaper struct {
 	Model
 	Name string `json:"name"` // 试卷名称
 	PaperOption
-	SyllabusOption
 	Score             int  `json:"score"`
 	QuestionCount     int  `json:"questionCount"`
 	SuggestTime       int  `json:"suggestTime"`

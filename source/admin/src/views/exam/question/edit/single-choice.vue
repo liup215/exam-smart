@@ -21,21 +21,19 @@
       <el-form-item label="是否是真题" required>
         <el-switch v-model="form.isPastPaperQuestion" active-text="是" inactive-text="否" :active-value="1" :inactive-value="0"></el-switch>
       </el-form-item>
-      <el-form-item label="年份" v-if="isPastPaperQuestion">
-        <el-select v-model="form.year" @change="yearChange">
+      <el-form-item label="年份" v-if="form.isPastPaperQuestion">
+        <el-select v-model="form.yearId" @change="yearChange">
           <el-option :value="0" label="---请选择---"></el-option>
-          <el-option v-for="(item, index) in yearList" :key="index" :value="item">{{item}}</el-option>
+          <el-option v-for="item in yearList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="月份" v-if="isPastPaperQuestion">
-        <el-select v-model="form.series" @change="seriesChange">
-          <el-option value="" label="---请选择---"></el-option>
-          <el-option value="January" label="January"></el-option>
-          <el-option value="June" label="June"></el-option>
-          <el-option value="October" label="October"></el-option>
+      <el-form-item label="月份" v-if="form.isPastPaperQuestion">
+        <el-select v-model="form.seriesId" @change="seriesChange">
+          <el-option :value="0" label="---请选择---"></el-option>
+          <el-option v-for="item in seriesList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="真题列表" v-if="isPastPaperQuestion">
+      <el-form-item label="真题列表" v-if="form.isPastPaperQuestion">
         <el-select v-model="form.pastPaperId">
           <el-option :value="0" label="---请选择---"></el-option>
           <el-option v-for="(pastPaper, index) in pastPaperList" :key="index" :value="pastPaper.id" :label="pastPaper.year + '-' + pastPaper.series + '-' + pastPaper.code">
@@ -89,6 +87,9 @@ import questionApi from '@/api/question'
 import syllabusApi from '@/api/syllabus'
 import Tinymce from '@/components/Tinymce'
 import examPaperApi from '@/api/examPaper'
+import yearApi from '@/api/year'
+import seriesApi from '@/api/series'
+import codeApi from '@/api/code'
 
 export default {
   components: {
@@ -110,8 +111,9 @@ export default {
         subjectId: null,
         isPastPaperQuestion: 1,
         pastPaperId: 0,
-        year: 0,
-        series: '',
+        yearId: null,
+        seriesId: null,
+        codeId: null,
         orderNumber: 1,
         title: '',
         items: [
@@ -130,7 +132,8 @@ export default {
       subjectList: [],
       syllabusList: [],
       pastPaperList: [],
-      yearList: [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000],
+      yearList: [],
+      seriesList: [],
       rules: {
         organisation: [
           { required: true, validator: notZero, message: '请选择考试局', trigger: 'change' }
@@ -180,9 +183,10 @@ export default {
       } else {
         _this.initSyllabus()
       }
-
     })
-    
+    yearApi.getAll().then(res => {
+      _this.yearList = res.data.list
+    })
   },
   methods: {
     initSyllabus() {
@@ -239,6 +243,7 @@ export default {
       })
     },
     syllabusChange() {
+      this.searchSeries()
       this.searchPastPaper()
     },
     yearChange() {
@@ -247,8 +252,24 @@ export default {
     seriesChange() {
       this.searchPastPaper()
     },
+    searchSeries() {
+      seriesApi.list({syllabusId: this.form.syllabusId}).then(re => {
+        this.seriesList = re.data.list
+        var seriesExist = false
+        for (var i = 0; i<this.seriesList.length; i++) {
+          if (this.seriesList[i].id === this.form.seriesId) {
+            seriesExist = true
+            break
+          }
+        }
+
+        if (!seriesExist) {
+          this.form.seriesId = null
+        }
+      })
+    },
     searchPastPaper() {
-      examPaperApi.pastPaperList({syllabusId: this.form.syllabusId, year: this.form.year, series: this.form.series, code: this.form.code}).then(res=> {
+      examPaperApi.pastPaperList({syllabusId: this.form.syllabusId, yearId: this.form.year, seriesId: this.form.series, code: this.form.code}).then(res=> {
         this.pastPaperList = res.data.list
         var flag = false
         for (var i = 0; i < this.pastPaperList.length; i++) {

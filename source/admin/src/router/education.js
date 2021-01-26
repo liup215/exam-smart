@@ -42,6 +42,45 @@ export default {
       name: 'EducationSyllabusEdit',
       meta: { title: '考纲编辑', noCache: true, icon: 'users'},
       hidden: true
+    },
+    {
+      path: 'year/list',
+      component: () => import('@/views/education/year/list'),
+      name: 'EducationYearList',
+      meta: { title: '年份列表', noCache: true, icon: 'users' }
+    },
+    {
+      path: 'year/edit',
+      component: () => import('@/views/education/year/edit'),
+      name: 'EducationYearEdit',
+      meta: { title: '年份编辑', noCache: true, icon: 'users'},
+      hidden: true
+    },
+    {
+      path: 'series/list',
+      component: () => import('@/views/education/series/list'),
+      name: 'EducationSeriesList',
+      meta: { title: '考试季列表', noCache: true, icon: 'users' }
+    },
+    {
+      path: 'series/edit',
+      component: () => import('@/views/education/series/edit'),
+      name: 'EducationSeriesEdit',
+      meta: { title: '考试季编辑', noCache: true, icon: 'users'},
+      hidden: true
+    },
+    {
+      path: 'code/list',
+      component: () => import('@/views/education/code/list'),
+      name: 'EducationCodeList',
+      meta: { title: '试卷代码列表', noCache: true, icon: 'users' }
+    },
+    {
+      path: 'code/edit',
+      component: () => import('@/views/education/code/edit'),
+      name: 'EducationCodeEdit',
+      meta: { title: '试卷代码编辑', noCache: true, icon: 'users'},
+      hidden: true
     }
   ]
 }

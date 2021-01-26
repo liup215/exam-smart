@@ -3,7 +3,7 @@
     <el-form :model="queryParam" ref="queryForm" :inline="true">
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
-        <router-link :to="{path:'/education/subject/edit'}" class="link-left">
+        <router-link :to="{path:'/education/code/edit'}" class="link-left">
           <el-button type="primary">添加</el-button>
         </router-link>
       </el-form-item>
@@ -11,11 +11,13 @@
 
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="id" label="Id" />
-      <el-table-column prop="name" label="学科"/>
-      <el-table-column prop="itemOrder" label="排序"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
+      <el-table-column prop="syllabusTypeName" label="考试局"/>
+      <el-table-column prop="subjectName" label="科目"/>
+      <el-table-column prop="syllabusName" label="考纲名称"/>
       <el-table-column width="220px" label="操作" align="center">
         <template slot-scope="{row}">
-          <router-link :to="{path:'/education/subject/edit', query:{id:row.id}}" class="link-left">
+          <router-link :to="{path:'/education/code/edit', query:{id:row.id}}" class="link-left">
             <el-button size="mini">编辑</el-button>
           </router-link>
           <el-button size="mini" type="danger" disabled class="link-left">删除</el-button>
@@ -29,7 +31,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import subjectApi from '@/api/subject'
+import codeApi from '@/api/code'
 
 export default {
   components: { Pagination },
@@ -50,7 +52,7 @@ export default {
   methods: {
     search () {
       this.listLoading = true
-      subjectApi.pageList(this.queryParam).then(response => {
+      codeApi.list(this.queryParam).then(response => {
         const re = response.data
         this.tableData = re.list
         this.total = re.total

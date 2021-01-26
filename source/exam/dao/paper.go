@@ -94,7 +94,7 @@ func (d *Dao) YearAdd(year model.Year) (model.Year, error) {
 }
 
 func (d *Dao) YearEdit(year model.Year) (model.Year, error) {
-	if year.ID != uint(0) {
+	if year.ID == uint(0) {
 		return model.Year{}, errors.New("年份ID不能为空")
 	}
 

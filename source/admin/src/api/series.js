@@ -5,30 +5,29 @@ var request = getRequest(process.env.VUE_APP_BASE_API)
 export default {
   list: (data) => {
     return request({
-      url: '/syllabus/list',
+      url: '/series/list',
       method: 'post',
       data: data
     })
   },
   add: (data) => {
     return request({
-      url: '/syllabus/add',
+      url: '/series/add',
       method: 'post',
       data: data
     })
   },
   edit: (data) => {
     return request({
-      url: '/syllabus/update',
+      url: '/series/edit',
       method: 'post',
       data: data
     })
   },
-  getById: (query) => {
+  getById: (id) => {
     return request({
-      url: '/syllabus/getById',
-      method: 'post',
-      data: query
+      url: '/series/getById?id=' + id,
+      method: 'post'
     })
   }
 }

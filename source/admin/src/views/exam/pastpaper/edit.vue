@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
+      <el-form-item label="名称">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
       <el-form-item label="考试局：" prop="syllabusType">
         <el-select v-model="form.syllabusType" placeholder="考试局"  @change="organisationChange">
           <el-option :value="1" label="CIE"></el-option>
@@ -13,24 +16,24 @@
         </el-select>
       </el-form-item>
       <el-form-item label="考纲" prop="syllabusId">
-        <el-select v-model="form.syllabusId">
+        <el-select v-model="form.syllabusId" @change="syllabusChange">
           <el-option v-for="item in syllabusList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="年份" prop="year">
-        <el-select v-model="form.year">
-          <el-option v-for="(item, index) in yearList" :key="index" :value="item">{{item}}</el-option>
+        <el-select v-model="form.yearId">
+          <el-option v-for="item in yearList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="月份" prop="series">
-        <el-select v-model="form.series">
-          <el-option value="January">January</el-option>
-          <el-option value="June">June</el-option>
-          <el-option value="October">October</el-option>
+      <el-form-item label="考试季" prop="seriesId">
+        <el-select v-model="form.seriesId">
+          <el-option v-for="item in seriesList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="试卷代码"  prop="Code">
-        <el-input v-model="form.code"/>
+      <el-form-item label="试卷代码"  prop="codeId">
+        <el-select v-model="form.codeId">
+          <el-option v-for="item in codeList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
@@ -46,6 +49,9 @@ import { mapGetters, mapState, mapActions } from 'vuex'
 import examPaperApi from '@/api/examPaper'
 import questionApi from '@/api/question'
 import syllabusApi from '@/api/syllabus'
+import yearApi from '@/api/year'
+import seriesApi from '@/api/series'
+import codeApi from '@/api/code'
 
 export default {
   data () {
@@ -55,13 +61,17 @@ export default {
         subjectId: null,
         syllabusId: null,
         name: '',
+        seriesId: null,
+        codeId: null,
         suggestTime: null,
         titleItems: []
       },
       subjectList: [],
       syllabusList: [],
       formLoading: false,
-      yearList: [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000],
+      yearList: [],
+      seriesList: [],
+      codeList: [],
       rules: {
         syllabusType: [
           { required: true, message: '请选择考试局', trigger: 'change' }
@@ -72,13 +82,13 @@ export default {
         syllabusId: [
           { required: true, message: '请选择考纲', trigger: 'change' }
         ],
-        year: [
+        yearId: [
           { required: true, message: '请选择试卷年份', trigger: 'blur' }
         ],
-        series: [
+        seriesId: [
           { required: true, message: '请选择考试季', trigger: 'blur' }
         ],
-        code: [
+        codeId: [
           { required: true, message: '请输入试卷代码', trigger: 'blur' }
         ]
       },
@@ -112,10 +122,17 @@ export default {
         if (!_this.form.titleItems) {
           _this.form.titleItems = []
         }
-        _this.searchSyllabus({type: _this.form.syllabusType, subjectId: re.data.subjectId})
+        _this.searchSyllabus({})
+        _this.searchSeries({})
+        _this.searchCode({})
         _this.formLoading = false
       })
+    } else {
+      _this.searchSyllabus({})
     }
+    yearApi.getAll().then(res => {
+      _this.yearList = res.data.list
+    })
   },
   methods: {
     organisationChange () {
@@ -141,6 +158,42 @@ export default {
         }
       })
     },
+    syllabusChange() {
+      this.searchSeries()
+      this.searchCode()
+    },
+    searchSeries() {
+      seriesApi.list({syllabusId: this.form.syllabusId}).then(res => {
+        this.seriesList = res.data.list
+        var seriesExist = false
+        for (var i = 0; i<this.seriesList.length; i++) {
+          if (this.seriesList[i].id === this.form.seriesId) {
+            seriesExist = true
+            break
+          }
+        }
+
+        if (!seriesExist) {
+          this.form.seriesId = null
+        }
+      })
+    },
+    searchCode() {
+      codeApi.list({syllabusId: this.form.syllabusId}).then(res => {
+        this.codeList = res.data.list
+        var codeExist = false
+        for (var i = 0; i<this.codeList.length; i++) {
+          if (this.codeList[i].id === this.form.codeId) {
+            codeExist = true
+            break
+          }
+        }
+
+        if (!codeExist) {
+          this.form.codeId = null
+        }
+      })
+    },
     submitForm () {
       let _this = this
       this.$refs.form.validate((valid) => {
@@ -151,7 +204,7 @@ export default {
             if (re.code === 200) {
               _this.form = re.data
               _this.$message.success(re.message)
-              _this.delVisitedView(_this).then(() => {
+              _this.$store.dispatch('tagsView/delView', {path: _this.$route.path}).then(() => {
                 _this.$router.push('/exam/pastPaper/list')
               })
             } else {

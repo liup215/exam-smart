@@ -56,7 +56,7 @@ func (svr *Service) buildSyllabusOptionById(id uint) model.SyllabusOption {
 	result.SyllabusType = syllabus.Type
 	result.SyllabusTypeName = syllabus.GetSyllabusTypeName()
 	result.SubjectId = syllabus.SubjectId
-	if sub, err := svr.SelectSubjectById(syllabus.SubjectId); err != nil {
+	if sub, err := svr.SelectSubjectById(syllabus.SubjectId); err == nil {
 		result.SubjectName = sub.Name
 	}
 

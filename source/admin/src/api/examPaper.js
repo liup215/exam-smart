@@ -42,13 +42,13 @@ export default {
     data: data
   }),
   editPastPaper: data => request({
-    url: '/admin/exam/pastPaper/edit',
+    url: '/exam/pastPaper/edit',
     method: 'post',
     data: data
   }),
   selectPastPaper: id => request({
-    url: '/admin/exam/pastPaper/selectById',
-    data: {ID: id},
+    url: '/exam/pastPaper/selectById',
+    data: {id: id},
     method: 'post'
   })
 }

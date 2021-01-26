@@ -33,16 +33,18 @@ func (s *Service) pastPaperFormat(p model.PastPaper) model.PastPaper {
 	if p.SyllabusId == uint(0) {
 		return p
 	}
-	// 获取考纲
-	syllabus, _ := s.dao.SelectSyllabusById(p.SyllabusId)
-	p.SyllabusTypeName = syllabus.GetSyllabusTypeName()
-	p.SyllabusName = syllabus.Name
-	p.SyllabusType = syllabus.Type
 
-	subject, _ := s.dao.SelectSubjectById(syllabus.SubjectId)
+	syllabusOption := s.buildSyllabusOptionById(p.SyllabusId)
+	p.PaperOption.SyllabusOption = syllabusOption
 
-	p.SubjectId = subject.ID
-	p.SubjectName = subject.Name
+	year, _ := s.SelectYearById(p.YearId)
+	p.PaperOption.YearName = year.Name
+
+	series, _ := s.SelectSeriesById(p.SeriesId)
+	p.PaperOption.SeriesName = series.Name
+
+	code, _ := s.SelectCodeById(p.CodeId)
+	p.PaperOption.CodeName = code.Name
 
 	return p
 }
@@ -81,11 +83,20 @@ func (s *Service) SeriesEdit(se model.Series) (model.Series, error) {
 }
 
 func (s *Service) SelectSeriesById(id uint) (model.Series, error) {
-	return s.dao.SelectSeriesById(id)
+	se, err := s.dao.SelectSeriesById(id)
+	syllabusOption := s.buildSyllabusOptionById(se.SyllabusId)
+	se.SyllabusOption = syllabusOption
+	return se, err
 }
 
 func (s *Service) SelectSeriesList(q model.SeriesQuery) ([]model.Series, int) {
-	return s.dao.SelectSeriesList(q)
+	list, total := s.dao.SelectSeriesList(q)
+	for i, se := range list {
+		syllabusOption := s.buildSyllabusOptionById(se.SyllabusId)
+		list[i].SyllabusOption = syllabusOption
+	}
+
+	return list, total
 }
 
 func (s *Service) CodeAdd(se model.Code) (model.Code, error) {
@@ -97,9 +108,18 @@ func (s *Service) CodeEdit(se model.Code) (model.Code, error) {
 }
 
 func (s *Service) SelectCodeById(id uint) (model.Code, error) {
-	return s.dao.SelectCodeById(id)
+	code, err := s.dao.SelectCodeById(id)
+	syllabusOption := s.buildSyllabusOptionById(code.SyllabusId)
+	code.SyllabusOption = syllabusOption
+	return code, err
 }
 
 func (s *Service) SelectCodeList(q model.CodeQuery) ([]model.Code, int) {
-	return s.dao.SelectCodeList(q)
+	list, total := s.dao.SelectCodeList(q)
+	for i, c := range list {
+		syllabusOption := s.buildSyllabusOptionById(c.SyllabusId)
+		list[i].SyllabusOption = syllabusOption
+	}
+
+	return list, total
 }
