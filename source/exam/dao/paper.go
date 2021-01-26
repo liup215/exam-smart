@@ -70,15 +70,15 @@ func (d *Dao) parsePastPaperQuery(q model.PastPaperQuery) *gorm.DB {
 	}
 
 	if q.YearId != uint(0) {
-		db = db.Where("year = ?", q.YearId)
+		db = db.Where("year_id = ?", q.YearId)
 	}
 
 	if q.CodeId != uint(0) {
-		db = db.Where("code = ?", q.CodeId)
+		db = db.Where("code_id = ?", q.CodeId)
 	}
 
 	if q.SeriesId != uint(0) {
-		db = db.Where("series = ?", q.SeriesId)
+		db = db.Where("series_id = ?", q.SeriesId)
 	}
 
 	return db
@@ -265,6 +265,45 @@ func (d *Dao) parseCodeQuery(q model.CodeQuery) *gorm.DB {
 
 	if q.SyllabusId != uint(0) {
 		db = db.Where("syllabus_id = ?", q.SyllabusId)
+	}
+
+	return db
+}
+
+type YearMapper struct {
+	YearQuery model.YearQuery
+}
+
+func (m YearMapper) ParseQuery(db *gorm.DB) *gorm.DB {
+	q := m.YearQuery
+	if q.ID != uint(0) {
+		db = db.Where("id = ?", q.ID)
+	}
+
+	return db
+}
+
+type SeriesMapper struct {
+	SeriesQuery model.SeriesQuery
+}
+
+func (sm SeriesMapper) ParseQuery(db *gorm.DB) *gorm.DB {
+	q := sm.SeriesQuery
+	if q.ID != uint(0) {
+		db = db.Where("id = ?", q.ID)
+	}
+
+	return db
+}
+
+type CodeMapper struct {
+	CodeQuery model.CodeQuery
+}
+
+func (cm CodeMapper) ParseQuery(db *gorm.DB) *gorm.DB {
+	q := cm.CodeQuery
+	if q.ID != uint(0) {
+		db = db.Where("id = ?", q.ID)
 	}
 
 	return db

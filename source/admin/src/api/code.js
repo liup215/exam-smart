@@ -29,5 +29,11 @@ export default {
       url: '/code/getById?id=' + id,
       method: 'post'
     })
-  }
+  },
+  getAll: () => {
+    return request({
+      url: '/code/all',
+      method: 'post'
+    })
+  },
 }

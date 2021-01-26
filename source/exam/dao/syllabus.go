@@ -92,3 +92,24 @@ func (dao *Dao) SyllabusUpdate(syllabus model.Syllabus) error {
 	}
 	return dao.orm.Model(&model.Syllabus{}).Where(&model.Syllabus{Model: model.Model{ID: syllabus.ID}}).Save(&syllabus).Error
 }
+
+type SyllabusMapper struct {
+	SyllabusQuery model.SyllabusQuery
+}
+
+func (sm SyllabusMapper) ParseQuery(db *gorm.DB) *gorm.DB {
+	query := sm.SyllabusQuery
+	if query.ID != 0 {
+		db = db.Where("id = ?", query.ID)
+	}
+
+	if query.SubjectId != 0 {
+		db = db.Where("subject_id = ?", query.SubjectId)
+	}
+
+	if query.Type != 0 {
+		db = db.Where("type = ?", query.Type)
+	}
+
+	return db
+}

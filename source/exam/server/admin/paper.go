@@ -184,7 +184,7 @@ func (h *Handler) SelectYearById(c *gin.Context) {
 }
 
 func (h *Handler) SelectYearAll(c *gin.Context) {
-	list, total := h.svr.SelectYearAll()
+	list, total := h.svr.SelectYearAll(model.YearQuery{})
 	http.Response(c, 200, "数据获取成功!", gin.H{
 		"list":  list,
 		"total": total,
@@ -273,6 +273,14 @@ func (h *Handler) SelectSeriesList(c *gin.Context) {
 	})
 }
 
+func (h *Handler) SelectSeriesAll(c *gin.Context) {
+	list, total := h.svr.SelectSeriesAll(model.SeriesQuery{})
+	http.Response(c, 200, "数据获取成功!", gin.H{
+		"list":  list,
+		"total": total,
+	})
+}
+
 func (h *Handler) CodeAdd(c *gin.Context) {
 	code := model.Code{}
 	if err := c.BindJSON(&code); err != nil {
@@ -333,6 +341,14 @@ func (h *Handler) SelectCodeList(c *gin.Context) {
 
 	list, total := h.svr.SelectCodeList(q)
 
+	http.Response(c, 200, "数据获取成功!", gin.H{
+		"list":  list,
+		"total": total,
+	})
+}
+
+func (h *Handler) SelectCodeAll(c *gin.Context) {
+	list, total := h.svr.SelectCodeAll(model.CodeQuery{})
 	http.Response(c, 200, "数据获取成功!", gin.H{
 		"list":  list,
 		"total": total,

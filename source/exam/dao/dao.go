@@ -72,3 +72,62 @@ func New(cf *conf.Config) *Dao {
 		orm: orm.New(cf.Orm),
 	}
 }
+
+func (d *Dao) Add(input interface{}, m Mapper) error {
+	db := m.ParseQuery(d.orm)
+
+	return db.Create(input).Error
+}
+
+func (d *Dao) Edit(input interface{}, m Mapper) error {
+	db := m.ParseQuery(d.orm)
+
+	return db.Save(input).Error
+}
+
+func (d *Dao) SelectOne(result interface{}, m Mapper) error {
+	db := m.ParseQuery(d.orm)
+	return db.First(result).Error
+}
+
+func (d *Dao) SelectList(result, total interface{}, m Mapper, pageIndex, pageSize int) error {
+	db := m.ParseQuery(d.orm)
+	err := db.Count(total).Error
+	if err != nil {
+		if err != gorm.ErrRecordNotFound {
+			return err
+		}
+	}
+
+	if pageIndex <= 0 {
+		pageIndex = 1
+	}
+
+	if pageSize <= 0 {
+		pageSize = 10
+	}
+
+	err = db.Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(result).Error
+	if err != nil {
+		if err != gorm.ErrRecordNotFound {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (d *Dao) SelectAll(result, total interface{}, m Mapper) error {
+	db := m.ParseQuery(d.orm)
+	err := db.Find(result).Count(total).Error
+	if err != nil {
+		if err != gorm.ErrRecordNotFound {
+			return err
+		}
+	}
+	return nil
+}
+
+type Mapper interface {
+	ParseQuery(*gorm.DB) *gorm.DB
+}

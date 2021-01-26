@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 
+	"exam/dao"
 	"exam/model"
 )
 
@@ -37,6 +38,14 @@ func (svr *Service) SyllabusUpdate(syllabus model.Syllabus) error {
 		return errors.New("书籍ID不能为空")
 	}
 	return svr.dao.SyllabusUpdate(syllabus)
+}
+
+func (svr *Service) SelectSyllabusAll(q model.SyllabusQuery) ([]model.Syllabus, int) {
+	list := []model.Syllabus{}
+	total := 0
+
+	svr.dao.SelectAll(&list, &total, dao.SyllabusMapper{SyllabusQuery: q})
+	return list, total
 }
 
 func (svr *Service) buildSyllabusOptionById(id uint) model.SyllabusOption {

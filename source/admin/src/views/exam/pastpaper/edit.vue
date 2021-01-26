@@ -5,19 +5,21 @@
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="考试局：" prop="syllabusType">
-        <el-select v-model="form.syllabusType" placeholder="考试局"  @change="organisationChange">
+        <el-select v-model="form.syllabusType" placeholder="考试局">
           <el-option :value="1" label="CIE"></el-option>
           <el-option :value="2" label="Edexcel"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="学科：" prop="subjectId">
-        <el-select v-model="form.subjectId" placeholder="学科" @change="subjectChange">
+        <el-select v-model="form.subjectId" placeholder="学科">
           <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="考纲" prop="syllabusId">
-        <el-select v-model="form.syllabusId" @change="syllabusChange">
-          <el-option v-for="item in syllabusList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+        <el-select v-model="form.syllabusId">
+          <template v-for="item in syllabusList">
+          <el-option v-if="item.type === form.syllabusType && item.subjectId === form.subjectId" :key="item.id" :value="item.id" :label="item.name"></el-option>
+          </template>
         </el-select>
       </el-form-item>
       <el-form-item label="年份" prop="year">
@@ -27,12 +29,15 @@
       </el-form-item>
       <el-form-item label="考试季" prop="seriesId">
         <el-select v-model="form.seriesId">
-          <el-option v-for="item in seriesList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
+          <template v-for="item in seriesList">
+          <el-option v-if="item.syllabusId === form.syllabusId" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option></template>
         </el-select>
       </el-form-item>
       <el-form-item label="试卷代码"  prop="codeId">
         <el-select v-model="form.codeId">
-          <el-option v-for="item in codeList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
+          <template v-for="item in codeList">
+          <el-option v-if="item.syllabusId === form.syllabusId"  :key="item.id" :value="item.id" :label="item.name"></el-option>
+          </template>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -122,27 +127,25 @@ export default {
         if (!_this.form.titleItems) {
           _this.form.titleItems = []
         }
-        _this.searchSyllabus({})
-        _this.searchSeries({})
-        _this.searchCode({})
         _this.formLoading = false
       })
-    } else {
-      _this.searchSyllabus({})
     }
+    syllabusApi.getAll().then(res => {
+      _this.syllabusList = res.data.list
+    })
     yearApi.getAll().then(res => {
       _this.yearList = res.data.list
     })
+    seriesApi.getAll().then(res => {
+      _this.seriesList = res.data.list
+    })
+    codeApi.getAll().then(res => {
+      _this.codeList = res.data.list
+    })
   },
   methods: {
-    organisationChange () {
-      this.searchSyllabus()
-    },
-    subjectChange() {
-      this.searchSyllabus()
-    },
     searchSyllabus() {
-      syllabusApi.list({type: this.form.syllabusType ? this.form.syllabusType : 0, subjectId: this.form.subjectId ? this.form.subjectId: 0}).then(res => {
+      syllabusApi.getAll({type: this.form.syllabusType ? this.form.syllabusType : 0, subjectId: this.form.subjectId ? this.form.subjectId: 0}).then(res => {
         this.syllabusList = res.data.list
 
         var syllabusExist = false

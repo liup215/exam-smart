@@ -29,5 +29,11 @@ export default {
       url: '/series/getById?id=' + id,
       method: 'post'
     })
+  },
+  getAll: () => {
+    return request({
+      url: '/series/all',
+      method: 'post'
+    })
   }
 }

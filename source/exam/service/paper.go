@@ -1,6 +1,7 @@
 package service
 
 import (
+	"exam/dao"
 	"exam/model"
 )
 
@@ -66,12 +67,15 @@ func (s *Service) SelectYearById(id uint) (model.Year, error) {
 	return s.dao.SelectYearById(id)
 }
 
-func (s *Service) SelectYearAll() ([]model.Year, int) {
-	return s.dao.SelectYearAll()
-}
-
 func (s *Service) SelectYearList(q model.YearQuery) ([]model.Year, int) {
 	return s.dao.SelectYearList(q)
+}
+
+func (s *Service) SelectYearAll(q model.YearQuery) ([]model.Year, int) {
+	list := []model.Year{}
+	total := 0
+	s.dao.SelectAll(&list, &total, dao.YearMapper{YearQuery: q})
+	return list, total
 }
 
 func (s *Service) SeriesAdd(se model.Series) (model.Series, error) {
@@ -99,6 +103,13 @@ func (s *Service) SelectSeriesList(q model.SeriesQuery) ([]model.Series, int) {
 	return list, total
 }
 
+func (s *Service) SelectSeriesAll(q model.SeriesQuery) ([]model.Series, int) {
+	list := []model.Series{}
+	total := 0
+	s.dao.SelectAll(&list, &total, dao.SeriesMapper{SeriesQuery: q})
+	return list, total
+}
+
 func (s *Service) CodeAdd(se model.Code) (model.Code, error) {
 	return s.dao.CodeAdd(se)
 }
@@ -121,5 +132,12 @@ func (s *Service) SelectCodeList(q model.CodeQuery) ([]model.Code, int) {
 		list[i].SyllabusOption = syllabusOption
 	}
 
+	return list, total
+}
+
+func (s *Service) SelectCodeAll(q model.CodeQuery) ([]model.Code, int) {
+	list := []model.Code{}
+	total := 0
+	s.dao.SelectAll(&list, &total, dao.CodeMapper{CodeQuery: q})
 	return list, total
 }

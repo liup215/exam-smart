@@ -2,20 +2,21 @@
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
       <el-form-item label="考试局：" prop="Organisation">
-        <el-select v-model="form.organisation" @change="organisationChange">
+        <el-select v-model="form.syllabusType">
           <el-option :value="1" label="CIE"></el-option>
           <el-option :value="2" label="Edexcel"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="学科：" prop="subjectId">
-        <el-select v-model="form.subjectId" placeholder="学科" @change="subjectChange">
+        <el-select v-model="form.subjectId" placeholder="学科">
           <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="考纲" prop="syllabusId">
         <el-select v-model="form.syllabusId" @change="syllabusChange">
-          <el-option :value="0" label="---请选择---"></el-option>
-          <el-option v-for="item in syllabusList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+          <template v-for="item in syllabusList" >
+          <el-option v-if="item.type === form.syllabusType && item.subjectId === form.subjectId"  :value="item.id" :label="item.name" :key="item.id"></el-option>
+          </template>
         </el-select>
       </el-form-item>
       <el-form-item label="是否是真题" required>
@@ -23,27 +24,33 @@
       </el-form-item>
       <el-form-item label="年份" v-if="form.isPastPaperQuestion">
         <el-select v-model="form.yearId" @change="yearChange">
-          <el-option :value="0" label="---请选择---"></el-option>
           <el-option v-for="item in yearList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="月份" v-if="form.isPastPaperQuestion">
+      <el-form-item label="考试季" v-if="form.isPastPaperQuestion">
         <el-select v-model="form.seriesId" @change="seriesChange">
-          <el-option :value="0" label="---请选择---"></el-option>
-          <el-option v-for="item in seriesList" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
+          <template v-for="item in seriesList">
+          <el-option v-if="item.syllabusId === form.syllabusId" :key="item.id" :value="item.id" :label="item.name">{{item.name}}</el-option>
+          </template>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="试卷代码" v-if="form.isPastPaperQuestion">
+        <el-select v-model="form.codeId" @change="codeChange">
+          <template v-for="item in codeList">
+          <el-option v-if="item.syllabusId === form.syllabusId"  :key="item.id" :value="item.id" :label="item.name"></el-option>
+          </template>
         </el-select>
       </el-form-item>
       <el-form-item label="真题列表" v-if="form.isPastPaperQuestion">
         <el-select v-model="form.pastPaperId">
-          <el-option :value="0" label="---请选择---"></el-option>
-          <el-option v-for="(pastPaper, index) in pastPaperList" :key="index" :value="pastPaper.id" :label="pastPaper.year + '-' + pastPaper.series + '-' + pastPaper.code">
+          <el-option v-for="pastPaper in pastPaperList" :key="pastPaper.id" :value="pastPaper.id" :label="pastPaper.name">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="题号" v-if="isPastPaperQuestion">
         <el-input-number v-model="form.orderNumber" :min="1" :step="1"></el-input-number>
       </el-form-item>
-      <el-form-item label="题干：" prop="Title" required>
+      <el-form-item label="题干：" prop="title" required>
         <Tinymce v-model="form.title"/>
       </el-form-item>
       <el-form-item label="选项：" required>
@@ -53,16 +60,16 @@
            <el-button type="danger" size="mini" class="question-item-remove" icon="el-icon-delete" @click="questionItemRemove(index)"></el-button>
         </el-form-item>
       </el-form-item>
-      <el-form-item label="解析：" prop="Analyze" required>
+      <el-form-item label="解析：" prop="analyze" required>
         <tinymce v-model="form.analyze"  @focus="inputClick(form,'analyze')" />
       </el-form-item>
-      <el-form-item label="分数：" prop="Score" required>
-        <el-input-number v-model="form.ccore" :min="1" :step="1"/>
+      <el-form-item label="分数：" prop="score" required>
+        <el-input-number v-model="form.score" :min="1" :step="1"/>
       </el-form-item>
       <el-form-item label="难度：" required>
         <el-rate v-model="form.difficult" class="question-item-rate"></el-rate>
       </el-form-item>
-      <el-form-item label="正确答案：" prop="Correct" required>
+      <el-form-item label="正确答案：" prop="correct" required>
         <el-radio-group v-model="form.correct">
           <el-radio  v-for="item in form.items"  :key="item.prefix"  :label="item.prefix">{{item.prefix}}</el-radio>
         </el-radio-group>
@@ -106,11 +113,12 @@ export default {
     return {
       form: {
         id: 0,
-        organisation: null,
+        syllabusType: null,
+        syllabusId: null,
         questionType: 1,
         subjectId: null,
         isPastPaperQuestion: 1,
-        pastPaperId: 0,
+        pastPaperId: null,
         yearId: null,
         seriesId: null,
         codeId: null,
@@ -125,8 +133,7 @@ export default {
         analyze: '',
         correct: '',
         score: '',
-        difficult: 1,
-        syllabusId: 0
+        difficult: 1
       },
       formLoading: false,
       subjectList: [],
@@ -134,6 +141,7 @@ export default {
       pastPaperList: [],
       yearList: [],
       seriesList: [],
+      codeList: [],
       rules: {
         organisation: [
           { required: true, validator: notZero, message: '请选择考试局', trigger: 'change' }
@@ -170,30 +178,29 @@ export default {
     let _this = this
     this.initSubject(function () {
       _this.subjectList = _this.subjects
-
-      if (id && parseInt(id) !== 0) {
-        _this.formLoading = true
-        questionApi.select(id).then(re => {
-          _this.form = re.data
-          _this.form.organisation = re.data.syllabusType
-          _this.searchSyllabus({type: _this.form.organisation, subjectId: re.data.subjectId})
-          _this.searchPastPaper()
-          _this.formLoading = false
-        })
-      } else {
-        _this.initSyllabus()
-      }
+    })
+    if (id && parseInt(id) !== 0) {
+      _this.formLoading = true
+      questionApi.select(id).then(re => {
+        _this.form = re.data
+        _this.searchPastPaper()
+        _this.formLoading = false
+      })
+    }
+    syllabusApi.getAll().then(res => {
+      _this.syllabusList = res.data.list
     })
     yearApi.getAll().then(res => {
       _this.yearList = res.data.list
     })
+    seriesApi.getAll().then(res => {
+      _this.seriesList = res.data.list
+    })
+    codeApi.getAll().then(res => {
+      _this.codeList = res.data.list
+    })
   },
   methods: {
-    initSyllabus() {
-      syllabusApi.list({}).then(res => {
-        this.syllabusList = res.data.list
-      })
-    },
     questionItemRemove (index) {
       this.form.items.splice(index, 1)
     },
@@ -229,22 +236,13 @@ export default {
     resetForm () {
       this.$refs['form'].resetFields()
     },
-    organisationChange () {
-      this.searchSyllabus()
-      this.form.syllabusId = null
-    },
-    subjectChange() {
-      this.searchSyllabus()
-      this.form.syllabusId = null
-    },
-    searchSyllabus() {
-      syllabusApi.list({type: this.form.organisation ? this.form.organisation : 0, subjectId: this.form.subjectId ? this.form.subjectId: 0}).then(res => {
-        this.syllabusList = res.data.list
-      })
-    },
     syllabusChange() {
-      this.searchSeries()
-      this.searchPastPaper()
+      this.form.seriesId = null
+      this.form.codeId = null
+      this.form.pastPaperId = null
+      this.pastPaperList = []
+      this.seriesList = []
+      this.codeList = []
     },
     yearChange() {
       this.searchPastPaper()
@@ -252,24 +250,11 @@ export default {
     seriesChange() {
       this.searchPastPaper()
     },
-    searchSeries() {
-      seriesApi.list({syllabusId: this.form.syllabusId}).then(re => {
-        this.seriesList = re.data.list
-        var seriesExist = false
-        for (var i = 0; i<this.seriesList.length; i++) {
-          if (this.seriesList[i].id === this.form.seriesId) {
-            seriesExist = true
-            break
-          }
-        }
-
-        if (!seriesExist) {
-          this.form.seriesId = null
-        }
-      })
+    codeChange() {
+      this.searchPastPaper()
     },
     searchPastPaper() {
-      examPaperApi.pastPaperList({syllabusId: this.form.syllabusId, yearId: this.form.year, seriesId: this.form.series, code: this.form.code}).then(res=> {
+      examPaperApi.pastPaperList({syllabusId: this.form.syllabusId, yearId: this.form.yearId, seriesId: this.form.seriesId, codeId: this.form.codeId}).then(res=> {
         this.pastPaperList = res.data.list
         var flag = false
         for (var i = 0; i < this.pastPaperList.length; i++) {

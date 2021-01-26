@@ -30,5 +30,11 @@ export default {
       method: 'post',
       data: query
     })
+  },
+  getAll: () => {
+    return request({
+      url: '/syllabus/all',
+      method: 'post'
+    })
   }
 }

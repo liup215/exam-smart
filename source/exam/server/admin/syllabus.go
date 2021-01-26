@@ -47,6 +47,14 @@ func (h *Handler) SyllabusList(c *gin.Context) {
 	})
 }
 
+func (h *Handler) SelectSyllabusAll(c *gin.Context) {
+	list, total := h.svr.SelectSyllabusAll(model.SyllabusQuery{})
+	http.Response(c, 200, "获取成功!", gin.H{
+		"list":  list,
+		"total": total,
+	})
+}
+
 func (h *Handler) SyllabusListOld(c *gin.Context) {
 
 	query := model.SyllabusQuery{}

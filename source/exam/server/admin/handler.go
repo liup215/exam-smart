@@ -46,6 +46,7 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/syllabus/list", h.SyllabusList)
 	r.POST("/syllabus/add", h.SyllabusAdd)
 	r.POST("/syllabus/edit", h.SyllabusUpdate)
+	r.POST("/syllabus/all", h.SelectSyllabusAll)
 
 	r.POST("/chapter/tree", h.ChapterTree)
 	r.POST("/chapter/listBySyllabus", h.ChapterListBySyllabus)
@@ -80,9 +81,11 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/series/edit", h.SeriesEdit)
 	r.POST("/series/getById", h.SelectSeriesById)
 	r.POST("/series/list", h.SelectSeriesList)
+	r.POST("/series/all", h.SelectSeriesAll)
 
 	r.POST("/code/add", h.CodeAdd)
 	r.POST("/code/edit", h.CodeEdit)
 	r.POST("/code/getById", h.SelectCodeById)
 	r.POST("/code/list", h.SelectCodeList)
+	r.POST("/code/all", h.SelectCodeAll)
 }
