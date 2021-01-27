@@ -182,7 +182,7 @@ func (svr *Service) examPaperFormat(p model.ExamPaper) model.ExamPaper {
 	p.SyllabusOption = syllabusOption
 
 	// 格式化创建时间
-	p.CreatedAtFormatted = p.CreatedAt.Format("2006 01 02 15:04:05")
+	p.CreatedAtFormatted = p.CreatedAt.Format("2006-01-02 15:04:05")
 
 	textContent, _ := svr.dao.TextContentById(p.FrameTexcontentId)
 	examPaperTitleItems := []model.ExamPaperTitleItem{}

@@ -1,20 +1,22 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="考试局：" prop="syllabusType" required>
-        <el-select v-model="form.syllabusType" placeholder="考试局"  @change="organisationChange">
+      <el-form-item label="考试局：" prop="syllabusType">
+        <el-select v-model="form.syllabusType" placeholder="考试局">
           <el-option :value="1" label="CIE"></el-option>
           <el-option :value="2" label="Edexcel"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="学科：" prop="subjectId" required>
-        <el-select v-model="form.subjectId" placeholder="学科" @change="subjectChange">
+      <el-form-item label="学科：" prop="subjectId">
+        <el-select v-model="form.subjectId" placeholder="学科">
           <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="考纲" required>
+      <el-form-item label="考纲" prop="syllabusId">
         <el-select v-model="form.syllabusId">
-          <el-option v-for="item in syllabusList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+          <template v-for="item in syllabusList">
+          <el-option v-if="item.type === form.syllabusType && item.subjectId === form.subjectId" :key="item.id" :value="item.id" :label="item.name"></el-option>
+          </template>
         </el-select>
       </el-form-item>
       <el-form-item label="试卷名称："  prop="name" required>
@@ -97,6 +99,7 @@ export default {
     return {
       form: {
         id: null,
+        syllabusType: null,
         subjectId: null,
         syllabusId: null,
         name: '',
@@ -156,35 +159,14 @@ export default {
         if (!_this.form.titleItems) {
           _this.form.titleItems = []
         }
-        _this.searchSyllabus({type: _this.form.syllabusType, subjectId: re.data.subjectId})
         _this.formLoading = false
       })
     }
+    syllabusApi.getAll().then(res => {
+      this.syllabusList = res.data.list
+    })
   },
   methods: {
-    organisationChange () {
-      this.searchSyllabus()
-    },
-    subjectChange() {
-      this.searchSyllabus()
-    },
-    searchSyllabus() {
-      syllabusApi.list({type: this.form.syllabusType ? this.form.syllabusType : 0, subjectId: this.form.subjectId ? this.form.subjectId: 0}).then(res => {
-        this.syllabusList = res.data.list
-
-        var syllabusExist = false
-        for (var i = 0; i<this.syllabusList.length; i++) {
-          if (this.syllabusList[i].id === this.form.syllabusId) {
-            syllabusExist = true
-            break
-          }
-        }
-
-        if (!syllabusExist) {
-          this.form.syllabusId = null
-        }
-      })
-    },
     submitForm () {
       let _this = this
       this.$refs.form.validate((valid) => {
