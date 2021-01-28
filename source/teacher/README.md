@@ -1,29 +1,7 @@
 # teacher
 
-## Project setup
-```
-npm install
-```
+A web app that uses [AngularDart](https://angulardart.dev) and
+[AngularDart Components](https://angulardart.dev/components).
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Created from templates made available by Stagehand under a BSD-style
+[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).

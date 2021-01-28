@@ -4,3 +4,7 @@ source/admin/dist/
 source/teacher/node_modules/
 source/teacher/dist/
 source/exam/cmd/tmp/
+source/teacher/.dart_tool/
+source/teacher/.packages/
+source/teacher/build/
+source/teacher/doc/api/
