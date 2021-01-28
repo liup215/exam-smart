@@ -36,6 +36,11 @@
       <el-table-column prop="yearName" label="年份"  />
       <el-table-column prop="seriesName" label="考试季"/>
       <el-table-column prop="codeName" label="试卷代码"/>
+      <el-table-column label="题目数量">
+        <template slot-scope="{row}">
+          {{row.insertedQuestionNumber}}/{{row.questionNumber}}
+        </template>
+      </el-table-column>
       <el-table-column  label="操作" align="center">
         <template slot-scope="{row}">
           <el-button size="mini" @click="$router.push({path:'/exam/pastPaper/edit',query:{id:row.id}})" >编辑</el-button>

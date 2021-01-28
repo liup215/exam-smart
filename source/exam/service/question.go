@@ -3,11 +3,20 @@ package service
 import (
 	"encoding/json"
 	"errors"
+	"exam/dao"
 	"exam/model"
 )
 
 func (svr *Service) SelectQuestionAllCount() int {
 	return svr.dao.SelectQuestionAllCount()
+}
+
+func (svr *Service) SelectQuestionAllByQuery(q model.QuestionQuery) ([]model.Question, int) {
+	list := []model.Question{}
+	total := 0
+	svr.dao.SelectAll(&list, &total, dao.QuestionMapper{QuestionQuery: q})
+
+	return list, total
 }
 
 func (svr *Service) SelectQuestionList(query model.QuestionQuery) ([]model.Question, int) {

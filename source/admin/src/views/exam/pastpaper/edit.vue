@@ -40,6 +40,9 @@
           </template>
         </el-select>
       </el-form-item>
+      <el-form-item label="题目数量" prop="questionNumber" required>
+        <el-input-number v-model="form.questionNumber" :min="1" :step="1"/>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
@@ -69,7 +72,8 @@ export default {
         seriesId: null,
         codeId: null,
         suggestTime: null,
-        titleItems: []
+        titleItems: [],
+        questionNumber: null
       },
       subjectList: [],
       syllabusList: [],
@@ -94,6 +98,9 @@ export default {
           { required: true, message: '请选择考试季', trigger: 'blur' }
         ],
         codeId: [
+          { required: true, message: '请输入试卷代码', trigger: 'blur' }
+        ],
+        questionNumber: [
           { required: true, message: '请输入试卷代码', trigger: 'blur' }
         ]
       },

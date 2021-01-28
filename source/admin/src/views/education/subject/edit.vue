@@ -46,7 +46,7 @@ export default {
       let _this = this
       this.formLoading = true
 
-      if (this.form.ID) {
+      if (this.form.id) {
         subjectApi.edit(this.form).then(data => {
           if (data.code === 200) {
             _this.$message.success(data.message)

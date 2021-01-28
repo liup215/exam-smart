@@ -100,3 +100,29 @@ func (d *Dao) parseQuestionQuery(q model.QuestionQuery) *gorm.DB {
 
 	return db
 }
+
+type QuestionMapper struct {
+	QuestionQuery model.QuestionQuery
+}
+
+func (qm QuestionMapper) ParseQuery(db *gorm.DB) *gorm.DB {
+	q := qm.QuestionQuery
+
+	if q.ID != 0 {
+		db = db.Where("id = ?", q.ID)
+	}
+
+	if q.IsPastPaperQuestion != 0 {
+		db = db.Where("is_past_paper_question = ?", q.IsPastPaperQuestion)
+
+		if q.PastPaperId != uint(0) {
+			db = db.Where("past_paper_id = ?", q.PastPaperId)
+		}
+	}
+
+	if q.QuestionType != 0 {
+		db = db.Where("question_type = ?", q.QuestionType)
+	}
+
+	return db
+}

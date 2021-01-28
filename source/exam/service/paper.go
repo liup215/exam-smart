@@ -47,6 +47,10 @@ func (s *Service) pastPaperFormat(p model.PastPaper) model.PastPaper {
 	code, _ := s.SelectCodeById(p.CodeId)
 	p.PaperOption.CodeName = code.Name
 
+	_, insertedQuestionNumber := s.SelectQuestionAllByQuery(model.QuestionQuery{PastPaperId: p.ID})
+
+	p.InsertedQuestionNumber = insertedQuestionNumber
+
 	return p
 }
 

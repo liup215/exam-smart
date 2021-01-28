@@ -62,7 +62,9 @@ type CodeQuery struct {
 
 type PastPaper struct {
 	Model
-	Name string `json:"name"`
+	Name                   string `json:"name"`
+	QuestionNumber         int    `json:"questionNumber"`
+	InsertedQuestionNumber int    `gorm:"-" json:"insertedQuestionNumber"`
 	PaperOption
 }
 
