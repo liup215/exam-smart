@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"exam/dao"
 	"exam/lib/net/http"
 	"exam/model"
 	"strconv"
@@ -31,7 +32,7 @@ func (h *Handler) PastPaperEdit(c *gin.Context) {
 }
 
 func (h *Handler) PastPaperList(c *gin.Context) {
-	p := model.PastPaperQuery{}
+	p := dao.PastPaperQuery{}
 	if err := c.BindJSON(&p); err != nil {
 		http.Response(c, 400, "参数解析失败: "+err.Error(), gin.H{})
 		return
@@ -45,7 +46,7 @@ func (h *Handler) PastPaperList(c *gin.Context) {
 }
 
 func (h *Handler) PastPaperById(c *gin.Context) {
-	p := model.PastPaperQuery{}
+	p := dao.PastPaperQuery{}
 	if err := c.BindJSON(&p); err != nil {
 		http.Response(c, 400, "参数解析失败: "+err.Error(), gin.H{})
 		return
@@ -79,7 +80,7 @@ func (h *Handler) ExamPaperEdit(c *gin.Context) {
 }
 
 func (h *Handler) ExamPaperList(c *gin.Context) {
-	p := model.ExamPaperQuery{}
+	p := dao.ExamPaperQuery{}
 
 	if err := c.BindJSON(&p); err != nil {
 		http.Response(c, 400, "参数解析失败: "+err.Error(), gin.H{})
@@ -95,7 +96,7 @@ func (h *Handler) ExamPaperList(c *gin.Context) {
 }
 
 func (h *Handler) ExamPaperById(c *gin.Context) {
-	p := model.ExamPaperQuery{}
+	p := dao.ExamPaperQuery{}
 	if err := c.BindJSON(&p); err != nil {
 		http.Response(c, 400, "参数解析失败: "+err.Error(), gin.H{})
 		return
@@ -184,7 +185,7 @@ func (h *Handler) SelectYearById(c *gin.Context) {
 }
 
 func (h *Handler) SelectYearAll(c *gin.Context) {
-	list, total := h.svr.SelectYearAll(model.YearQuery{})
+	list, total := h.svr.SelectYearAll(dao.YearQuery{})
 	http.Response(c, 200, "数据获取成功!", gin.H{
 		"list":  list,
 		"total": total,
@@ -192,7 +193,7 @@ func (h *Handler) SelectYearAll(c *gin.Context) {
 }
 
 func (h *Handler) SelectYearList(c *gin.Context) {
-	q := model.YearQuery{}
+	q := dao.YearQuery{}
 
 	if err := c.BindJSON(&q); err != nil {
 		http.Response(c, 400, "数据获取失败: "+err.Error(), nil)
@@ -258,7 +259,7 @@ func (h *Handler) SelectSeriesById(c *gin.Context) {
 }
 
 func (h *Handler) SelectSeriesList(c *gin.Context) {
-	q := model.SeriesQuery{}
+	q := dao.SeriesQuery{}
 
 	if err := c.BindJSON(&q); err != nil {
 		http.Response(c, 400, "数据获取失败: "+err.Error(), nil)
@@ -274,7 +275,7 @@ func (h *Handler) SelectSeriesList(c *gin.Context) {
 }
 
 func (h *Handler) SelectSeriesAll(c *gin.Context) {
-	list, total := h.svr.SelectSeriesAll(model.SeriesQuery{})
+	list, total := h.svr.SelectSeriesAll(dao.SeriesQuery{})
 	http.Response(c, 200, "数据获取成功!", gin.H{
 		"list":  list,
 		"total": total,
@@ -332,7 +333,7 @@ func (h *Handler) SelectCodeById(c *gin.Context) {
 }
 
 func (h *Handler) SelectCodeList(c *gin.Context) {
-	q := model.CodeQuery{}
+	q := dao.CodeQuery{}
 
 	if err := c.BindJSON(&q); err != nil {
 		http.Response(c, 400, "数据获取失败: "+err.Error(), nil)
@@ -348,7 +349,7 @@ func (h *Handler) SelectCodeList(c *gin.Context) {
 }
 
 func (h *Handler) SelectCodeAll(c *gin.Context) {
-	list, total := h.svr.SelectCodeAll(model.CodeQuery{})
+	list, total := h.svr.SelectCodeAll(dao.CodeQuery{})
 	http.Response(c, 200, "数据获取成功!", gin.H{
 		"list":  list,
 		"total": total,

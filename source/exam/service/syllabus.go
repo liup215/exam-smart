@@ -7,8 +7,10 @@ import (
 	"exam/model"
 )
 
-func (svr *Service) SyllabusList(query model.SyllabusQuery) ([]model.Syllabus, int) {
-	list, total := svr.dao.SelectSyllabusList(query)
+func (svr *Service) SyllabusList(query dao.SyllabusQuery) ([]model.Syllabus, int) {
+	list := []model.Syllabus{}
+	total := 0
+	svr.dao.SelectList(&list, &total, query)
 	for i, v := range list {
 		if subj, err := svr.SelectSubjectById(v.SubjectId); err == nil {
 			list[i].SubjectName = subj.Name
@@ -22,29 +24,31 @@ func (svr *Service) SyllabusList(query model.SyllabusQuery) ([]model.Syllabus, i
 	return list, total
 }
 
-func (svr *Service) SelectSyllabusById(id uint) (*model.Syllabus, error) {
-	return svr.dao.SelectSyllabusOne(model.SyllabusQuery{ID: id})
+func (svr *Service) SelectSyllabusById(id uint) (model.Syllabus, error) {
+	syllabus := model.Syllabus{}
+	err := svr.dao.SelectOne(&syllabus, dao.SyllabusQuery{Model: model.Model{ID: id}})
+	return syllabus, err
 }
 
 func (svr *Service) SyllabusAdd(syllabus model.Syllabus) error {
 	if syllabus.ID != 0 {
 		return errors.New("无效的书籍ID")
 	}
-	return svr.dao.SyllabusAdd(syllabus)
+	return svr.dao.Create(&syllabus, dao.SyllabusQuery{})
 }
 
 func (svr *Service) SyllabusUpdate(syllabus model.Syllabus) error {
 	if syllabus.ID == 0 {
 		return errors.New("书籍ID不能为空")
 	}
-	return svr.dao.SyllabusUpdate(syllabus)
+	return svr.dao.Save(syllabus, dao.SyllabusQuery{})
 }
 
-func (svr *Service) SelectSyllabusAll(q model.SyllabusQuery) ([]model.Syllabus, int) {
+func (svr *Service) SelectSyllabusAll(q dao.SyllabusQuery) ([]model.Syllabus, int) {
 	list := []model.Syllabus{}
 	total := 0
 
-	svr.dao.SelectAll(&list, &total, dao.SyllabusMapper{SyllabusQuery: q})
+	svr.dao.SelectAll(&list, &total, q)
 	return list, total
 }
 

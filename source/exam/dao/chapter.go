@@ -1,12 +1,37 @@
 package dao
 
 import (
-	"errors"
 	"exam/model"
 
 	"github.com/jinzhu/gorm"
 )
 
+type ChapterQuery struct {
+	ID         uint `json:"id"`
+	SyllabusId uint `json:"syllabusId"`
+	ParentId   uint `json:"parentId"`
+	Page
+}
+
+func (q ChapterQuery) ParseQuery(db *gorm.DB) *gorm.DB {
+	db = db.Model(&model.Chapter{})
+
+	if q.ID != 0 {
+		db = db.Where("id = ?", q.ID)
+	}
+
+	if q.SyllabusId != 0 {
+		db = db.Where("syllabus_id = ?", q.SyllabusId)
+	}
+
+	if q.ParentId != 0 {
+		db = db.Where("parent_id = ?", q.ParentId)
+	}
+
+	return db
+}
+
+/*
 func (dao *Dao) SelectChapterById(id uint) (model.Chapter, error) {
 	result := model.Chapter{}
 	if id < 0 {
@@ -114,3 +139,5 @@ func (dao *Dao) ChapterListBySyllabus(sid uint) ([]model.Chapter, int) {
 
 	return list, total
 }
+
+*/

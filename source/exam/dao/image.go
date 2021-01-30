@@ -1,10 +1,30 @@
 package dao
 
 import (
-	"errors"
 	"exam/model"
+	"github.com/jinzhu/gorm"
 )
 
+type ImageQuery struct {
+	model.Model
+	Name string `json:"name" form:"name"`
+	Page
+}
+
+func (q ImageQuery) ParseQuery(db *gorm.DB) *gorm.DB {
+	db = db.Model(&model.Image{})
+	if q.ID != uint(0) {
+		db = db.Where("id = ?", q.ID)
+	}
+
+	if q.Name != "" {
+		db = db.Where("name = ?", q.Name)
+	}
+
+	return db
+}
+
+/*
 func (d *Dao) ImageAdd(img model.Image) (*model.Image, error) {
 	if img.ID != uint(0) {
 		img.ID = uint(0)
@@ -28,3 +48,5 @@ func (d *Dao) ImageByName(name string) (*model.Image, error) {
 		return nil, err
 	}
 }
+
+*/

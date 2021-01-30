@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"errors"
 	"exam/conf"
 	"exam/lib/database/orm"
 
@@ -73,25 +74,44 @@ func New(cf *conf.Config) *Dao {
 	}
 }
 
-func (d *Dao) Add(input interface{}, m Mapper) error {
-	db := m.ParseQuery(d.orm)
+func (d *Dao) Create(input Model, q Query) error {
+	if input.GetID() != uint(0) {
+		return errors.New("新增记录ID必须为空")
+	}
+
+	db := q.ParseQuery(d.orm)
 
 	return db.Create(input).Error
 }
 
-func (d *Dao) Edit(input interface{}, m Mapper) error {
-	db := m.ParseQuery(d.orm)
+func (d *Dao) Update(input Model, q Query) error {
+	if input.GetID() == uint(0) {
+		return errors.New("无效的ID")
+	}
+	db := q.ParseQuery(d.orm)
+	return db.Update(input).Error
+}
 
+func (d *Dao) Save(input Model, q Query) error {
+	if input.GetID() == uint(0) {
+		return errors.New("无效的ID")
+	}
+	db := q.ParseQuery(d.orm)
 	return db.Save(input).Error
 }
 
-func (d *Dao) SelectOne(result interface{}, m Mapper) error {
-	db := m.ParseQuery(d.orm)
+func (d *Dao) Delete(input interface{}, q Query) error {
+	db := q.ParseQuery(d.orm)
+	return db.Delete(input).Error
+}
+
+func (d *Dao) SelectOne(result interface{}, q Query) error {
+	db := q.ParseQuery(d.orm)
 	return db.First(result).Error
 }
 
-func (d *Dao) SelectList(result, total interface{}, m Mapper, pageIndex, pageSize int) error {
-	db := m.ParseQuery(d.orm)
+func (d *Dao) SelectList(result, total interface{}, q Query) error {
+	db := q.ParseQuery(d.orm)
 	err := db.Count(total).Error
 	if err != nil {
 		if err != gorm.ErrRecordNotFound {
@@ -99,13 +119,8 @@ func (d *Dao) SelectList(result, total interface{}, m Mapper, pageIndex, pageSiz
 		}
 	}
 
-	if pageIndex <= 0 {
-		pageIndex = 1
-	}
-
-	if pageSize <= 0 {
-		pageSize = 10
-	}
+	pageIndex := q.GetPageIndex()
+	pageSize := q.GetPageSize()
 
 	err = db.Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(result).Error
 	if err != nil {
@@ -117,8 +132,8 @@ func (d *Dao) SelectList(result, total interface{}, m Mapper, pageIndex, pageSiz
 	return nil
 }
 
-func (d *Dao) SelectAll(result, total interface{}, m Mapper) error {
-	db := m.ParseQuery(d.orm)
+func (d *Dao) SelectAll(result, total interface{}, q Query) error {
+	db := q.ParseQuery(d.orm)
 	err := db.Find(result).Count(total).Error
 	if err != nil {
 		if err != gorm.ErrRecordNotFound {
@@ -128,6 +143,41 @@ func (d *Dao) SelectAll(result, total interface{}, m Mapper) error {
 	return nil
 }
 
-type Mapper interface {
+func (d *Dao) Count(q Query) int {
+	db := q.ParseQuery(d.orm)
+
+	total := 0
+	db.Count(&total)
+	return total
+}
+
+type Query interface {
 	ParseQuery(*gorm.DB) *gorm.DB
+	GetPageIndex() int
+	GetPageSize() int
+}
+
+type Page struct {
+	PageIndex int `json:"pageIndex" form:"pageIndex"`
+	PageSize  int `json:"pageSize" form:"pageSize"`
+}
+
+func (p Page) GetPageIndex() int {
+	if p.PageIndex <= 0 {
+		p.PageIndex = 1
+	}
+
+	return p.PageIndex
+}
+
+func (p Page) GetPageSize() int {
+	if p.PageSize <= 0 {
+		p.PageSize = 20
+	}
+
+	return p.PageSize
+}
+
+type Model interface {
+	GetID() uint
 }

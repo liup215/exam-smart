@@ -1,12 +1,12 @@
 package dao
 
 import (
-	"errors"
 	"exam/model"
 
 	"github.com/jinzhu/gorm"
 )
 
+/*
 func (d *Dao) QuestionToChapterAdd(questionToChapter model.QuestionToChapter) (*model.QuestionToChapter, error) {
 	if questionToChapter.QuestionId == 0 || questionToChapter.ChapterId == 0 {
 		return nil, errors.New("question id 或者 chapter id 不能为空!")
@@ -70,20 +70,27 @@ func (d *Dao) SelectQuestionToChapter(q model.QuestionToChapterQuery) ([]model.Q
 
 	return list, total
 }
+*/
+type QuestionToChapterQuery struct {
+	model.Model
+	QuestionId uint `json:"questionId"`
+	ChapterId  uint `json:"chapterId"`
+	Page
+}
 
-func (d *Dao) parseQuestionToChapterQuery(query model.QuestionToChapterQuery) *gorm.DB {
-	db := d.orm.Model(&model.QuestionToChapter{})
+func (q QuestionToChapterQuery) ParseQuery(db *gorm.DB) *gorm.DB {
+	db = db.Model(&model.QuestionToChapter{})
 
-	if query.Id != 0 {
-		db = db.Where("id = ?", query.Id)
+	if q.ID != 0 {
+		db = db.Where("id = ?", q.ID)
 	}
 
-	if query.QuestionId != 0 {
-		db = db.Where("question_id = ?", query.QuestionId)
+	if q.QuestionId != 0 {
+		db = db.Where("question_id = ?", q.QuestionId)
 	}
 
-	if query.ChapterId != 0 {
-		db = db.Where("chapter_id = ?", query.ChapterId)
+	if q.ChapterId != 0 {
+		db = db.Where("chapter_id = ?", q.ChapterId)
 	}
 
 	return db

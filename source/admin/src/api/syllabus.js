@@ -19,7 +19,7 @@ export default {
   },
   edit: (data) => {
     return request({
-      url: '/syllabus/update',
+      url: '/syllabus/edit',
       method: 'post',
       data: data
     })

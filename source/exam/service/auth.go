@@ -1,33 +1,47 @@
 package service
 
 import (
+	"exam/dao"
 	"exam/lib/strings"
 	"exam/model"
+	"github.com/jinzhu/gorm"
 )
 
-func (auth *Service) InitUser() {
+func (s *Service) InitUser() {
+	record := model.Admin{}
+	err := s.dao.SelectOne(&record, dao.AdminQuery{UserName: "admin"})
+	if err == nil {
+		return
+	}
+
+	if err != gorm.ErrRecordNotFound {
+		return
+	}
+
 	salt := strings.Random(8)
-	auth.dao.AdminCreate(model.Admin{
+
+	admin := model.Admin{
 		UserName: "admin",
-		Password: auth.UserHash("123456" + salt),
+		Password: s.UserHash("123456" + salt),
 		Salt:     salt,
 		Status:   model.USER_STATUS_ENABLE,
-	})
+	}
+	s.dao.Create(admin, dao.AdminQuery{})
 }
 
-func (auth *Service) AuthAdmin(username, password string) (*model.Admin, bool) {
-
-	user, _ := auth.dao.GetAdminByUserName(username)
-	if user == nil {
-		return nil, false
+func (s *Service) AuthAdmin(username, password string) (model.Admin, bool) {
+	user := model.Admin{}
+	err := s.dao.SelectOne(&user, dao.AdminQuery{UserName: username})
+	if err != nil {
+		return user, false
 	}
 
 	if user.Password == "" || len(user.Password) == 0 {
-		return nil, false
+		return user, false
 	}
 
-	if auth.UserHash(password+user.Salt) != user.Password {
-		return nil, false
+	if s.UserHash(password+user.Salt) != user.Password {
+		return user, false
 	}
 
 	return user, true

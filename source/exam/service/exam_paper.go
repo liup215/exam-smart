@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"errors"
+	"exam/dao"
 	"exam/lib/strings"
 	"exam/model"
 	"fmt"
@@ -26,39 +27,44 @@ func init() {
 	fmt.Println(os.MkdirAll(EXAM_TMP_DIR, os.ModePerm))
 }
 
-func (svr *Service) SelectExamPaperAllCount() int {
-	return svr.dao.SelectExamPaperAllCount()
+func (s *Service) SelectExamPaperAllCount() int {
+	return s.dao.Count(dao.ExamPaperQuery{})
 }
 
-func (svr *Service) ExamPaperList(query model.ExamPaperQuery) ([]model.ExamPaper, int) {
-	list, total := svr.dao.SelectExamPaperList(query)
+func (s *Service) ExamPaperList(q dao.ExamPaperQuery) ([]model.ExamPaper, int) {
+	list := []model.ExamPaper{}
+	total := 0
+
+	s.dao.SelectList(&list, &total, q)
 
 	for i, p := range list {
-		list[i] = svr.examPaperFormat(p)
+		s.examPaperFormat(&p)
+		list[i] = p
 	}
 
 	return list, total
 }
 
-func (svr *Service) ExamPaperById(id uint) (model.ExamPaper, error) {
+func (s *Service) ExamPaperById(id uint) (model.ExamPaper, error) {
 	if id == uint(0) {
 		return model.ExamPaper{}, errors.New("试卷ID不能为空")
 	}
 
-	return svr.examPaperById(id)
+	return s.examPaperById(id)
 }
 
-func (svr *Service) ExamPaperExportToDox(id uint) (string, string, error) {
+func (s *Service) ExamPaperExportToDox(id uint) (string, string, error) {
 	if id == uint(0) {
 		return "", "", errors.New("试卷ID不能为空")
 	}
 
-	paper, err := svr.dao.SelectExamPaperById(id)
+	paper, err := s.examPaperById(id)
 	if err != nil {
 		return "", "", err
 	}
 
-	p := svr.examPaperFormat(paper)
+	//p := s.examPaperFormat(paper)
+	s.examPaperFormat(&paper)
 	fileName := fmt.Sprintf("exam_paper_%v_%v_%v.docx", int(id), paper.Name, time.Now().Format("20060102150405")+strings.NumRandomStr(4))
 
 	filePath := EXAM_TMP_DIR + fileName
@@ -76,11 +82,11 @@ func (svr *Service) ExamPaperExportToDox(id uint) (string, string, error) {
 	tRun := t.AddRun()
 	t.SetStyle("Heading1")
 	tRun.Properties().SetFontFamily("Arial")
-	tRun.AddText(p.Name)
+	tRun.AddText(paper.Name)
 
 	// 写入题目
 
-	for order, titleItem := range p.TitleItems {
+	for order, titleItem := range paper.TitleItems {
 		item := doc.AddParagraph()
 		iRun := item.AddRun()
 		item.SetStyle("Heading2")
@@ -89,7 +95,7 @@ func (svr *Service) ExamPaperExportToDox(id uint) (string, string, error) {
 
 		// 正式写入题目
 		for qOrder, qItem := range titleItem.QuestionItems {
-			svr.writeQuestionToDoc(doc, qItem.Question, qOrder)
+			s.writeQuestionToDoc(doc, qItem.Question, qOrder)
 		}
 
 	}
@@ -168,28 +174,30 @@ func (svr *Service) writeQuestionToDoc(doc *document.Document, q model.Question,
 	}
 }
 
-func (svr *Service) examPaperById(id uint) (model.ExamPaper, error) {
+func (s *Service) examPaperById(id uint) (model.ExamPaper, error) {
 	if id == uint(0) {
 		return model.ExamPaper{}, errors.New("试卷ID不能为空")
 	}
 
-	paper, err := svr.dao.SelectExamPaperById(id)
-	return svr.examPaperFormat(paper), err
+	p := model.ExamPaper{}
+	err := s.dao.SelectOne(&p, dao.ExamPaperQuery{Model: model.Model{ID: id}})
+	s.examPaperFormat(&p)
+	return p, err
 }
 
-func (svr *Service) examPaperFormat(p model.ExamPaper) model.ExamPaper {
+func (svr *Service) examPaperFormat(p *model.ExamPaper) {
 	syllabusOption := svr.buildSyllabusOptionById(p.SyllabusId)
 	p.SyllabusOption = syllabusOption
 
 	// 格式化创建时间
 	p.CreatedAtFormatted = p.CreatedAt.Format("2006-01-02 15:04:05")
 
-	textContent, _ := svr.dao.TextContentById(p.FrameTexcontentId)
+	textContent := model.TextContent{}
+	svr.dao.SelectOne(&textContent, dao.TextContentQuery{Model: model.Model{ID: p.FrameTexcontentId}})
 	examPaperTitleItems := []model.ExamPaperTitleItem{}
 	json.Unmarshal([]byte(textContent.Content), &examPaperTitleItems)
 
 	p.TitleItems = examPaperTitleItems
-	return p
 }
 
 func (svr *Service) SavePaper(examPaper model.ExamPaper) (model.ExamPaper, error) {
@@ -205,22 +213,19 @@ func (svr *Service) SavePaper(examPaper model.ExamPaper) (model.ExamPaper, error
 	if examPaper.ID == 0 {
 
 		textContext := model.TextContent{Content: frameTextContentStr}
-		textContextId, err := svr.dao.TextContentAdd(textContext)
+		err := svr.dao.Create(&textContext, dao.TextContentQuery{})
 		if err != nil {
 			return model.ExamPaper{}, errors.New("题目信息存储失败, " + err.Error())
 		}
 
-		examPaper.FrameTexcontentId = textContextId
+		examPaper.FrameTexcontentId = textContext.ID
 		svr.examPaperFromVM(&examPaper, titleItemsVM)
-		ep, err := svr.dao.ExamPaperAdd(examPaper)
-		if err != nil {
+		if err := svr.dao.Create(&examPaper, dao.ExamPaperQuery{}); err != nil {
 			return model.ExamPaper{}, nil
 		}
-
-		examPaper = *ep
 	} else {
-		record, err := svr.dao.SelectExamPaperById(examPaper.ID)
-		if err != nil {
+		record := model.ExamPaper{}
+		if err := svr.dao.SelectOne(&record, dao.ExamPaperQuery{Model: model.Model{ID: examPaper.ID}}); err != nil {
 			return model.ExamPaper{}, errors.New("试卷查询失败, " + err.Error())
 		}
 
@@ -228,24 +233,23 @@ func (svr *Service) SavePaper(examPaper model.ExamPaper) (model.ExamPaper, error
 		record.SyllabusId = examPaper.SyllabusId
 		record.SuggestTime = examPaper.SuggestTime
 
-		textContext, err := svr.dao.TextContentById(examPaper.FrameTexcontentId)
-		if err != nil {
+		textContent := model.TextContent{}
+		if err := svr.dao.SelectOne(&textContent, dao.TextContentQuery{Model: model.Model{ID: examPaper.FrameTexcontentId}}); err != nil {
 			return model.ExamPaper{}, errors.New("试卷内容查询失败, " + err.Error())
 		}
 
-		textContext.Content = frameTextContentStr
-		if svr.dao.TextContentUpdate(*textContext) != nil {
+		textContent.Content = frameTextContentStr
+		if svr.dao.Save(&textContent, dao.TextContentQuery{}) != nil {
 			return model.ExamPaper{}, errors.New("试卷内容更新失败, " + err.Error())
 		}
 
 		svr.examPaperFromVM(&record, titleItemsVM)
 
-		ep, err := svr.dao.ExamPaperUpdate(record)
-		if err != nil {
+		if err := svr.dao.Save(&record, dao.ExamPaperQuery{}); err != nil {
 			return model.ExamPaper{}, nil
 		}
 
-		examPaper = *ep
+		examPaper = record
 	}
 
 	return examPaper, nil

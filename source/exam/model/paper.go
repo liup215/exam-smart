@@ -28,23 +28,10 @@ type Year struct {
 	Name string `json:"name"`
 }
 
-type YearQuery struct {
-	ID        uint `json:"id"`
-	PageIndex int  `json:"pageIndex"`
-	PageSize  int  `json:"pageSize"`
-}
-
 type Series struct {
 	Model
 	Name string `json:"name"`
 	SyllabusOption
-}
-
-type SeriesQuery struct {
-	ID         uint `json:"id"`
-	SyllabusId uint `json:"syllabusId"`
-	PageIndex  int  `json:"pageIndex"`
-	PageSize   int  `json:"pageSize"`
 }
 
 type Code struct {
@@ -53,27 +40,12 @@ type Code struct {
 	SyllabusOption
 }
 
-type CodeQuery struct {
-	ID         uint `json:"id"`
-	SyllabusId uint `json:"syllabusId"`
-	PageIndex  int  `json:"pageIndex"`
-	PageSize   int  `json:"pageSize"`
-}
-
 type PastPaper struct {
 	Model
 	Name                   string `json:"name"`
 	QuestionNumber         int    `json:"questionNumber"`
 	InsertedQuestionNumber int    `gorm:"-" json:"insertedQuestionNumber"`
 	PaperOption
-}
-
-type PastPaperQuery struct {
-	Model
-	Name string `json:"name"`
-	PaperOption
-	PageIndex int `json:"pageIndex"`
-	PageSize  int `json:"pageSize"`
 }
 
 type ExamPaper struct {
@@ -91,14 +63,6 @@ type ExamPaper struct {
 
 	// response VM
 	CreatedAtFormatted string `gorm:"-" json:"createdAtFormatted"`
-}
-
-type ExamPaperQuery struct {
-	Model
-	Name string `json:"name"` // 试卷名称
-	PaperOption
-	PageIndex int `json:"pageIndex" form:"pageIndex"`
-	PageSize  int `json:"pageSize" form:"pageSize"`
 }
 
 type ExamPaperTitleItem struct {

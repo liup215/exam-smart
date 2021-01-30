@@ -5,12 +5,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"exam/dao"
 	"exam/lib/net/http"
 	"exam/model"
 )
 
 func (h *Handler) QuestionList(c *gin.Context) {
-	query := model.QuestionQuery{}
+	query := dao.QuestionQuery{}
 
 	if err := c.BindJSON(&query); err != nil {
 		http.Response(c, 400, "参数解析失败: "+err.Error(), nil)
@@ -74,7 +75,7 @@ func (h *Handler) QuestionAddOrEdit(c *gin.Context) {
 }
 
 func (h *Handler) QuestionDeleteChapter(c *gin.Context) {
-	q := model.QuestionToChapterQuery{}
+	q := dao.QuestionToChapterQuery{}
 	if err := c.BindJSON(&q); err != nil {
 		http.Response(c, 400, "参数解析失败: "+err.Error(), nil)
 		return

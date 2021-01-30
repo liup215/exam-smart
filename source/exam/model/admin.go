@@ -12,18 +12,6 @@ type Admin struct {
 	Status   int    `form:"status" json:"status"` // 1.启用 2禁用
 }
 
-type AdminQuery struct {
-	UserName  string `json:"userName"`
-	PageIndex int    `json:"pageIndex"`
-	PageSize  int    `json:"pageSize"`
-}
-
-type AdminPageRequest struct {
-	UserName  string `json:"userName"`
-	PageIndex int    `json:"pageIndex"`
-	PageSize  int    `json:"pageSize"`
-}
-
 const (
 	USER_STATUS_ENABLE  = 1
 	USER_STATUS_DISABLE = 2

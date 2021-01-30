@@ -73,13 +73,3 @@ type QuestionChapterInfo struct {
 	ChapterId   uint   `json:"chapterId"`
 	ChapterName string `json:"chapterName"`
 }
-
-type QuestionQuery struct {
-	PageIndex           int  `json:"pageIndex"`
-	PageSize            int  `json:"pageSize"`
-	SyllabusId          uint `json:"syllabusId"`
-	ID                  uint `json:"id"`
-	IsPastPaperQuestion int  `json:"isPastPaperQuestion"`
-	PastPaperId         uint `json:"pastPaperId"`
-	QuestionType        int  `json:"questionType"`
-}

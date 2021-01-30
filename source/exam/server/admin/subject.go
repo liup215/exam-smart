@@ -1,20 +1,13 @@
 package admin
 
 import (
+	"exam/dao"
 	"exam/lib/net/http"
 	"exam/model"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
-
-func (h *Handler) SubjectListPage(c *gin.Context) {
-	c.HTML(200, "admin/subject_list.html", gin.H{})
-}
-
-func (h *Handler) SubjectAddPage(c *gin.Context) {
-	c.HTML(200, "admin/subject_add.html", gin.H{})
-}
 
 func (h *Handler) SubjectAdd(c *gin.Context) {
 	var sub model.Subject
@@ -48,7 +41,7 @@ func (h *Handler) SubjectEdit(c *gin.Context) {
 
 func (h *Handler) SubjectList(c *gin.Context) {
 
-	query := model.SubjectQuery{}
+	query := dao.SubjectQuery{}
 	if err := c.BindJSON(&query); err != nil {
 		http.Response(c, 400, "参数解析失败: "+err.Error(), nil)
 		return

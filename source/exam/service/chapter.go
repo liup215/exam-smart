@@ -1,12 +1,16 @@
 package service
 
 import (
-	//"errors"
+	"errors"
+	"exam/dao"
 	"exam/model"
 )
 
-func (svr *Service) ChapterList(query model.ChapterQuery) ([]model.Chapter, int) {
-	return svr.dao.SelectChapterList(query)
+func (s *Service) ChapterList(q dao.ChapterQuery) ([]model.Chapter, int) {
+	list := []model.Chapter{}
+	total := 0
+	s.dao.SelectList(&list, &total, q)
+	return list, total
 }
 
 func (svr *Service) ChapterTree(sId uint) []model.Chapter {
@@ -14,10 +18,12 @@ func (svr *Service) ChapterTree(sId uint) []model.Chapter {
 	return svr.buildChapterTree(0, sId)
 }
 
-func (svr *Service) buildChapterTree(parentId, bookId uint) []model.Chapter {
-	list := svr.dao.SelectChapterByParentIdAndSyllabusId(parentId, bookId)
+func (s *Service) buildChapterTree(parentId, syllabusId uint) []model.Chapter {
+	list := []model.Chapter{}
+	total := 0
+	s.dao.SelectAll(&list, &total, dao.ChapterQuery{ParentId: parentId, SyllabusId: syllabusId})
 	for i, chapter := range list {
-		children := svr.buildChapterTree(chapter.ID, bookId)
+		children := s.buildChapterTree(chapter.ID, syllabusId)
 		if len(children) == 0 {
 			list[i].IsLeaf = 1
 		}
@@ -26,22 +32,40 @@ func (svr *Service) buildChapterTree(parentId, bookId uint) []model.Chapter {
 	return list
 }
 
-func (svr *Service) ChapterAdd(chapter model.Chapter) error {
-	return svr.dao.ChapterAdd(chapter)
+func (s *Service) ChapterAdd(chapter model.Chapter) error {
+	if chapter.ID != uint(0) {
+		chapter.ID = uint(0)
+	}
+
+	return s.dao.Create(chapter, dao.ChapterQuery{})
 }
 
-func (svr *Service) ChapterUpdate(chapter model.Chapter) error {
-	return svr.dao.ChapterUpdate(chapter)
+func (s *Service) ChapterUpdate(chapter model.Chapter) error {
+	return s.dao.Update(chapter, dao.ChapterQuery{})
 }
 
-func (svr *Service) ChapterDelete(id uint) error {
-	return svr.dao.ChapterDelete(id)
+func (s *Service) ChapterDelete(id uint) error {
+	if id == uint(0) {
+		return errors.New("无效的ID")
+	}
+
+	return s.dao.Delete(model.Chapter{Model: model.Model{ID: id}}, dao.ChapterQuery{})
 }
 
-func (svr *Service) ChapterListBySyllabus(sid uint) ([]model.Chapter, int) {
-	return svr.dao.ChapterListBySyllabus(sid)
+func (s *Service) ChapterListBySyllabus(sid uint) ([]model.Chapter, int) {
+	list := []model.Chapter{}
+	total := 0
+	s.dao.SelectList(&list, &total, dao.ChapterQuery{SyllabusId: sid})
+	return list, total
 }
 
-func (svr *Service) ChapterById(id uint) (model.Chapter, error) {
-	return svr.dao.SelectChapterById(id)
+func (s *Service) ChapterById(id uint) (model.Chapter, error) {
+	c := model.Chapter{}
+
+	if id == uint(0) {
+		return c, errors.New("无效的ID")
+	}
+
+	err := s.dao.SelectOne(&c, dao.ChapterQuery{ID: id})
+	return c, err
 }

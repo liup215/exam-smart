@@ -13,11 +13,3 @@ type Chapter struct {
 	IsLeaf       int       `gorm:"-" json:"isLeaf"`
 	QuestionList string    `gorm:"-" json:"questionList"`
 }
-
-type ChapterQuery struct {
-	ID         uint `json:"id"`
-	SyllabusId uint `json:"syllabusId"`
-	ParentId   uint `json:"parentId"`
-	PageIndex  int  `json:"pageIndex"`
-	PageSize   int  `json:"pageSize"`
-}

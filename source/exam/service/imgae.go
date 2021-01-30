@@ -1,6 +1,7 @@
 package service
 
 import (
+	"exam/dao"
 	"exam/lib/strings"
 	"exam/model"
 
@@ -19,7 +20,8 @@ func (s *Service) NewImage() (*model.Image, error) {
 
 	img.Name = name
 
-	return s.dao.ImageAdd(img)
+	err = s.dao.Create(img, dao.ImageQuery{})
+	return &img, err
 }
 
 func (s *Service) GenerateImageName() (string, error) {
@@ -31,7 +33,8 @@ func (s *Service) generateImageName() (string, error) {
 	name := prefix + strings.Random(20)
 
 	for {
-		_, err := s.dao.ImageByName(name)
+		img := model.Image{}
+		err := s.dao.SelectOne(&img, dao.ImageQuery{Name: name})
 		if err == gorm.ErrRecordNotFound {
 			break
 		} else if err != nil {

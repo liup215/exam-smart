@@ -23,7 +23,7 @@
         <el-input v-model="form.name"/>
       </el-form-item>
       <el-form-item :key="index" :label="'标题'+(index+1)+':'" required v-for="(titleItem,index) in form.titleItems">
-        <el-input v-model="titleItem.Name" style="width: 80%"/>
+        <el-input v-model="titleItem.name" style="width: 80%"/>
         <el-button type="text" class="link-left" style="margin-left: 20px" size="mini" @click="addQuestion(titleItem)">
           添加题目
         </el-button>

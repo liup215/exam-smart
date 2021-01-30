@@ -8,3 +8,7 @@ type Model struct {
 	UpdatedAt time.Time  `json:"updatedAt"`
 	DeletedAt *time.Time `json:"deletedAt"`
 }
+
+func (m Model) GetID() uint {
+	return m.ID
+}

@@ -16,9 +16,9 @@ func (h *Handler) Dashboard(c *gin.Context) {
 	http.Response(c, 200, "数据获取成功", gin.H{
 		"examPaperCount":              h.svr.SelectExamPaperAllCount(),
 		"questionCount":               h.svr.SelectQuestionAllCount(),
-		"doExamPaperCount":            h.svr.SelectExamPaperAnswerAllCount(),
-		"doQuestionCount":             h.svr.SelectExamPaperQuestionCustomerAnswerAllCount(),
-		"monthDayUserActionValue":     h.svr.SelectUserEventLogMothCount(),
+		"doExamPaperCount":            0,
+		"doQuestionCount":             0,
+		"monthDayUserActionValue":     0,
 		"monthDayDoExamQuestionValue": monthDayDoExamQuestionValue,
 		"monthDayText":                monthDayText,
 	})

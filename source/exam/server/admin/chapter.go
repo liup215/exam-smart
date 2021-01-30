@@ -1,67 +1,15 @@
 package admin
 
 import (
+	"exam/dao"
 	"exam/lib/net/http"
 	"exam/model"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) ChapterAddPage(c *gin.Context) {
-	ssID := c.Query("syllabusId")
-	sID, err := strconv.Atoi(ssID)
-	if err != nil {
-		c.HTML(200, "admin/error.html", nil)
-		return
-	}
-
-	ppID := c.Query("parentId")
-	pID, err := strconv.Atoi(ppID)
-	if err != nil {
-		c.HTML(200, "admin/error.html", nil)
-		return
-	}
-
-	c.HTML(200, "admin/chapter-add.html", gin.H{
-		"syllabusId": sID,
-		"parentId":   pID,
-	})
-}
-
-func (h *Handler) ChapterEditPage(c *gin.Context) {
-	ccID := c.Query("id")
-	cID, err := strconv.Atoi(ccID)
-	if err != nil || cID == 0 {
-		c.HTML(200, "admin/error.html", nil)
-		return
-	}
-
-	chapter, _ := h.svr.ChapterById(uint(cID))
-	c.HTML(200, "admin/chapter-edit.html", gin.H{
-		"chapter": chapter,
-	})
-}
-
-func (h *Handler) ChapterTreePage(c *gin.Context) {
-	ssID := c.Query("syllabusId")
-	sID, err := strconv.Atoi(ssID)
-	if err != nil {
-		c.HTML(200, "admin/error.html", nil)
-		return
-	}
-	syllabus, err := h.svr.SelectSyllabusById(uint(sID))
-	if err != nil {
-		c.HTML(200, "admin/error.html", nil)
-		return
-	}
-	c.HTML(200, "admin/chatper-tree.html", gin.H{
-		"syllabus": syllabus,
-	})
-}
-
 func (h *Handler) ChapterListBySyllabus(c *gin.Context) {
-	q := model.ChapterQuery{}
+	q := dao.ChapterQuery{}
 	if err := c.BindJSON(&q); err != nil {
 		http.Response(c, 400, "参数解析失败,"+err.Error(), nil)
 		return
@@ -84,7 +32,7 @@ func (h *Handler) ChapterListBySyllabus(c *gin.Context) {
 
 func (h *Handler) ChapterList(c *gin.Context) {
 
-	query := model.ChapterQuery{}
+	query := dao.ChapterQuery{}
 
 	if err := c.BindJSON(&query); err != nil {
 		http.Response(c, 400, "参数解析失败, "+err.Error(), nil)
@@ -114,7 +62,7 @@ func (h *Handler) ChapterAdd(c *gin.Context) {
 }
 
 func (h *Handler) ChapterTree(c *gin.Context) {
-	query := model.ChapterQuery{}
+	query := dao.ChapterQuery{}
 
 	if err := c.BindJSON(&query); err != nil {
 		http.Response(c, 400, err.Error(), nil)
@@ -153,7 +101,7 @@ func (h *Handler) ChapterUpdate(c *gin.Context) {
 }
 
 func (h *Handler) ChapterDelete(c *gin.Context) {
-	query := model.ChapterQuery{}
+	query := dao.ChapterQuery{}
 
 	if err := c.BindJSON(&query); err != nil {
 		http.Response(c, 400, "参数解析失败: "+err.Error(), nil)

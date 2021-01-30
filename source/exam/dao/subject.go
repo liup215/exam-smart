@@ -1,12 +1,12 @@
 package dao
 
 import (
-	"errors"
 	"exam/model"
 
 	"github.com/jinzhu/gorm"
 )
 
+/*
 func (dao *Dao) SubjectAdd(sub model.Subject) error {
 	if sub.ID != 0 {
 		sub.ID = 0
@@ -57,9 +57,14 @@ func (dao *Dao) SelectSubjectList(query model.SubjectQuery) ([]model.Subject, in
 
 	return list, total
 }
+*/
+type SubjectQuery struct {
+	model.Model
+	Page
+}
 
-func (dao *Dao) parseSubjectQuery(query model.SubjectQuery) *gorm.DB {
-	db := dao.orm.Model(&model.Subject{})
+func (q SubjectQuery) ParseQuery(db *gorm.DB) *gorm.DB {
+	db = db.Model(&model.Subject{})
 
 	return db
 }

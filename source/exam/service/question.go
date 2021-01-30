@@ -8,42 +8,43 @@ import (
 )
 
 func (svr *Service) SelectQuestionAllCount() int {
-	return svr.dao.SelectQuestionAllCount()
+	return svr.dao.Count(dao.QuestionQuery{})
 }
 
-func (svr *Service) SelectQuestionAllByQuery(q model.QuestionQuery) ([]model.Question, int) {
+func (svr *Service) SelectQuestionAllByQuery(q dao.QuestionQuery) ([]model.Question, int) {
 	list := []model.Question{}
 	total := 0
-	svr.dao.SelectAll(&list, &total, dao.QuestionMapper{QuestionQuery: q})
+	svr.dao.SelectAll(&list, &total, q)
 
 	return list, total
 }
 
-func (svr *Service) SelectQuestionList(query model.QuestionQuery) ([]model.Question, int) {
+func (svr *Service) SelectQuestionList(query dao.QuestionQuery) ([]model.Question, int) {
 	list := []model.Question{}
-	questionList, total := svr.dao.SelectQuestionList(query)
+	total := 0
+	svr.dao.SelectList(&list, &total, query)
 
-	for _, q := range questionList {
-		err := svr.buildQuestion(&q)
-		if err != nil {
+	for i, q := range list {
+		if err := svr.buildQuestion(&q); err != nil {
 			continue
 		}
-		list = append(list, q)
+		list[i] = q
 	}
 
 	return list, total
 }
 
-func (svr *Service) QuestionById(id uint) (*model.Question, error) {
+func (svr *Service) QuestionById(id uint) (model.Question, error) {
 	if id == uint(0) {
-		return nil, errors.New("ID不能为空!")
+		return model.Question{}, errors.New("ID不能为空!")
 	}
 
-	question, err := svr.dao.SelectQuestionById(id)
+	question := model.Question{}
+	err := svr.dao.SelectOne(&question, dao.QuestionQuery{Model: model.Model{ID: id}})
 	if err != nil {
-		return nil, err
+		return model.Question{}, err
 	}
-	err = svr.buildQuestion(question)
+	err = svr.buildQuestion(&question)
 
 	return question, err
 }
@@ -55,8 +56,8 @@ func (svr *Service) buildQuestion(q *model.Question) error {
 	syllabusOption := svr.buildSyllabusOptionById(q.SyllabusId)
 	q.SyllabusOption = syllabusOption
 
-	textContent, err := svr.dao.TextContentById(q.InfoTextContentId)
-	if err != nil {
+	textContent := model.TextContent{}
+	if err := svr.dao.SelectOne(&textContent, dao.TextContentQuery{Model: model.Model{ID: q.InfoTextContentId}}); err != nil {
 		return err
 	}
 
@@ -72,19 +73,24 @@ func (svr *Service) buildQuestion(q *model.Question) error {
 
 	// 返回真题信息
 	if q.IsPastPaperQuestion == 1 && q.PastPaperId != 0 {
-		pastPaper, _ := svr.dao.PastPaperById(q.PastPaperId)
+		pastPaper, _ := svr.PastPaperById(q.PastPaperId)
 		q.YearId = pastPaper.YearId
+		q.YearName = pastPaper.YearName
 		q.CodeId = pastPaper.CodeId
+		q.CodeName = pastPaper.CodeName
 		q.SeriesId = pastPaper.SeriesId
+		q.SeriesName = pastPaper.SeriesName
 	}
 
 	// 返回题目章节信息
 	chapterList := []model.QuestionChapterInfo{}
-
-	chapterToQuestionList := svr.dao.SelectQuestionToChapterByQuestion(q.ID)
+	chapterToQuestionList := []model.QuestionToChapter{}
+	total := 0
+	svr.dao.SelectAll(&chapterToQuestionList, &total, dao.QuestionToChapterQuery{QuestionId: q.ID})
 
 	for _, chapterToQuestion := range chapterToQuestionList {
-		chapter, err := svr.dao.SelectChapterById(chapterToQuestion.ChapterId)
+		chapter := model.Chapter{}
+		err := svr.dao.SelectOne(&chapter, dao.ChapterQuery{ID: chapterToQuestion.ChapterId})
 		if err != nil {
 			continue
 		}
@@ -105,9 +111,8 @@ func (svr *Service) QuestionEdit(q model.Question) error {
 	if q.ID == uint(0) {
 		return errors.New("ID不能为空")
 	}
-	question, err := svr.dao.SelectQuestionById(q.ID)
-
-	if err != nil {
+	question := model.Question{}
+	if err := svr.dao.SelectOne(&question, dao.QuestionQuery{Model: model.Model{ID: q.ID}}); err != nil {
 		return errors.New("查无此问题！")
 	}
 
@@ -124,39 +129,47 @@ func (svr *Service) QuestionEdit(q model.Question) error {
 
 	question.SetCorrectFromVM(q.Correct, q.CorrectArray)
 
-	if err := svr.dao.QuestionUpdate(*question); err != nil {
+	if err := svr.dao.Save(&question, dao.QuestionQuery{Model: model.Model{ID: q.ID}}); err != nil {
 		return err
 	}
 
-	textContent, err := svr.dao.TextContentById(question.InfoTextContentId)
-	if err != nil {
+	textContent := model.TextContent{}
+	if err := svr.dao.SelectOne(&textContent, dao.TextContentQuery{Model: model.Model{ID: question.InfoTextContentId}}); err != nil {
 		return errors.New("试题内容查询失败!")
 	}
 
-	svr.setQuestionInfoFromVM(textContent, q)
-	if err := svr.dao.TextContentUpdate(*textContent); err != nil {
+	svr.setQuestionInfoFromVM(&textContent, q)
+	if err := svr.dao.Save(&textContent, dao.TextContentQuery{Model: model.Model{ID: textContent.ID}}); err != nil {
 		return err
 	}
 	return nil
 }
 
 func (svr *Service) QuestionAdd(q model.Question) error {
+	if q.ID != uint(0) {
+		q.ID = uint(0)
+	}
 	text := model.TextContent{}
 	svr.setQuestionInfoFromVM(&text, q)
 
-	txtID, _ := svr.dao.TextContentAdd(text)
+	if err := svr.dao.Create(&text, dao.TextContentQuery{}); err != nil {
+		return err
+	}
+	txtID := text.ID
 
 	q.InfoTextContentId = txtID
 
 	q.SetCorrectFromVM(q.Correct, q.CorrectArray)
 
-	_, err := svr.dao.QuestionAdd(q)
+	return svr.dao.Create(&q, dao.QuestionQuery{})
 
-	return err
 }
 
 func (svr *Service) QuestionUpdate(q model.Question) error {
-	return svr.dao.QuestionUpdate(q)
+	if q.ID == uint(0) {
+		return errors.New("无效的ID")
+	}
+	return svr.dao.Save(&q, dao.QuestionQuery{})
 }
 
 func (svr *Service) setQuestionInfoFromVM(infoTextContent *model.TextContent, vm model.Question) {

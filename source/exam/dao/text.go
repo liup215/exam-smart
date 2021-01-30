@@ -1,9 +1,24 @@
 package dao
 
 import (
-	"errors"
 	"exam/model"
+	"github.com/jinzhu/gorm"
 )
+
+type TextContentQuery struct {
+	model.Model
+	Page
+}
+
+func (q TextContentQuery) ParseQuery(db *gorm.DB) *gorm.DB {
+	db = db.Model(&model.TextContent{})
+	if q.ID != uint(0) {
+		db = db.Where("id = ?", q.ID)
+	}
+	return db
+}
+
+/*
 
 func (d *Dao) TextContentAdd(txt model.TextContent) (uint, error) {
 	err := d.orm.Create(&txt).Error
@@ -28,3 +43,4 @@ func (d *Dao) TextContentById(id uint) (*model.TextContent, error) {
 
 	return &textContent, err
 }
+*/

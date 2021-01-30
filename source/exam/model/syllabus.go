@@ -26,11 +26,3 @@ func (s Syllabus) GetSyllabusTypeName() string {
 
 	return ""
 }
-
-type SyllabusQuery struct {
-	ID        uint `json:"id"`
-	SubjectId uint `json:"subjectId"`
-	Type      int  `json:"type"`
-	PageIndex int  `form:"pageIndex" json:"pageIndex"`
-	PageSize  int  `form:"pageSize" json:"pageSize"`
-}

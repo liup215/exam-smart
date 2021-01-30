@@ -237,12 +237,12 @@ export default {
       this.$refs['form'].resetFields()
     },
     syllabusChange() {
-      this.form.seriesId = null
-      this.form.codeId = null
-      this.form.pastPaperId = null
-      this.pastPaperList = []
-      this.seriesList = []
-      this.codeList = []
+      // this.form.seriesId = null
+      // this.form.codeId = null
+      // this.form.pastPaperId = null
+      // this.pastPaperList = []
+      // this.seriesList = []
+      // this.codeList = []
     },
     yearChange() {
       this.searchPastPaper()

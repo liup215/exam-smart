@@ -1,39 +1,16 @@
 package admin
 
 import (
+	"exam/dao"
 	"exam/lib/net/http"
 	"exam/model"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) SyllabusAddPage(c *gin.Context) {
-	subList, _ := h.svr.AllSubject()
-
-	c.HTML(200, "admin/syllabus-add.html", gin.H{
-		"subjectList": subList,
-	})
-}
-
-func (h *Handler) SyllabusListPage(c *gin.Context) {
-	c.HTML(200, "admin/syllabus-list.html", gin.H{})
-}
-
-func (h *Handler) SyllabusEditPage(c *gin.Context) {
-	sid := c.Query("id")
-	id, _ := strconv.Atoi(sid)
-	syllabus, _ := h.svr.SelectSyllabusById(uint(id))
-	subList, _ := h.svr.AllSubject()
-	c.HTML(200, "admin/syllabus-edit.html", gin.H{
-		"syllabus":    syllabus,
-		"subjectList": subList,
-	})
-}
-
 func (h *Handler) SyllabusList(c *gin.Context) {
 
-	query := model.SyllabusQuery{}
+	query := dao.SyllabusQuery{}
 
 	if err := c.BindJSON(&query); err != nil {
 		http.Response(c, 400, "参数解析失败, "+err.Error(), nil)
@@ -48,7 +25,7 @@ func (h *Handler) SyllabusList(c *gin.Context) {
 }
 
 func (h *Handler) SelectSyllabusAll(c *gin.Context) {
-	list, total := h.svr.SelectSyllabusAll(model.SyllabusQuery{})
+	list, total := h.svr.SelectSyllabusAll(dao.SyllabusQuery{})
 	http.Response(c, 200, "获取成功!", gin.H{
 		"list":  list,
 		"total": total,
@@ -57,7 +34,7 @@ func (h *Handler) SelectSyllabusAll(c *gin.Context) {
 
 func (h *Handler) SyllabusListOld(c *gin.Context) {
 
-	query := model.SyllabusQuery{}
+	query := dao.SyllabusQuery{}
 
 	if err := c.BindJSON(&query); err != nil {
 		http.Response(c, 400, "参数解析失败, "+err.Error(), nil)
@@ -70,8 +47,8 @@ func (h *Handler) SyllabusListOld(c *gin.Context) {
 	})
 }
 
-func (h *Handler) SyllabusById(c *gin.Context) {
-	query := model.SyllabusQuery{}
+func (h *Handler) SelectSyllabusById(c *gin.Context) {
+	query := dao.SyllabusQuery{}
 
 	if err := c.BindJSON(&query); err != nil {
 		http.Response(c, 400, "参数解析失败, "+err.Error(), nil)

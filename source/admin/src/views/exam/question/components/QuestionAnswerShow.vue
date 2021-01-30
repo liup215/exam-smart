@@ -47,7 +47,7 @@
           </div>
           <div class="question-answer-show-item">
             <span class="question-show-item">真题信息：</span>
-            <span v-if="question.isPastPaperQuestion === 1">{{question.year}}-{{question.series}}-{{question.code}}-{{question.orderNumber}}</span>
+            <span v-if="question.isPastPaperQuestion === 1">{{question.yearName}}-{{question.seriesName}}-{{question.codeName}}-{{question.orderNumber}}</span>
             <span v-else>原创试题</span>
           </div>
         </el-tab-pane>

@@ -7,11 +7,3 @@ type QuestionToChapter struct {
 	QuestionId uint `json:"questionId"`
 	ChapterId  uint `json:"chapterId"`
 }
-
-type QuestionToChapterQuery struct {
-	Id         uint `json:"id"`
-	QuestionId uint `json:"questionId"`
-	ChapterId  uint `json:"chapterId"`
-	PageIndex  int  `json:"pageIndex"`
-	PageSize   int  `json:"pageSize"`
-}

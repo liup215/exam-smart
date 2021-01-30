@@ -47,6 +47,7 @@ func (h *Handler) Route(r *gin.RouterGroup) {
 	r.POST("/syllabus/add", h.SyllabusAdd)
 	r.POST("/syllabus/edit", h.SyllabusUpdate)
 	r.POST("/syllabus/all", h.SelectSyllabusAll)
+	r.POST("/syllabus/getById", h.SelectSyllabusById)
 
 	r.POST("/chapter/tree", h.ChapterTree)
 	r.POST("/chapter/listBySyllabus", h.ChapterListBySyllabus)

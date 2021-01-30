@@ -1,12 +1,30 @@
 package dao
 
 import (
-	"errors"
 	"exam/model"
 
 	"github.com/jinzhu/gorm"
 )
 
+type AdminQuery struct {
+	ID       uint   `json:"id" form: "id"`
+	UserName string `json:"userName" form:"userName"`
+	Page
+}
+
+func (q AdminQuery) ParseQuery(db *gorm.DB) *gorm.DB {
+	db = db.Model(&model.Admin{})
+	if q.ID != uint(0) {
+		db = db.Where("id = ?", q.ID)
+	}
+
+	if q.UserName != "" {
+		db = db.Where("user_name = ?", q.UserName)
+	}
+	return db
+}
+
+/*
 func (dao *Dao) AdminCreate(user model.Admin) error {
 	if user.ID != uint(0) {
 		return errors.New("用户ID必须为空")
@@ -59,3 +77,4 @@ func (dao *Dao) AdminPage(request model.AdminQuery) ([]model.Admin, int) {
 
 	return list, total
 }
+*/
