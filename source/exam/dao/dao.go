@@ -69,6 +69,10 @@ func New(cf *conf.Config) *Dao {
 		db.CreateTable(&model.Code{})
 	}
 
+	if !db.HasTable(&model.Teacher{}) {
+		db.CreateTable(&model.Teacher{})
+	}
+
 	return &Dao{
 		orm: orm.New(cf.Orm),
 	}

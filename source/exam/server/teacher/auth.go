@@ -1,4 +1,4 @@
-package admin
+package teacher
 
 import (
 	"errors"
@@ -22,7 +22,7 @@ func (h *Handler) Authenticator(c *gin.Context) (interface{}, error) {
 	}
 
 	// 登录过程验证
-	u, result := h.svr.AdminAuth(login.Username, login.Password)
+	u, result := h.svr.TeacherAuth(login.Username, login.Password)
 	if !result {
 		return nil, errors.New("用户名或密码错误")
 	}
@@ -33,9 +33,10 @@ func (h *Handler) Authenticator(c *gin.Context) (interface{}, error) {
 	}
 
 	return &auth.CurrentUser{
+		Id:       int(u.ID),
 		Username: u.UserName,
 		Status:   u.Status,
-		Usertype: auth.USER_TYPE_ADMIN,
+		Usertype: auth.USER_TYPE_TEACHER,
 	}, nil
 
 }
@@ -46,7 +47,7 @@ func (h *Handler) Unauthorized(c *gin.Context, code int, message string) {
 
 func (h *Handler) GetUserInfo(c *gin.Context) {
 	u, _ := auth.GetCurrentUser(c)
-	u.Roles = []string{"admin"}
-	http.Response(c, 200, "信息获取成功", u)
-
+	u.Roles = []string{"teacher"}
+	t, _ := h.svr.GetTeacherById(uint(u.Id))
+	http.Response(c, 200, "信息获取成功", t)
 }

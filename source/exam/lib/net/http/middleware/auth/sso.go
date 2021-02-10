@@ -23,7 +23,8 @@ type CurrentUser struct {
 
 const (
 	USER_TYPE_ADMIN = iota
-	USER_TYPE_MEMBER
+	USER_TYPE_TEACHER
+	USER_TYPE_STUDENT
 )
 
 func PayloadFunc(data interface{}) jwt.MapClaims {
