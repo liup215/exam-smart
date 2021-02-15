@@ -4,7 +4,7 @@ import 'package:teacher/app_component.template.dart' as app;
 import 'main.template.dart' as ng;
 
 @GenerateInjector([
-  routerProviders
+  routerProvidersHash
 ])
 final InjectorFactory appInjector = ng.appInjector$Injector;
 

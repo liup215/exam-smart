@@ -66,5 +66,9 @@ type SubjectQuery struct {
 func (q SubjectQuery) ParseQuery(db *gorm.DB) *gorm.DB {
 	db = db.Model(&model.Subject{})
 
+	if q.ID != uint(0) {
+		db = db.Where("id = ?", q.ID)
+	}
+
 	return db
 }
